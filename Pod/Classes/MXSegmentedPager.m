@@ -1,29 +1,31 @@
+// MXSegmentedPager.m
 //
-//  MXSegmentedPager.m
-//  Pods
+// Copyright (c) 2015 Maxime Epain
 //
-//  Created by Maxime Epain on 25/02/2015.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 #import "MXSegmentedPager.h"
 
-static void * kMXScrollViewObservationContext = &kMXScrollViewObservationContext;
-static NSString * const kMXScrollViewContentOffsetKeyPath = @"contentOffset";
-
-typedef enum ScrollDirection {
-    ScrollDirectionNone,
-    ScrollDirectionRight,
-    ScrollDirectionLeft,
-    ScrollDirectionUp,
-    ScrollDirectionDown,
-    ScrollDirectionCrazy,
-} ScrollDirection;
-
 @interface MXSegmentedPager () <UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView* scrollView;
-
-@property (nonatomic, assign) CGFloat lastContentOffset;
+@property (nonatomic, strong) NSArray* boundaries;
+@property (nonatomic, readwrite) BOOL moveSegment;
 @end
 
 @implementation MXSegmentedPager
@@ -50,6 +52,10 @@ typedef enum ScrollDirection {
         [self createView];
     }
     return self;
+}
+
+- (UIView *)container {
+    return self.scrollView;
 }
 
 - (void)createView
@@ -81,13 +87,10 @@ typedef enum ScrollDirection {
     self.scrollView.alwaysBounceVertical = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.showsHorizontalScrollIndicator = NO;
-    
-//    [self.scrollView addObserver:self
-//                  forKeyPath:kMXScrollViewContentOffsetKeyPath
-//                     options:NSKeyValueObservingOptionNew
-//                     context:kMXScrollViewObservationContext];
-    
+    self.scrollView.keyboardDismissMode = YES;
     [self addSubview:self.scrollView];
+    
+    self.moveSegment = YES;
 }
 
 - (void) setFrame:(CGRect)frame {
@@ -112,6 +115,8 @@ typedef enum ScrollDirection {
 - (void) setPages:(NSDictionary *)pages {
     _pages = pages;
     CGFloat width = 0.f;
+    
+    NSMutableArray* boundaries = [NSMutableArray arrayWithObject:@0];
     for (NSString* title in pages) {
         
         UIView* view = [pages objectForKey:title];
@@ -124,37 +129,13 @@ typedef enum ScrollDirection {
         };
         view.frame = frame;
         width += view.frame.size.width;
+        
+        CGFloat boundary = frame.origin.x + (frame.size.width / 2);
+        [boundaries addObject:[NSNumber numberWithFloat:boundary]];
     }
     self.scrollView.contentSize = CGSizeMake(width, self.frame.size.height);
-    
     self.segmentedControl.sectionTitles = [pages allKeys];
-}
-
-#pragma mark - Key-Value Observing
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (context == kMXScrollViewObservationContext && [keyPath isEqualToString:kMXScrollViewContentOffsetKeyPath]) {
-
-//        CGPoint contentOffset = [change[NSKeyValueChangeNewKey] CGPointValue];
-//        CGPoint currentOffset = self.scrollView.l;
-//            
-//        CGFloat x = 0.f;
-//        NSArray* keys = [self.pages allKeys];
-//        NSInteger index = 1;
-//            
-////        for (; x >= contentOffset.x; index++) {
-////           
-////            NSString* key = [keys objectAtIndex:index];
-////            UIView* upView = [self.pages objectForKey:key];
-////            
-////            x += upView.frame.size.width;
-////        }
-//        [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
-        
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
+    self.boundaries = boundaries;
 }
 
 #pragma -mark segmentedControl target
@@ -171,43 +152,35 @@ typedef enum ScrollDirection {
         x += view.frame.size.width;
     }
 
+    self.moveSegment = NO;
 //    CGFloat y = self.scrollView.contentOffset.y;
     [self.scrollView setContentOffset:CGPointMake(x, 0) animated:YES];
 }
 
+#pragma -mark <UIScrollViewDelegate>
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    self.moveSegment = YES;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    ScrollDirection scrollDirection = ScrollDirectionNone;
-    if (self.lastContentOffset > scrollView.contentOffset.x)
-        scrollDirection = ScrollDirectionRight;
-    else if (self.lastContentOffset < scrollView.contentOffset.x)
-        scrollDirection = ScrollDirectionLeft;
-    self.lastContentOffset = scrollView.contentOffset.x;
-    
-    NSInteger index = self.segmentedControl.selectedSegmentIndex;
-    
-    if (scrollDirection == ScrollDirectionLeft) {
-        index++;
-        
-        if (index > 0 && index < self.pages.count) {
-            NSString* key = [[self.pages allKeys] objectAtIndex:index];
-            UIView* view = [self.pages objectForKey:key];
+    if (self.moveSegment) {
+        NSInteger curIndex = self.segmentedControl.selectedSegmentIndex;
+        NSInteger index = 0;
+        for (NSInteger i = 0; i < self.boundaries.count - 2;) {
+            CGFloat left        = [(NSNumber*)[self.boundaries objectAtIndex:i] floatValue];
+            CGFloat right       = [(NSNumber*)[self.boundaries objectAtIndex:++i] floatValue];
+            CGFloat position    = scrollView.contentOffset.x;
             
-            if (view.frame.origin.x > scrollView.contentOffset.x) {
-                [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
+            if (position > left && position < right) {
+                break;
+            }
+            if (position > 0 && position < scrollView.contentSize.width) {
+                index++;
             }
         }
-    }
-    else if (scrollDirection == ScrollDirectionRight) {
-        index--;
-        
-        if (index >= 0 && index < self.pages.count) {
-            NSString* key = [[self.pages allKeys] objectAtIndex:index];
-            UIView* view = [self.pages objectForKey:key];
-            
-            if (view.frame.origin.x < scrollView.contentOffset.x) {
-                [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
-            }
+        if (curIndex != index) {
+            [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
         }
     }
 }
