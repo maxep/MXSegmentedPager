@@ -7,7 +7,7 @@
 
 UIScrollView paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl).
 
-![Demo](https://lh5.googleusercontent.com/IaLYGDkE2ODAPP-fuDUWy1n2t3O9akH3lJ6NLa_WlYnOfNbfxI8AZcE7RhlR3q5FKnqDOJERyp8=w1416-h658)
+![Demo](https://drive.google.com/uc?export=download&id=0B3oPAwr0Xxx-YTRobGhUVFF4MVU)
 
 ## Usage
 
