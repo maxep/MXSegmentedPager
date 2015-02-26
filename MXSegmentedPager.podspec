@@ -10,19 +10,16 @@
 Pod::Spec.new do |s|
   s.name             = "MXSegmentedPager"
   s.version          = "0.1.0"
-  s.summary          = "A short description of MXSegmentedPager."
+  s.summary          = "UIScrollView paging control using HMSegmentedControl."
   s.description      = <<-DESC
-                       An optional longer description of MXSegmentedPager
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
+                       UIScrollView paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl).
                        DESC
   s.homepage         = "https://github.com/<GITHUB_USERNAME>/MXSegmentedPager"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.screenshots     = "https://lh5.googleusercontent.com/IaLYGDkE2ODAPP-fuDUWy1n2t3O9akH3lJ6NLa_WlYnOfNbfxI8AZcE7RhlR3q5FKnqDOJERyp8=w1416-h658"
   s.license          = 'MIT'
   s.author           = { "Maxime Epain" => "maxime.epain@gmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/MXSegmentedPager.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => "https://github.com/maxep/MXSegmentedPager.git", :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/MaximeEpain'
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
