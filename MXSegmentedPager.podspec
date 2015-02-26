@@ -14,8 +14,8 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
                        UIScrollView paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl).
                        DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/MXSegmentedPager"
-  s.screenshots     = "https://lh5.googleusercontent.com/IaLYGDkE2ODAPP-fuDUWy1n2t3O9akH3lJ6NLa_WlYnOfNbfxI8AZcE7RhlR3q5FKnqDOJERyp8=w1416-h658"
+
+  s.homepage         = "https://github.com/maxep/MXSegmentedPager"
   s.license          = 'MIT'
   s.author           = { "Maxime Epain" => "maxime.epain@gmail.com" }
   s.source           = { :git => "https://github.com/maxep/MXSegmentedPager.git", :tag => s.version.to_s }
