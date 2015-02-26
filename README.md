@@ -5,6 +5,10 @@
 [![License](https://img.shields.io/cocoapods/l/MXSegmentedPager.svg?style=flat)](http://cocoadocs.org/docsets/MXSegmentedPager)
 [![Platform](https://img.shields.io/cocoapods/p/MXSegmentedPager.svg?style=flat)](http://cocoadocs.org/docsets/MXSegmentedPager)
 
+UIScrollView paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl).
+
+![Demo](https://lh5.googleusercontent.com/IaLYGDkE2ODAPP-fuDUWy1n2t3O9akH3lJ6NLa_WlYnOfNbfxI8AZcE7RhlR3q5FKnqDOJERyp8=w1416-h658)
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.

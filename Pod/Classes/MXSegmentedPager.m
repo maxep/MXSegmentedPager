@@ -133,7 +133,7 @@
         CGFloat boundary = frame.origin.x + (frame.size.width / 2);
         [boundaries addObject:[NSNumber numberWithFloat:boundary]];
     }
-    self.scrollView.contentSize = CGSizeMake(width, self.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake(width, self.scrollView.frame.size.height);
     self.segmentedControl.sectionTitles = [pages allKeys];
     self.boundaries = boundaries;
 }
