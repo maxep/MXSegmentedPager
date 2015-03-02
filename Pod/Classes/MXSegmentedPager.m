@@ -54,43 +54,8 @@
     return self;
 }
 
-- (UIView *)container {
+- (UIView *)contentView {
     return self.scrollView;
-}
-
-- (void)createView
-{
-    CGRect frame = (CGRect) {
-        .origin = CGPointZero,
-        .size.width = self.frame.size.width,
-        .size.height = 44.f
-    };
-    
-    self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:frame];
-    [self.segmentedControl addTarget:self
-                         action:@selector(pageControlValueChanged:)
-               forControlEvents:UIControlEventValueChanged];
-    [self addSubview:self.segmentedControl];
-    
-    frame = (CGRect) {
-        .origin.x = 0.f,
-        .origin.y = frame.size.height,
-        .size.width = self.frame.size.width,
-        .size.height = self.frame.size.height - frame.size.height
-    };
-    
-    self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
-    self.scrollView.delegate = self;
-    self.scrollView.scrollsToTop = NO;
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.directionalLockEnabled = YES;
-    self.scrollView.alwaysBounceVertical = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.keyboardDismissMode = YES;
-    [self addSubview:self.scrollView];
-    
-    self.moveSegment = YES;
 }
 
 - (void) setFrame:(CGRect)frame {
@@ -155,6 +120,7 @@
     self.moveSegment = NO;
 //    CGFloat y = self.scrollView.contentOffset.y;
     [self.scrollView setContentOffset:CGPointMake(x, 0) animated:YES];
+    [self changedToIndex:index];
 }
 
 #pragma -mark <UIScrollViewDelegate>
@@ -181,7 +147,59 @@
         }
         if (curIndex != index) {
             [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
+            [self changedToIndex:index];
         }
+    }
+}
+
+#pragma -mark private methods
+- (void)createView {
+    CGRect frame = (CGRect) {
+        .origin = CGPointZero,
+        .size.width = self.frame.size.width,
+        .size.height = 44.f
+    };
+    
+    self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:frame];
+    [self.segmentedControl addTarget:self
+                              action:@selector(pageControlValueChanged:)
+                    forControlEvents:UIControlEventValueChanged];
+    [self addSubview:self.segmentedControl];
+    
+    frame = (CGRect) {
+        .origin.x = 0.f,
+        .origin.y = frame.size.height,
+        .size.width = self.frame.size.width,
+        .size.height = self.frame.size.height - frame.size.height
+    };
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
+    self.scrollView.delegate = self;
+    self.scrollView.scrollsToTop = NO;
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.directionalLockEnabled = YES;
+    self.scrollView.alwaysBounceVertical = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.keyboardDismissMode = YES;
+    [self addSubview:self.scrollView];
+    
+    self.moveSegment = YES;
+}
+
+- (void) changedToIndex:(NSInteger)index {
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithIndex:)]) {
+        [self.delegate segmentedPager:self didSelectViewWithIndex:index];
+    }
+    
+    NSString* title = [[self.pages allKeys] objectAtIndex:index];
+    
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithTitle:)]) {
+        [self.delegate segmentedPager:self didSelectViewWithTitle:title];
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectView:)]) {
+        [self.delegate segmentedPager:self didSelectView:[self.pages objectForKey:title]];
     }
 }
 @end

@@ -23,10 +23,22 @@
 #import <UIKit/UIKit.h>
 #import "HMSegmentedControl.h"
 
+@class MXSegmentedPager;
+
+@protocol MXSegmentedPagerDelegate <NSObject>
+
+@optional
+- (void) segmentedPager:(MXSegmentedPager*)segmentedPager didSelectView:(UIView*)view;
+- (void) segmentedPager:(MXSegmentedPager*)segmentedPager didSelectViewWithTitle:(NSString*)title;
+- (void) segmentedPager:(MXSegmentedPager*)segmentedPager didSelectViewWithIndex:(NSInteger)index;
+
+@end
+
 @interface MXSegmentedPager : UIView
 
+@property (nonatomic, assign) id<MXSegmentedPagerDelegate> delegate;
 @property (nonatomic, strong) HMSegmentedControl* segmentedControl;
-@property (nonatomic, readonly) UIView* container;
+@property (nonatomic, strong) UIScrollView* contentView;
 
 @property (nonatomic, strong) NSDictionary* pages;
 
