@@ -1,4 +1,4 @@
-// MXFancyViewController.h
+// UICollectionView+MXSegmentedPager.h
 //
 // Copyright (c) 2015 Maxime Epain
 //
@@ -21,7 +21,16 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "MXSegmentedPager.h"
 
-@interface MXFancyViewController : UIViewController
+@interface MXSegmentedPager (UICollectionView) <UICollectionViewDelegate, UICollectionViewDataSource>
+@property (nonatomic, strong) UIImageView * header;
+@end
+
+@interface UICollectionView (MXSegmentedPager)
+
+- (instancetype)initWithSegmentedPager:(MXSegmentedPager*)segmentedPager;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder segmentedPager:(MXSegmentedPager*)segmentedPager;
+- (instancetype)initWithFrame:(CGRect)frame segmentedPager:(MXSegmentedPager*)segmentedPager;
 
 @end

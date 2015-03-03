@@ -29,6 +29,7 @@ Pod::Spec.new do |s|
     'MXSegmentedPager' => ['Pod/Assets/*.png']
   }
   s.dependency 'HMSegmentedControl', '~> 1.4'
+  s.dependency 'CSStickyHeaderFlowLayout', '~> 0.2.4'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

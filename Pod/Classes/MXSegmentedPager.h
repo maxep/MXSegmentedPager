@@ -34,12 +34,27 @@
 
 @end
 
+@protocol MXSegmentedPagerDataSource <NSObject>
+
+@required
+- (NSInteger) numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager;
+- (UIView*) segmentedPager:(MXSegmentedPager*)segmentedPager viewForPageAtIndex:(NSInteger)index;
+
+@optional
+- (NSString*) segmentedPager:(MXSegmentedPager*)segmentedPager titleForSectionAtIndex:(NSInteger)index;
+- (UIImage*) segmentedPager:(MXSegmentedPager*)segmentedPager imageForSectionAtIndex:(NSInteger)index;
+@end
+
 @interface MXSegmentedPager : UIView
 
 @property (nonatomic, assign) id<MXSegmentedPagerDelegate> delegate;
-@property (nonatomic, strong) HMSegmentedControl* segmentedControl;
-@property (nonatomic, strong) UIScrollView* contentView;
+@property (nonatomic, assign) id<MXSegmentedPagerDataSource> dataSource;
 
-@property (nonatomic, strong) NSDictionary* pages;
+@property (nonatomic, readwrite) CGSize containerSize;
+
+@property (nonatomic, strong) HMSegmentedControl* segmentedControl;
+@property (nonatomic, strong) UIScrollView* container;
+
+- (void) reloadData;
 
 @end

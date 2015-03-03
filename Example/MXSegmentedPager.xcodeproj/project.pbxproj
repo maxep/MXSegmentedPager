@@ -24,7 +24,6 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		B10F7A080B4570658946BDC6 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9BB96F1D81164F56C1E5BB /* libPods-Tests.a */; };
-		D0B3DDD91AA5085A00FFC498 /* MXFancyView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B3DDD81AA5085A00FFC498 /* MXFancyView.m */; };
 		D0DD86011AA355E60077F3CD /* MXFancyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DD86001AA355E60077F3CD /* MXFancyViewController.m */; };
 		D0DD86071AA35B720077F3CD /* LongText.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0DD86061AA35B720077F3CD /* LongText.txt */; };
 /* End PBXBuildFile section */
@@ -69,8 +68,6 @@
 		A0BF6BCCED469F777ABABE06 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B24E644BD5926805008B6BC5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B7583AB295328300927EBFB5 /* Pods-MXSegmentedPager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MXSegmentedPager.release.xcconfig"; path = "Pods/Target Support Files/Pods-MXSegmentedPager/Pods-MXSegmentedPager.release.xcconfig"; sourceTree = "<group>"; };
-		D0B3DDD71AA5085A00FFC498 /* MXFancyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXFancyView.h; sourceTree = "<group>"; };
-		D0B3DDD81AA5085A00FFC498 /* MXFancyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXFancyView.m; sourceTree = "<group>"; };
 		D0DD85FF1AA355E60077F3CD /* MXFancyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXFancyViewController.h; sourceTree = "<group>"; };
 		D0DD86001AA355E60077F3CD /* MXFancyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXFancyViewController.m; sourceTree = "<group>"; };
 		D0DD86061AA35B720077F3CD /* LongText.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongText.txt; sourceTree = "<group>"; };
@@ -140,13 +137,14 @@
 		6003F593195388D20070C39A /* MXSegmentedPager */ = {
 			isa = PBXGroup;
 			children = (
-				D0DD86021AA357560077F3CD /* Fancy */,
 				6003F59C195388D20070C39A /* MXAppDelegate.h */,
 				6003F59D195388D20070C39A /* MXAppDelegate.m */,
 				6003F59F195388D20070C39A /* Main_iPhone.storyboard */,
 				6003F5A2195388D20070C39A /* Main_iPad.storyboard */,
 				6003F5A5195388D20070C39A /* MXViewController.h */,
 				6003F5A6195388D20070C39A /* MXViewController.m */,
+				D0DD85FF1AA355E60077F3CD /* MXFancyViewController.h */,
+				D0DD86001AA355E60077F3CD /* MXFancyViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 				D0DD86061AA35B720077F3CD /* LongText.txt */,
@@ -192,17 +190,6 @@
 				A0BF6BCCED469F777ABABE06 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
-			sourceTree = "<group>";
-		};
-		D0DD86021AA357560077F3CD /* Fancy */ = {
-			isa = PBXGroup;
-			children = (
-				D0DD85FF1AA355E60077F3CD /* MXFancyViewController.h */,
-				D0DD86001AA355E60077F3CD /* MXFancyViewController.m */,
-				D0B3DDD71AA5085A00FFC498 /* MXFancyView.h */,
-				D0B3DDD81AA5085A00FFC498 /* MXFancyView.m */,
-			);
-			name = Fancy;
 			sourceTree = "<group>";
 		};
 		EA6E2EFEB002B63B25204F49 /* Pods */ = {
@@ -387,7 +374,6 @@
 				6003F5A7195388D20070C39A /* MXViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				D0DD86011AA355E60077F3CD /* MXFancyViewController.m in Sources */,
-				D0B3DDD91AA5085A00FFC498 /* MXFancyView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

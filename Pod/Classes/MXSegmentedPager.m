@@ -23,9 +23,9 @@
 #import "MXSegmentedPager.h"
 
 @interface MXSegmentedPager () <UIScrollViewDelegate>
-@property (nonatomic, strong) UIScrollView* scrollView;
 @property (nonatomic, strong) NSArray* boundaries;
 @property (nonatomic, readwrite) BOOL moveSegment;
+@property (nonatomic, strong) NSDictionary* pages;
 @end
 
 @implementation MXSegmentedPager
@@ -54,8 +54,13 @@
     return self;
 }
 
-- (UIView *)contentView {
-    return self.scrollView;
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    [super willMoveToSuperview:newSuperview];
+    [self reloadData];
+}
+
+- (CGSize)containerSize {
+    return self.container.frame.size;
 }
 
 - (void) setFrame:(CGRect)frame {
@@ -74,7 +79,9 @@
         .size.width = self.frame.size.width,
         .size.height = self.frame.size.height - subFrame.size.height
     };
-    self.scrollView.frame = subFrame;
+    self.container.frame = subFrame;
+    
+    [self reloadData];
 }
 
 - (void) setPages:(NSDictionary *)pages {
@@ -85,7 +92,7 @@
     for (NSString* title in pages) {
         
         UIView* view = [pages objectForKey:title];
-        [self.scrollView addSubview:view];
+        [self.container addSubview:view];
         
         CGRect frame = (CGRect) {
             .origin.x = view.frame.origin.x + width,
@@ -98,9 +105,42 @@
         CGFloat boundary = frame.origin.x + (frame.size.width / 2);
         [boundaries addObject:[NSNumber numberWithFloat:boundary]];
     }
-    self.scrollView.contentSize = CGSizeMake(width, self.scrollView.frame.size.height);
+    self.container.contentSize = CGSizeMake(width, self.container.frame.size.height);
     self.segmentedControl.sectionTitles = [pages allKeys];
     self.boundaries = boundaries;
+}
+
+- (void)reloadData {
+    NSInteger numberOfPages = 0;
+    if ([self.dataSource respondsToSelector:@selector(numberOfPagesInSegmentedPager:)]) {
+        numberOfPages = [self.dataSource numberOfPagesInSegmentedPager:self];
+    }
+    
+    NSMutableDictionary* pages = [NSMutableDictionary dictionary];
+    NSMutableArray* images = [NSMutableArray array];
+    
+    for (NSInteger index = 0; index < numberOfPages; index++) {
+        NSString* key = [NSString stringWithFormat:@"Page %ld", (long)index];
+        if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
+            key = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
+        }
+        if ([self.dataSource respondsToSelector:@selector(segmentedPager:viewForPageAtIndex:)]) {
+            UIView* view = [self.dataSource segmentedPager:self viewForPageAtIndex:index];
+            [pages setObject:view forKey:key];
+        }
+        else if ([self.dataSource respondsToSelector:@selector(segmentedPager:imageForSectionAtIndex:)]) {
+            UIImage* image = [self.dataSource segmentedPager:self imageForSectionAtIndex:index];
+            [images addObject:image];
+        }
+    }
+    
+    self.pages = pages;
+    if (images.count > 0) {
+        self.segmentedControl.sectionImages = images;
+    }
+    else {
+        self.segmentedControl.sectionTitles = [pages allKeys];
+    }
 }
 
 #pragma -mark segmentedControl target
@@ -119,7 +159,7 @@
 
     self.moveSegment = NO;
 //    CGFloat y = self.scrollView.contentOffset.y;
-    [self.scrollView setContentOffset:CGPointMake(x, 0) animated:YES];
+    [self.container setContentOffset:CGPointMake(x, 0) animated:YES];
     [self changedToIndex:index];
 }
 
@@ -173,16 +213,16 @@
         .size.height = self.frame.size.height - frame.size.height
     };
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
-    self.scrollView.delegate = self;
-    self.scrollView.scrollsToTop = NO;
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.directionalLockEnabled = YES;
-    self.scrollView.alwaysBounceVertical = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.keyboardDismissMode = YES;
-    [self addSubview:self.scrollView];
+    self.container = [[UIScrollView alloc] initWithFrame:frame];
+    self.container.delegate = self;
+    self.container.scrollsToTop = NO;
+    self.container.pagingEnabled = YES;
+    self.container.directionalLockEnabled = YES;
+    self.container.alwaysBounceVertical = NO;
+    self.container.showsVerticalScrollIndicator = NO;
+    self.container.showsHorizontalScrollIndicator = NO;
+    self.container.keyboardDismissMode = YES;
+    [self addSubview:self.container];
     
     self.moveSegment = YES;
 }

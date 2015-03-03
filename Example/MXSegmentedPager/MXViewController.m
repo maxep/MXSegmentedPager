@@ -23,8 +23,12 @@
 #import "MXViewController.h"
 #import "MXSegmentedPager.h"
 
-@interface MXViewController () <UITableViewDelegate, UITableViewDataSource>
-
+@interface MXViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UIImageView       * cover;
+@property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
+@property (nonatomic, strong) UITableView       * tableView;
+@property (nonatomic, strong) UIWebView         * webView;
+@property (nonatomic, strong) UITextView        * textView;
 @end
 
 @implementation MXViewController
@@ -33,67 +37,102 @@
 {
     [super viewDidLoad];
     
-    NSMutableDictionary* pages = [NSMutableDictionary dictionary];
+    [self.view addSubview:self.cover];
     
-    // Boundary between cover and segmented pager
-    CGFloat boundary = self.view.frame.size.height / 3;
+    // Setup the segmented pager properties
+    self.segmentedPager.delegate = self;
+    self.segmentedPager.dataSource = self;
     
-    // Set a cover on the top of the view
-    UIImageView* cover = [[UIImageView alloc] initWithFrame:(CGRect){
-        .origin         = CGPointZero,
-        .size.width     = self.view.frame.size.width,
-        .size.height    = boundary
-    }];
-    cover.contentMode = UIViewContentModeScaleAspectFill;
-    cover.image = [UIImage imageNamed:@"success-baby"];
-    [self.view addSubview:cover];
-    
-    // Set a segmented pager on the below the cover
-    MXSegmentedPager* segmentedPager = [[MXSegmentedPager alloc] initWithFrame:(CGRect){
-        .origin.x       = 0,
-        .origin.y       = boundary,
-        .size.width     = self.view.frame.size.width,
-        .size.height    = 2 * boundary
-    }];
-    [self.view addSubview:segmentedPager];
-    
-    //Add a table page
-    UITableView* tableView = [[UITableView alloc] initWithFrame:(CGRect){
-        .origin = CGPointZero,
-        .size   = segmentedPager.contentView.frame.size
-    }];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [pages setObject:tableView forKey:@"Table"];
-    
-    // Add a web page
-    UIWebView* webView = [[UIWebView alloc] initWithFrame:(CGRect){
-        .origin = CGPointZero,
-        .size   = segmentedPager.contentView.frame.size
-    }];
-    NSString *strURL = @"http://nshipster.com/";
-    NSURL *url = [NSURL URLWithString:strURL];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    [webView loadRequest:urlRequest];
-    [pages setObject:webView forKey:@"Web"];
-    
-    // Add a text page
-    UITextView* textView = [[UITextView alloc] initWithFrame:(CGRect){
-        .origin = CGPointZero,
-        .size   = segmentedPager.contentView.frame.size
-    }];
-    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"LongText" ofType:@"txt"];
-    textView.text = [[NSString alloc]initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-    [pages setObject:textView forKey:@"Text"];
-    
-    // Set the pages in the segmented pager
-    segmentedPager.pages = pages;
+    [self.view addSubview:self.segmentedPager];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma -mark private methods
+
+- (UIImageView *)cover {
+    if (!_cover) {
+        // Boundary between cover and segmented pager
+        CGFloat boundary = self.view.frame.size.height / 3;
+        
+        // Set a cover on the top of the view
+        _cover = [[UIImageView alloc] initWithFrame:(CGRect){
+            .origin         = CGPointZero,
+            .size.width     = self.view.frame.size.width,
+            .size.height    = boundary
+        }];
+        _cover.contentMode = UIViewContentModeScaleAspectFill;
+        _cover.image = [UIImage imageNamed:@"success-baby"];
+    }
+    return _cover;
+}
+
+- (MXSegmentedPager *)segmentedPager {
+    if (!_segmentedPager) {
+        // Boundary between cover and segmented pager
+        CGFloat boundary = self.view.frame.size.height / 3;
+        
+        // Set a segmented pager below the cover
+        _segmentedPager = [[MXSegmentedPager alloc] initWithFrame:(CGRect){
+            .origin.x       = 0,
+            .origin.y       = boundary,
+            .size.width     = self.view.frame.size.width,
+            .size.height    = 2 * boundary
+        }];
+    }
+    return _segmentedPager;
+}
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        //Add a table page
+        _tableView = [[UITableView alloc] initWithFrame:(CGRect){
+            .origin = CGPointZero,
+            .size   = self.segmentedPager.containerSize
+        }];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+    }
+    return _tableView;
+}
+
+- (UIWebView *)webView {
+    if (!_webView) {
+        // Add a web page
+        _webView = [[UIWebView alloc] initWithFrame:(CGRect){
+            .origin = CGPointZero,
+            .size   = self.segmentedPager.containerSize
+        }];
+        NSString *strURL = @"http://nshipster.com/";
+        NSURL *url = [NSURL URLWithString:strURL];
+        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+        [_webView loadRequest:urlRequest];
+    }
+    return _webView;
+}
+
+- (UITextView *)textView {
+    if (!_textView) {
+        // Add a text page
+        _textView = [[UITextView alloc] initWithFrame:(CGRect){
+            .origin = CGPointZero,
+            .size   = self.segmentedPager.containerSize
+        }];
+        NSString *filePath = [[NSBundle mainBundle]pathForResource:@"LongText" ofType:@"txt"];
+        _textView.text = [[NSString alloc]initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+    }
+    return _textView;
+}
+
+#pragma -mark <MXSegmentedPagerDataSource>
+- (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
+    return 3;
+}
+
+- (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index {
+    return [@[@"Table", @"Web", @"Text"] objectAtIndex:index];
+}
+
+- (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
+    return [@[self.tableView, self.webView, self.textView] objectAtIndex:index];
 }
 
 #pragma -mark <UITableViewDelegate>
