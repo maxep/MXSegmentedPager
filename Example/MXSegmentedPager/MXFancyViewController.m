@@ -41,14 +41,14 @@
         .size = self.view.frame.size
     };
     
-    // Create a UICollectionView with segmented pager integration
-    self.collectionView = [[UICollectionView alloc] initWithFrame:frame segmentedPager:self.segmentedPager];
-    
     // Setup the segmented pager properties
     self.segmentedPager.delegate    = self;
     self.segmentedPager.dataSource  = self;
     self.segmentedPager.header      = self.cover;
     
+    // Create a UICollectionView with segmented pager integration
+    self.collectionView = [[UICollectionView alloc] initWithFrame:frame];
+    self.collectionView.segmentedPager = self.segmentedPager;
     [self.view addSubview:self.collectionView];
 }
 

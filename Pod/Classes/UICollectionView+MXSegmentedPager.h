@@ -24,13 +24,11 @@
 #import "MXSegmentedPager.h"
 
 @interface MXSegmentedPager (UICollectionView) <UICollectionViewDelegate, UICollectionViewDataSource>
-@property (nonatomic, strong) UIImageView * header;
+@property (nonatomic, strong) UIView * header;
 @end
 
 @interface UICollectionView (MXSegmentedPager)
 
-- (instancetype)initWithSegmentedPager:(MXSegmentedPager*)segmentedPager;
-- (instancetype)initWithCoder:(NSCoder *)aDecoder segmentedPager:(MXSegmentedPager*)segmentedPager;
-- (instancetype)initWithFrame:(CGRect)frame segmentedPager:(MXSegmentedPager*)segmentedPager;
+@property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
 
 @end

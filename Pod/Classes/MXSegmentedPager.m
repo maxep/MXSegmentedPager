@@ -84,32 +84,6 @@
     [self reloadData];
 }
 
-- (void) setPages:(NSDictionary *)pages {
-    _pages = pages;
-    CGFloat width = 0.f;
-    
-    NSMutableArray* boundaries = [NSMutableArray arrayWithObject:@0];
-    for (NSString* title in pages) {
-        
-        UIView* view = [pages objectForKey:title];
-        [self.container addSubview:view];
-        
-        CGRect frame = (CGRect) {
-            .origin.x = view.frame.origin.x + width,
-            .origin.y = view.frame.origin.y,
-            .size = view.frame.size
-        };
-        view.frame = frame;
-        width += view.frame.size.width;
-        
-        CGFloat boundary = frame.origin.x + (frame.size.width / 2);
-        [boundaries addObject:[NSNumber numberWithFloat:boundary]];
-    }
-    self.container.contentSize = CGSizeMake(width, self.container.frame.size.height);
-    self.segmentedControl.sectionTitles = [pages allKeys];
-    self.boundaries = boundaries;
-}
-
 - (void)reloadData {
     NSInteger numberOfPages = 0;
     if ([self.dataSource respondsToSelector:@selector(numberOfPagesInSegmentedPager:)]) {
@@ -170,7 +144,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    if (self.moveSegment) {
+    if (self.moveSegment && scrollView == self.container) {
         NSInteger curIndex = self.segmentedControl.selectedSegmentIndex;
         NSInteger index = 0;
         for (NSInteger i = 0; i < self.boundaries.count - 2;) {
@@ -241,5 +215,34 @@
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectView:)]) {
         [self.delegate segmentedPager:self didSelectView:[self.pages objectForKey:title]];
     }
+    
+    
 }
+
+- (void) setPages:(NSDictionary *)pages {
+    _pages = pages;
+    CGFloat width = 0.f;
+    
+    NSMutableArray* boundaries = [NSMutableArray arrayWithObject:@0];
+    for (NSString* title in pages) {
+        
+        UIView* view = [pages objectForKey:title];
+        [self.container addSubview:view];
+        
+        CGRect frame = (CGRect) {
+            .origin.x = view.frame.origin.x + width,
+            .origin.y = view.frame.origin.y,
+            .size = view.frame.size
+        };
+        view.frame = frame;
+        width += view.frame.size.width;
+        
+        CGFloat boundary = frame.origin.x + (frame.size.width / 2);
+        [boundaries addObject:[NSNumber numberWithFloat:boundary]];
+    }
+    self.container.contentSize = CGSizeMake(width, self.containerSize.height);
+    self.segmentedControl.sectionTitles = [pages allKeys];
+    self.boundaries = boundaries;
+}
+
 @end
