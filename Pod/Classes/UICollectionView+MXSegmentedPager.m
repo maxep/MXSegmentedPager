@@ -42,6 +42,8 @@ static NSString * const reuseSectionIdentifier  = @"Section";
     
     parentView.delegate = self;
     parentView.dataSource = self;
+    parentView.alwaysBounceVertical = YES;
+    parentView.showsVerticalScrollIndicator = NO;
     
     // Register classes
     [parentView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseCellIdentifier];
@@ -108,13 +110,13 @@ static NSString * const reuseSectionIdentifier  = @"Section";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseCellIdentifier forIndexPath:indexPath];
-    
     self.container.frame = (CGRect) {
         .origin = CGPointZero,
         .size   = self.containerSize
     };
+    [cell addSubview:self.container];
     [self reloadData];
-    [cell.contentView addSubview:self.container];
+    
     return cell;
 }
 
