@@ -56,7 +56,9 @@
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
-    [self reloadData];
+    if (newSuperview) {
+        [self reloadData];
+    }
 }
 
 - (CGSize)containerSize {

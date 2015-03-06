@@ -1,4 +1,4 @@
-// MXFancyViewController.m
+// MXCollectionViewController.m
 //
 // Copyright (c) 2015 Maxime Epain
 //
@@ -22,7 +22,7 @@
 #import "MXCollectionViewController.h"
 #import "UICollectionView+MXSegmentedPager.h"
 
-@interface MXFancyViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
+@interface MXCollectionViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView       * cover;
 @property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
 @property (nonatomic, strong) UICollectionView  * collectionView;
@@ -31,7 +31,7 @@
 @property (nonatomic, strong) UITextView        * textView;
 @end
 
-@implementation MXFancyViewController
+@implementation MXCollectionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

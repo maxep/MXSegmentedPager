@@ -1,4 +1,4 @@
-// MXViewController.m
+// MXSimpleViewController.m
 //
 // Copyright (c) 2015 Maxime Epain
 //
@@ -23,7 +23,7 @@
 #import "MXSimpleViewController.h"
 #import "MXSegmentedPager.h"
 
-@interface MXViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
+@interface MXSimpleViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView       * cover;
 @property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
 @property (nonatomic, strong) UITableView       * tableView;
@@ -31,7 +31,7 @@
 @property (nonatomic, strong) UITextView        * textView;
 @end
 
-@implementation MXViewController
+@implementation MXSimpleViewController
 
 - (void)viewDidLoad
 {

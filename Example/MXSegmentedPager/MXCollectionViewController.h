@@ -1,4 +1,4 @@
-// MXFancyViewController.h
+// MXCollectionViewController.h
 //
 // Copyright (c) 2015 Maxime Epain
 //
@@ -22,6 +22,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MXFancyViewController : UIViewController
+@interface MXCollectionViewController : UIViewController
 
 @end

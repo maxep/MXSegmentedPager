@@ -1,4 +1,4 @@
-// MXViewController.h
+// MXSimpleViewController.h
 //
 // Copyright (c) 2015 Maxime Epain
 //
@@ -22,6 +22,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MXViewController : UIViewController
+@interface MXSimpleViewController : UIViewController
 
 @end

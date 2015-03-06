@@ -114,8 +114,9 @@ static NSString * const reuseSectionIdentifier  = @"Section";
         .origin = CGPointZero,
         .size   = self.containerSize
     };
-    [cell addSubview:self.container];
+    
     [self reloadData];
+    [cell addSubview:self.container];
     
     return cell;
 }
@@ -168,7 +169,12 @@ static NSString * const reuseSectionIdentifier  = @"Section";
 
 - (instancetype)initWithFrame:(CGRect)frame {
     CSStickyHeaderFlowLayout *layout= [[CSStickyHeaderFlowLayout alloc] init];
-     return self = [self initWithFrame:frame collectionViewLayout:layout];
+    return self = [self initWithFrame:frame collectionViewLayout:layout];
 }
 
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer: (UIGestureRecognizer *)otherGestureRecognizer {
+    
+    return YES;
+}
 @end
