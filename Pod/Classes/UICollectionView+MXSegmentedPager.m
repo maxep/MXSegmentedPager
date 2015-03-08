@@ -147,6 +147,7 @@ static NSString * const reuseSectionIdentifier  = @"Section";
 - (void)setSegmentedPager:(MXSegmentedPager *)segmentedPager {
     
     segmentedPager.parentView = self;
+    self.bounces = NO;
     
     objc_setAssociatedObject(self, @selector(segmentedPager), segmentedPager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -174,7 +175,6 @@ static NSString * const reuseSectionIdentifier  = @"Section";
 
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer: (UIGestureRecognizer *)otherGestureRecognizer {
-    
     return YES;
 }
 @end
