@@ -25,6 +25,8 @@
 
 @interface MXSegmentedPager (UICollectionView) <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, strong) UIView * header;
+
+- (void) setHeader:(UIView *)header withHeight:(CGFloat)height;
 @end
 
 @interface UICollectionView (MXSegmentedPager)

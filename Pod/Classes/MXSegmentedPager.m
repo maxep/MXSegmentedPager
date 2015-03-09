@@ -25,7 +25,8 @@
 @interface MXSegmentedPager () <UIScrollViewDelegate>
 @property (nonatomic, strong) NSArray* boundaries;
 @property (nonatomic, readwrite) BOOL moveSegment;
-@property (nonatomic, strong) NSDictionary* pages;
+@property (nonatomic, strong) NSArray* pages;
+@property (nonatomic, strong) NSArray* keys;
 @end
 
 @implementation MXSegmentedPager
@@ -92,17 +93,19 @@
         numberOfPages = [self.dataSource numberOfPagesInSegmentedPager:self];
     }
     
-    NSMutableDictionary* pages = [NSMutableDictionary dictionary];
     NSMutableArray* images = [NSMutableArray array];
+    NSMutableArray* keys = [NSMutableArray array];
+    NSMutableArray* pages  = [NSMutableArray array];
     
     for (NSInteger index = 0; index < numberOfPages; index++) {
         NSString* key = [NSString stringWithFormat:@"Page %ld", (long)index];
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
             key = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
         }
+        [keys addObject:key];
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:viewForPageAtIndex:)]) {
             UIView* view = [self.dataSource segmentedPager:self viewForPageAtIndex:index];
-            [pages setObject:view forKey:key];
+            [pages addObject:view];
         }
         else if ([self.dataSource respondsToSelector:@selector(segmentedPager:imageForSectionAtIndex:)]) {
             UIImage* image = [self.dataSource segmentedPager:self imageForSectionAtIndex:index];
@@ -111,12 +114,14 @@
     }
     
     self.pages = pages;
+    self.keys = keys;
     if (images.count > 0) {
         self.segmentedControl.sectionImages = images;
     }
     else {
-        self.segmentedControl.sectionTitles = [pages allKeys];
+        self.segmentedControl.sectionTitles = keys;
     }
+    [self layoutSubviews];
 }
 
 #pragma -mark segmentedControl target
@@ -124,12 +129,9 @@
     NSInteger index = self.segmentedControl.selectedSegmentIndex;
     
     CGFloat x = 0.f;
-    NSArray* keys = [self.pages allKeys];
     
     for (NSInteger i = 0; i < index; ++i) {
-        NSString* key = [keys objectAtIndex:i];
-        UIView* view = [self.pages objectForKey:key];
-        
+        UIView* view = [self.pages objectAtIndex:index];
         x += view.frame.size.width;
     }
 
@@ -146,7 +148,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    if (self.moveSegment && scrollView == self.container) {
+    if (self.moveSegment && scrollView == self.container && self.pages.count > 1) {
         NSInteger curIndex = self.segmentedControl.selectedSegmentIndex;
         NSInteger index = 0;
         for (NSInteger i = 0; i < self.boundaries.count - 2;) {
@@ -208,27 +210,25 @@
         [self.delegate segmentedPager:self didSelectViewWithIndex:index];
     }
     
-    NSString* title = [[self.pages allKeys] objectAtIndex:index];
+    NSString* title = [self.keys objectAtIndex:index];
+    UIView* view = [self.pages objectAtIndex:index];
     
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithTitle:)]) {
         [self.delegate segmentedPager:self didSelectViewWithTitle:title];
     }
     
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectView:)]) {
-        [self.delegate segmentedPager:self didSelectView:[self.pages objectForKey:title]];
+        [self.delegate segmentedPager:self didSelectView:view];
     }
-    
-    
 }
 
-- (void) setPages:(NSDictionary *)pages {
-    _pages = pages;
+- (void)layoutSubviews {
     CGFloat width = 0.f;
     
     NSMutableArray* boundaries = [NSMutableArray arrayWithObject:@0];
-    for (NSString* title in pages) {
+    for (NSInteger index = 0; index < self.pages.count; index++) {
         
-        UIView* view = [pages objectForKey:title];
+        UIView* view = [self.pages objectAtIndex:index];
         [self.container addSubview:view];
         
         CGRect frame = (CGRect) {
@@ -243,7 +243,6 @@
         [boundaries addObject:[NSNumber numberWithFloat:boundary]];
     }
     self.container.contentSize = CGSizeMake(width, self.containerSize.height);
-    self.segmentedControl.sectionTitles = [pages allKeys];
     self.boundaries = boundaries;
 }
 

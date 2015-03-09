@@ -26,6 +26,7 @@
 
 @interface MXSegmentedPager ()
 @property (nonatomic, strong) UICollectionView* parentView;
+@property (nonatomic, strong) CSStickyHeaderFlowLayout *layout;
 @end
 
 @implementation MXSegmentedPager (UICollectionView)
@@ -33,6 +34,19 @@
 static NSString * const reuseCellIdentifier     = @"Cell";
 static NSString * const reuseHeaderIdentifier   = @"Header";
 static NSString * const reuseSectionIdentifier  = @"Section";
+
+- (CSStickyHeaderFlowLayout *) layout {
+    CSStickyHeaderFlowLayout * layout = objc_getAssociatedObject(self, @selector(layout));
+    if (!layout) {
+        layout = [[CSStickyHeaderFlowLayout alloc] init];
+        [self setLayout:layout];
+    }
+    return layout;
+}
+
+- (void) setLayout:(CSStickyHeaderFlowLayout *)layout {
+    objc_setAssociatedObject(self, @selector(layout), layout, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (UICollectionView *)parentView {
     return objc_getAssociatedObject(self, @selector(parentView));
@@ -50,9 +64,9 @@ static NSString * const reuseSectionIdentifier  = @"Section";
     [parentView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:CSStickyHeaderParallaxHeader withReuseIdentifier:reuseHeaderIdentifier];
     [parentView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseSectionIdentifier];
     
-    objc_setAssociatedObject(self, @selector(parentView), parentView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    parentView.collectionViewLayout = self.layout;
     
-    [self setParentHeaderLayout];
+    objc_setAssociatedObject(self, @selector(parentView), parentView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIView *)header {
@@ -60,6 +74,11 @@ static NSString * const reuseSectionIdentifier  = @"Section";
 }
 
 - (void)setHeader:(UIView *)header {
+    [self setHeader:header withHeight:header.frame.size.height];
+}
+
+- (void) setHeader:(UIView *)header withHeight:(CGFloat)height {
+    
     // Make sure the contentMode is set to scale proportionally
     [header setContentMode:UIViewContentModeScaleAspectFill];
     // Clip the parts of the view that are not in frame
@@ -69,16 +88,28 @@ static NSString * const reuseSectionIdentifier  = @"Section";
     
     objc_setAssociatedObject(self, @selector(header), header, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    [self setParentHeaderLayout];
+    self.layout.parallaxHeaderReferenceSize = CGSizeMake(self.frame.size.width, height);
+    self.layout.itemSize = CGSizeMake(self.frame.size.width, self.layout.itemSize.height);
 }
 
-- (void) setParentHeaderLayout {
-    CSStickyHeaderFlowLayout *layout = (id)self.parentView.collectionViewLayout;
+- (void) setFrame:(CGRect)frame {
+    [super setFrame:frame];
     
-    if ([layout isKindOfClass:[CSStickyHeaderFlowLayout class]]) {
-        layout.parallaxHeaderReferenceSize = CGSizeMake(self.frame.size.width, self.header.frame.size.height);
-        layout.itemSize = CGSizeMake(self.frame.size.width, layout.itemSize.height);
-    }
+    CGRect subFrame = (CGRect) {
+        .origin = CGPointZero,
+        .size.width = self.frame.size.width,
+        .size.height = 44.f
+    };
+    self.segmentedControl.frame = subFrame;
+    
+    subFrame = (CGRect) {
+        .origin     = CGPointZero,
+        .size.width = self.frame.size.width,
+        .size.height = self.frame.size.height - subFrame.size.height
+    };
+    self.container.frame = subFrame;
+    
+    [self reloadData];
 }
 
 #pragma mark <UICollectionViewDelegate>
@@ -152,29 +183,13 @@ static NSString * const reuseSectionIdentifier  = @"Section";
     objc_setAssociatedObject(self, @selector(segmentedPager), segmentedPager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.collectionViewLayout = [[CSStickyHeaderFlowLayout alloc] init];
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        self.collectionViewLayout = [[CSStickyHeaderFlowLayout alloc] init];
-    }
-    return self;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
     CSStickyHeaderFlowLayout *layout= [[CSStickyHeaderFlowLayout alloc] init];
     return self = [self initWithFrame:frame collectionViewLayout:layout];
 }
 
-
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer: (UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
 }
+
 @end
