@@ -35,6 +35,8 @@ static NSString * const reuseCellIdentifier     = @"Cell";
 static NSString * const reuseHeaderIdentifier   = @"Header";
 static NSString * const reuseSectionIdentifier  = @"Section";
 
+static NSString * const contentOffsetKeyPath    = @"contentOffset";
+
 - (CSStickyHeaderFlowLayout *) layout {
     CSStickyHeaderFlowLayout * layout = objc_getAssociatedObject(self, @selector(layout));
     if (!layout) {
@@ -92,26 +94,6 @@ static NSString * const reuseSectionIdentifier  = @"Section";
     self.layout.itemSize = CGSizeMake(self.frame.size.width, self.layout.itemSize.height);
 }
 
-- (void) setFrame:(CGRect)frame {
-    [super setFrame:frame];
-    
-    CGRect subFrame = (CGRect) {
-        .origin = CGPointZero,
-        .size.width = self.frame.size.width,
-        .size.height = 44.f
-    };
-    self.segmentedControl.frame = subFrame;
-    
-    subFrame = (CGRect) {
-        .origin     = CGPointZero,
-        .size.width = self.frame.size.width,
-        .size.height = self.frame.size.height - subFrame.size.height
-    };
-    self.container.frame = subFrame;
-    
-    [self reloadData];
-}
-
 #pragma mark <UICollectionViewDelegate>
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -148,7 +130,7 @@ static NSString * const reuseSectionIdentifier  = @"Section";
     
     [self reloadData];
     [cell addSubview:self.container];
-    
+    [self setContentOffsetObserver];
     return cell;
 }
 
@@ -167,6 +149,40 @@ static NSString * const reuseSectionIdentifier  = @"Section";
     return nil;
 }
 
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+
+    if ([keyPath isEqualToString:contentOffsetKeyPath]) {
+        
+        if ([self.container.subviews containsObject:object] && [object isKindOfClass:[UIScrollView class]]) {
+            [self layoutCollectionViewWithScrollView:object];
+        }
+    }
+}
+
+#pragma mark Private methods
+
+- (void) setContentOffsetObserver {
+    for (UIScrollView *view in self.container.subviews) {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            [view addObserver:self forKeyPath:contentOffsetKeyPath options:NSKeyValueObservingOptionNew context:nil];
+        }
+    }
+}
+
+- (void) layoutCollectionViewWithScrollView:(UIScrollView*) scrollView {
+    
+    CGFloat y = self.layout.parallaxHeaderReferenceSize.height;
+    if (scrollView.contentOffset.y < self.layout.parallaxHeaderReferenceSize.height) {
+        y = scrollView.contentOffset.y;
+    }
+    self.parentView.contentOffset = CGPointMake(self.parentView.contentOffset.x, y);
+    
+    NSLog(@"self.parentView.contentOffset (%f, %f)", self.parentView.contentOffset.x, self.parentView.contentOffset.y);
+    NSLog(@"self.parentView.contentInset (%f, %f)", self.parentView.contentInset.top, self.parentView.contentInset.bottom);
+}
+
 @end
 
 @implementation UICollectionView (MXSegmentedPager)
@@ -178,8 +194,6 @@ static NSString * const reuseSectionIdentifier  = @"Section";
 - (void)setSegmentedPager:(MXSegmentedPager *)segmentedPager {
     
     segmentedPager.parentView = self;
-    self.bounces = NO;
-    
     objc_setAssociatedObject(self, @selector(segmentedPager), segmentedPager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
@@ -188,8 +202,8 @@ static NSString * const reuseSectionIdentifier  = @"Section";
     return self = [self initWithFrame:frame collectionViewLayout:layout];
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer: (UIGestureRecognizer *)otherGestureRecognizer {
-    return YES;
-}
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer: (UIGestureRecognizer *)otherGestureRecognizer {
+//    return YES;
+//}
 
 @end

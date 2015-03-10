@@ -147,6 +147,11 @@
     return 50;
 }
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MXCollectionViewController *collectionViewController = [[MXCollectionViewController alloc] init];
+    [self.navigationController pushViewController:collectionViewController animated:YES];
+}
+
 #pragma -mark <UITableViewDataSource>
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";

@@ -124,7 +124,7 @@
     [self layoutSubviews];
 }
 
-#pragma -mark segmentedControl target
+#pragma mark segmentedControl target
 - (void)pageControlValueChanged:(id)sender {
     NSInteger index = self.segmentedControl.selectedSegmentIndex;
     
@@ -141,7 +141,7 @@
     [self changedToIndex:index];
 }
 
-#pragma -mark <UIScrollViewDelegate>
+#pragma mark <UIScrollViewDelegate>
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     self.moveSegment = YES;
 }
@@ -170,7 +170,7 @@
     }
 }
 
-#pragma -mark private methods
+#pragma mark Private methods
 - (void)createView {
     CGRect frame = (CGRect) {
         .origin = CGPointZero,
@@ -223,6 +223,7 @@
 }
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     CGFloat width = 0.f;
     
     NSMutableArray* boundaries = [NSMutableArray arrayWithObject:@0];

@@ -140,6 +140,11 @@
     return 50;
 }
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MXSimpleViewController *simpleViewController = [[MXSimpleViewController alloc] init];
+    [self.navigationController pushViewController:simpleViewController animated:YES];
+}
+
 #pragma -mark <UITableViewDataSource>
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
