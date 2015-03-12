@@ -23,7 +23,8 @@
 #import "MXMenuViewController.h"
 
 #import "MXSimpleViewController.h"
-#import "MXCollectionViewController.h"
+//#import "MXCollectionViewController.h"
+#import "MXParallaxViewController.h"
 
 @interface MXMenuViewController ()
 
@@ -40,7 +41,7 @@
         controller = [[MXSimpleViewController alloc] init];
     }
     else {
-        controller = [[MXCollectionViewController alloc] init];
+        controller = [[MXParallaxViewController alloc] init];
     }
     
     [self.navigationController pushViewController:controller animated:YES];
@@ -59,7 +60,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = (indexPath.row < 1)? @"Simple" : @"Collection";
+    cell.textLabel.text = (indexPath.row < 1)? @"Simple" : @"Parallax";
     
     return cell;
 }

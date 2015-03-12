@@ -1,4 +1,4 @@
-// UICollectionView+MXSegmentedPager.h
+// MXSegmentedPager+ParallaxHeader.h
 //
 // Copyright (c) 2015 Maxime Epain
 //
@@ -20,17 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
 #import "MXSegmentedPager.h"
+#import "UIScrollView+VGParallaxHeader.h"
 
-@interface MXSegmentedPager (UICollectionView) <UICollectionViewDelegate, UICollectionViewDataSource>
-@property (nonatomic, strong) UIView * header;
+@interface MXSegmentedPager (ParallaxHeader)
 
-- (void) setHeader:(UIView *)header withHeight:(CGFloat)height;
-@end
+//@property (nonatomic, strong) UIView * header;
 
-@interface UICollectionView (MXSegmentedPager)
+//@property (nonatomic, strong, readonly) VGParallaxHeader *parallaxHeader;
+//
+//- (void) setHeader:(UIView *)header withHeight:(CGFloat)height;
 
-@property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
+- (void)setParallaxHeaderView:(UIView *)view
+                         mode:(VGParallaxHeaderMode)mode
+                       height:(CGFloat)height;
 
 @end

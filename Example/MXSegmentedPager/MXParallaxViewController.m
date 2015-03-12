@@ -1,60 +1,34 @@
-// MXCollectionViewController.m
 //
-// Copyright (c) 2015 Maxime Epain
+//  MXParallaxViewController.m
+//  MXSegmentedPager
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Created by Maxime Epain on 11/03/2015.
+//  Copyright (c) 2015 Maxime Epain. All rights reserved.
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-#import "MXCollectionViewController.h"
-#import "UICollectionView+MXSegmentedPager.h"
 
-@interface MXCollectionViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
+#import "MXParallaxViewController.h"
+#import "MXSegmentedPager+ParallaxHeader.h"
+
+@interface MXParallaxViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView       * cover;
 @property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
-@property (nonatomic, strong) UICollectionView  * collectionView;
 @property (nonatomic, strong) UITableView       * tableView;
 @property (nonatomic, strong) UIWebView         * webView;
 @property (nonatomic, strong) UITextView        * textView;
 @end
 
-@implementation MXCollectionViewController
+@implementation MXParallaxViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    CGRect frame = (CGRect){
-        .origin = CGPointZero,
-        .size = self.view.frame.size
-    };
-    
     // Setup the segmented pager properties
-    self.segmentedPager.delegate    = self;
-    self.segmentedPager.dataSource  = self;
-    self.segmentedPager.header      = self.cover;
+    self.segmentedPager.delegate = self;
+    self.segmentedPager.dataSource = self;
+    [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:150.f];
     
-    // Create a UICollectionView with segmented pager integration
-    self.collectionView = [[UICollectionView alloc] initWithFrame:frame];
-    self.collectionView.segmentedPager = self.segmentedPager;
-    [self.view addSubview:self.collectionView];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.view addSubview:self.segmentedPager];
 }
 
 #pragma -mark private methods
@@ -148,8 +122,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MXCollectionViewController *collectionViewController = [[MXCollectionViewController alloc] init];
-    [self.navigationController pushViewController:collectionViewController animated:YES];
+    MXParallaxViewController *parallaxViewController = [[MXParallaxViewController alloc] init];
+    [self.navigationController pushViewController:parallaxViewController animated:YES];
 }
 
 #pragma -mark <UITableViewDataSource>

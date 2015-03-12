@@ -23,6 +23,8 @@
 #import <UIKit/UIKit.h>
 #import "HMSegmentedControl.h"
 
+FOUNDATION_EXTERN NSString *const MXKeyPathContainer;
+
 @class MXSegmentedPager;
 
 @protocol MXSegmentedPagerDelegate <NSObject>
