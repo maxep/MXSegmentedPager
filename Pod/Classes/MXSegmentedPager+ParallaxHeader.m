@@ -28,7 +28,7 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
 
 @interface MXHeaderView : UIScrollView <UIScrollViewDelegate>
 @property (nonatomic, assign) CGFloat minimumHeigth;
-@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+@property (nonatomic, strong) MXSegmentedPager *segmentedPager;
 @property (nonatomic, strong) MXProgressBlock progressBlock;
 
 - (void) setRelativeOffsetWithScrollView:(UIScrollView*)scrollView delta:(CGFloat)delta;
@@ -37,9 +37,52 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
 
 @implementation MXHeaderView
 
-- (void)setSegmentedControl:(HMSegmentedControl *)segmentedControl {
-    _segmentedControl = segmentedControl;
-    [self addSubview:segmentedControl];
+- (void)setSegmentedPager:(MXSegmentedPager *)segmentedPager {
+    _segmentedPager = segmentedPager;
+    [self addSubview:segmentedPager.segmentedControl];
+    [self addSubview:segmentedPager.container];
+    
+//    [self setupConstraints];
+}
+
+#pragma mark Private methods
+
+- (void) setupConstraints {
+    
+//    [self.segmentedPager.segmentedControl setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.segmentedPager.container setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedPager.container
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.segmentedPager.segmentedControl
+                                                     attribute:NSLayoutAttributeBottom
+                                                    multiplier:0
+                                                      constant:0]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedPager.container
+                                                     attribute:NSLayoutAttributeBottom
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeBottom
+                                                    multiplier:0
+                                                      constant:0]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedPager.container
+                                                     attribute:NSLayoutAttributeWidth
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.segmentedPager.segmentedControl
+                                                     attribute:NSLayoutAttributeWidth
+                                                    multiplier:0
+                                                      constant:0]];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedPager.container
+                                                     attribute:NSLayoutAttributeLeft
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.segmentedPager.segmentedControl
+                                                     attribute:NSLayoutAttributeLeft
+                                                    multiplier:0
+                                                      constant:0]];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -47,8 +90,7 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
     if (self) {
         
         self.delegate = self;
-        self.alwaysBounceVertical = YES;
-        self.scrollEnabled = NO;
+        self.alwaysBounceVertical = NO;
         
         self.minimumHeigth = 0;
     }
@@ -62,6 +104,11 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
     
     if (self.progressBlock) {
         self.progressBlock(scrollView.parallaxHeader.progress);
+    }
+    
+    NSLog(@"y: %f", self.contentOffset.y);
+    if (self.contentOffset.y > -self.minimumHeigth) {
+        self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
     }
 }
 
@@ -77,12 +124,6 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
     }
     
     self.contentOffset = CGPointMake(self.contentOffset.x, y);
-    
-    self.frame = (CGRect ) {
-        .origin = self.frame.origin,
-        .size.width = self.frame.size.width,
-        .size.height = self.segmentedControl.frame.size.height - y
-    };
 }
 
 @end
@@ -97,17 +138,13 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
     
     self.headerView = [[MXHeaderView alloc] initWithFrame:(CGRect){
         .origin = CGPointZero,
-        .size.width = self.frame.size.width,
-        .size.height = height + self.segmentedControl.frame.size.height
+        .size   = self.frame.size
     }];
     
-    self.headerView.segmentedControl = self.segmentedControl;
-    self.headerView.contentSize = CGSizeMake(self.frame.size.width, height);
+    self.headerView.segmentedPager = self;
+    self.headerView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height + height);
     [self.headerView setParallaxHeaderView:view mode:mode height:height];
     [self addSubview:self.headerView];
-    [self bringSubviewToFront:self.headerView];
-    
-    [self addObserver:self forKeyPath:MXKeyPathContainer options:NSKeyValueObservingOptionNew context:nil];
 }
 
 #pragma mark Properties
@@ -129,6 +166,12 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
 }
 
 - (void)setMinimunHeaderHeight:(CGFloat)minimunHeaderHeight {
+//    self.container.frame = (CGRect){
+//        .origin         = self.container.frame.origin,
+//        .size.width     = self.container.frame.size.width,
+//        .size.height    = self.container.frame.size.height - minimunHeaderHeight,
+//
+//    };
     self.headerView.minimumHeigth = minimunHeaderHeight;
 }
 
@@ -140,87 +183,4 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
     self.headerView.progressBlock = progressBlock;
 }
 
-#pragma mark Private methods
-
-- (void) layoutScrollViews {
-    
-    [self.container.subviews enumerateObjectsUsingBlock:^(UIView* view, NSUInteger idx, BOOL *stop) {
-        UIScrollView *scrollView = (UIScrollView*)view;
-        
-        if (![view isKindOfClass:[UIScrollView class]]) {
-            scrollView = [[UIScrollView alloc] initWithFrame:view.frame];
-            view.frame = (CGRect){
-                .origin   = CGPointZero,
-                .size     = view.frame.size
-            };
-            scrollView.contentSize = view.frame.size;
-            
-            [scrollView addSubview:view];
-            [self.container addSubview:scrollView];
-        }
-        
-        scrollView.contentInset = (UIEdgeInsets){
-            .top    = self.headerView.parallaxHeader.frame.size.height,
-            .left   = scrollView.contentInset.left,
-            .bottom = scrollView.contentInset.bottom,
-            .right  = scrollView.contentInset.right
-        };
-        [scrollView layoutSubviews];
-        
-        [scrollView addObserver:self forKeyPath:MXKeyPathContentOffset options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-        
-    }];
-    [self bringSubviewToFront:self.headerView];
-}
-
-- (void) scrollSubViewsWithScrollView:(UIScrollView*) scrollView {
-    
-    [self.container.subviews enumerateObjectsUsingBlock:^(UIView* view, NSUInteger idx, BOOL *stop) {
-        UIScrollView* subView = (UIScrollView*)view;
-        
-        if (subView != scrollView && [subView isKindOfClass:[UIScrollView class]]) {
-            
-            if (scrollView.contentOffset.y <= -self.headerView.minimumHeigth) {
-                [subView removeObserver:self forKeyPath:MXKeyPathContentOffset];
-                subView.contentOffset = CGPointMake(subView.contentOffset.x, scrollView.contentOffset.y);
-                [subView addObserver:self forKeyPath:MXKeyPathContentOffset options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-            }
-        }
-    }];
-}
-
-- (void)dealloc
-{
-    //Dirty hack..
-    @try{
-        [self.container.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-            [view removeObserver:self forKeyPath:MXKeyPathContentOffset];
-        }];
-        [self removeObserver:self forKeyPath:MXKeyPathContainer];
-    }@catch(id anException){
-    }
-}
-
-#pragma mark - KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-    if ([keyPath isEqualToString:MXKeyPathContainer] && object == self) {
-        [self layoutScrollViews];
-    }
-    else if ([keyPath isEqualToString:MXKeyPathContentOffset] && [self.container.subviews containsObject:object]) {
-        
-        CGPoint newContentOffset = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
-        CGPoint oldContentOffset = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
-        CGFloat delta = newContentOffset.y - oldContentOffset.y;
-        
-        NSLog(@"y: %f", newContentOffset.y);
-        [self.headerView setRelativeOffsetWithScrollView:object delta:delta];
-        [self scrollSubViewsWithScrollView:object];
-        
-    }
-    else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
 @end
