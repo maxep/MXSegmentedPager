@@ -26,7 +26,8 @@
     // Setup the segmented pager properties
     self.segmentedPager.delegate = self;
     self.segmentedPager.dataSource = self;
-    [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:150.f];
+    [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:self.cover.frame.size.height];
+    self.segmentedPager.minimunHeaderHeight = 64.f;
     
     [self.view addSubview:self.segmentedPager];
 }
@@ -35,14 +36,11 @@
 
 - (UIImageView *)cover {
     if (!_cover) {
-        // Boundary between cover and segmented pager
-        CGFloat boundary = self.view.frame.size.height / 3;
-        
         // Set a cover on the top of the view
         _cover = [[UIImageView alloc] initWithFrame:(CGRect){
             .origin         = CGPointZero,
             .size.width     = self.view.frame.size.width,
-            .size.height    = boundary
+            .size.height    = 150.f
         }];
         _cover.contentMode = UIViewContentModeScaleAspectFill;
         _cover.image = [UIImage imageNamed:@"success-baby"];
@@ -54,10 +52,7 @@
     if (!_segmentedPager) {
         
         // Set a segmented pager below the cover
-        _segmentedPager = [[MXSegmentedPager alloc] initWithFrame:(CGRect){
-            .origin = CGPointZero,
-            .size   = self.view.frame.size
-        }];
+        _segmentedPager = [[MXSegmentedPager alloc] initWithFrame:self.view.frame];
     }
     return _segmentedPager;
 }
@@ -104,6 +99,7 @@
 }
 
 #pragma -mark <MXSegmentedPagerDataSource>
+
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
     return 3;
 }

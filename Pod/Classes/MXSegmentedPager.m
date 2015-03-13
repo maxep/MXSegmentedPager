@@ -140,7 +140,6 @@ NSString * const MXKeyPathContainer = @"container";
     }
 
     self.moveSegment = NO;
-//    CGFloat y = self.scrollView.contentOffset.y;
     [self.container setContentOffset:CGPointMake(x, 0) animated:YES];
     [self changedToIndex:index];
 }
@@ -175,6 +174,7 @@ NSString * const MXKeyPathContainer = @"container";
 }
 
 #pragma mark Private methods
+
 - (void)createView {
     CGRect frame = (CGRect) {
         .origin = CGPointZero,

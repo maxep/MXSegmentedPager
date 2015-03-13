@@ -23,13 +23,13 @@
 #import "MXSegmentedPager.h"
 #import "UIScrollView+VGParallaxHeader.h"
 
+typedef void (^MXProgressBlock) (CGFloat progress);
+
 @interface MXSegmentedPager (ParallaxHeader)
 
-//@property (nonatomic, strong) UIView * header;
-
-//@property (nonatomic, strong, readonly) VGParallaxHeader *parallaxHeader;
-//
-//- (void) setHeader:(UIView *)header withHeight:(CGFloat)height;
+@property (nonatomic, strong, readonly) VGParallaxHeader *parallaxHeader;
+@property (nonatomic, assign) CGFloat minimunHeaderHeight;
+@property (nonatomic, strong) MXProgressBlock progressBlock;
 
 - (void)setParallaxHeaderView:(UIView *)view
                          mode:(VGParallaxHeaderMode)mode

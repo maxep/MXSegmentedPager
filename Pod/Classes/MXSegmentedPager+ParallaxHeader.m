@@ -26,15 +26,16 @@
 
 NSString * const MXKeyPathContentOffset = @"contentOffset";
 
-@interface MXTopView : UIScrollView <UIScrollViewDelegate>
-
+@interface MXHeaderView : UIScrollView <UIScrollViewDelegate>
+@property (nonatomic, assign) CGFloat minimumHeigth;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+@property (nonatomic, strong) MXProgressBlock progressBlock;
 
 - (void) setRelativeOffsetWithScrollView:(UIScrollView*)scrollView delta:(CGFloat)delta;
 
 @end
 
-@implementation MXTopView
+@implementation MXHeaderView
 
 - (void)setSegmentedControl:(HMSegmentedControl *)segmentedControl {
     _segmentedControl = segmentedControl;
@@ -46,10 +47,10 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
     if (self) {
         
         self.delegate = self;
-        self.contentInset = UIEdgeInsetsZero;
-        self.scrollIndicatorInsets = UIEdgeInsetsZero;
         self.alwaysBounceVertical = YES;
         self.scrollEnabled = NO;
+        
+        self.minimumHeigth = 0;
     }
     return self;
 }
@@ -59,22 +60,17 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
     // This must be called in order to work
     [scrollView shouldPositionParallaxHeader];
     
-    // scrollView.parallaxHeader.progress - is progress of current scroll
-    NSLog(@"Progress: %f", scrollView.parallaxHeader.progress);
-    
-    // This is how you can implement appearing or disappearing of sticky view
-    [scrollView.parallaxHeader.stickyView setAlpha:scrollView.parallaxHeader.progress];
+    if (self.progressBlock) {
+        self.progressBlock(scrollView.parallaxHeader.progress);
+    }
 }
 
 - (void) setRelativeOffsetWithScrollView:(UIScrollView*)scrollView delta:(CGFloat)delta {
     
     CGFloat y = self.contentOffset.y + delta;
-    
-    if (self.contentOffset.y + delta > 0) {
-        y = 0;
-    }
-    else if (scrollView.contentOffset.y > 0) {
-        y = self.contentOffset.y;
+
+    if(scrollView.contentOffset.y > -self.minimumHeigth) {
+        y = -self.minimumHeigth;
     }
     else if (scrollView.contentOffset.y - scrollView.contentInset.top < 0) {
         y = scrollView.contentOffset.y - scrollView.contentInset.top + self.contentInset.top;
@@ -92,62 +88,62 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
 @end
 
 @interface MXSegmentedPager ()
-@property (nonatomic, strong) MXTopView * topView;
+@property (nonatomic, strong) MXHeaderView * headerView;
 @end
 
 @implementation MXSegmentedPager (ParallaxHeader)
 
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
     
-    self.topView = [[MXTopView alloc] initWithFrame:(CGRect){
+    self.headerView = [[MXHeaderView alloc] initWithFrame:(CGRect){
         .origin = CGPointZero,
         .size.width = self.frame.size.width,
         .size.height = height + self.segmentedControl.frame.size.height
     }];
     
-    self.topView.segmentedControl = self.segmentedControl;
-    self.topView.contentSize = CGSizeMake(self.frame.size.width, height);
-    [self.topView setParallaxHeaderView:view mode:mode height:height];
-    [self addSubview:self.topView];
-    [self bringSubviewToFront:self.topView];
+    self.headerView.segmentedControl = self.segmentedControl;
+    self.headerView.contentSize = CGSizeMake(self.frame.size.width, height);
+    [self.headerView setParallaxHeaderView:view mode:mode height:height];
+    [self addSubview:self.headerView];
+    [self bringSubviewToFront:self.headerView];
     
     [self addObserver:self forKeyPath:MXKeyPathContainer options:NSKeyValueObservingOptionNew context:nil];
 }
 
 #pragma mark Properties
 
-- (UIScrollView *)topView {
-    return objc_getAssociatedObject(self, @selector(topView));
+- (MXHeaderView *)headerView {
+    return objc_getAssociatedObject(self, @selector(headerView));
 }
 
-- (void)setTopView:(UIScrollView *)topView {
-    objc_setAssociatedObject(self, @selector(topView), topView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setHeaderView:(MXHeaderView *)headerView {
+    objc_setAssociatedObject(self, @selector(headerView), headerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-#pragma mark - KVO
+- (VGParallaxHeader *)parallaxHeader {
+    return self.headerView.parallaxHeader;
+}
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-    if ([keyPath isEqualToString:MXKeyPathContainer] && object == self) {
-        [self layoutScrollViews];
-    }
-    else if ([keyPath isEqualToString:MXKeyPathContentOffset] && [self.container.subviews containsObject:object]) {
-        
-        CGPoint newContentOffset = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
-        CGPoint oldContentOffset = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
-        CGFloat delta = newContentOffset.y - oldContentOffset.y;
-        
-        [self.topView setRelativeOffsetWithScrollView:object delta:delta];
-        
-    }
-    else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
+- (CGFloat)minimunHeaderHeight {
+    return self.headerView.minimumHeigth;
+}
+
+- (void)setMinimunHeaderHeight:(CGFloat)minimunHeaderHeight {
+    self.headerView.minimumHeigth = minimunHeaderHeight;
+}
+
+- (MXProgressBlock)progressBlock {
+    return self.headerView.progressBlock;
+}
+
+- (void)setProgressBlock:(MXProgressBlock)progressBlock {
+    self.headerView.progressBlock = progressBlock;
 }
 
 #pragma mark Private methods
 
 - (void) layoutScrollViews {
+    
     [self.container.subviews enumerateObjectsUsingBlock:^(UIView* view, NSUInteger idx, BOOL *stop) {
         UIScrollView *scrollView = (UIScrollView*)view;
         
@@ -164,16 +160,33 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
         }
         
         scrollView.contentInset = (UIEdgeInsets){
-            .top    = self.topView.parallaxHeader.frame.size.height,
+            .top    = self.headerView.parallaxHeader.frame.size.height,
             .left   = scrollView.contentInset.left,
             .bottom = scrollView.contentInset.bottom,
             .right  = scrollView.contentInset.right
         };
+        [scrollView layoutSubviews];
         
-        scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, -self.topView.frame.size.height);
         [scrollView addObserver:self forKeyPath:MXKeyPathContentOffset options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+        
     }];
-    [self bringSubviewToFront:self.topView];
+    [self bringSubviewToFront:self.headerView];
+}
+
+- (void) scrollSubViewsWithScrollView:(UIScrollView*) scrollView {
+    
+    [self.container.subviews enumerateObjectsUsingBlock:^(UIView* view, NSUInteger idx, BOOL *stop) {
+        UIScrollView* subView = (UIScrollView*)view;
+        
+        if (subView != scrollView && [subView isKindOfClass:[UIScrollView class]]) {
+            
+            if (scrollView.contentOffset.y <= -self.headerView.minimumHeigth) {
+                [subView removeObserver:self forKeyPath:MXKeyPathContentOffset];
+                subView.contentOffset = CGPointMake(subView.contentOffset.x, scrollView.contentOffset.y);
+                [subView addObserver:self forKeyPath:MXKeyPathContentOffset options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+            }
+        }
+    }];
 }
 
 - (void)dealloc
@@ -188,4 +201,26 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
     }
 }
 
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    if ([keyPath isEqualToString:MXKeyPathContainer] && object == self) {
+        [self layoutScrollViews];
+    }
+    else if ([keyPath isEqualToString:MXKeyPathContentOffset] && [self.container.subviews containsObject:object]) {
+        
+        CGPoint newContentOffset = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
+        CGPoint oldContentOffset = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
+        CGFloat delta = newContentOffset.y - oldContentOffset.y;
+        
+        NSLog(@"y: %f", newContentOffset.y);
+        [self.headerView setRelativeOffsetWithScrollView:object delta:delta];
+        [self scrollSubViewsWithScrollView:object];
+        
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
 @end
