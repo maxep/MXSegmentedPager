@@ -24,8 +24,6 @@
 
 #import "MXSegmentedPager+ParallaxHeader.h"
 
-NSString * const MXKeyPathContentOffset = @"contentOffset";
-
 @interface MXHeaderView : UIScrollView <UIScrollViewDelegate>
 @property (nonatomic, assign) CGFloat minimumHeigth;
 @property (nonatomic, strong) MXSegmentedPager *segmentedPager;
@@ -91,6 +89,7 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
         
         self.delegate = self;
         self.alwaysBounceVertical = NO;
+        self.showsVerticalScrollIndicator = NO;
         
         self.minimumHeigth = 0;
     }
@@ -124,6 +123,10 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
     }
     
     self.contentOffset = CGPointMake(self.contentOffset.x, y);
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 @end
@@ -166,12 +169,6 @@ NSString * const MXKeyPathContentOffset = @"contentOffset";
 }
 
 - (void)setMinimunHeaderHeight:(CGFloat)minimunHeaderHeight {
-//    self.container.frame = (CGRect){
-//        .origin         = self.container.frame.origin,
-//        .size.width     = self.container.frame.size.width,
-//        .size.height    = self.container.frame.size.height - minimunHeaderHeight,
-//
-//    };
     self.headerView.minimumHeigth = minimunHeaderHeight;
 }
 
