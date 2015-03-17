@@ -35,52 +35,10 @@
 
 @implementation MXHeaderView
 
-- (void)setSegmentedPager:(MXSegmentedPager *)segmentedPager {
+- (void)setSegmentedPager:(MXSegmentedPager*)segmentedPager {
     _segmentedPager = segmentedPager;
     [self addSubview:segmentedPager.segmentedControl];
     [self addSubview:segmentedPager.container];
-    
-//    [self setupConstraints];
-}
-
-#pragma mark Private methods
-
-- (void) setupConstraints {
-    
-//    [self.segmentedPager.segmentedControl setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.segmentedPager.container setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedPager.container
-                                                     attribute:NSLayoutAttributeTop
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.segmentedPager.segmentedControl
-                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:0
-                                                      constant:0]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedPager.container
-                                                     attribute:NSLayoutAttributeBottom
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self
-                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:0
-                                                      constant:0]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedPager.container
-                                                     attribute:NSLayoutAttributeWidth
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.segmentedPager.segmentedControl
-                                                     attribute:NSLayoutAttributeWidth
-                                                    multiplier:0
-                                                      constant:0]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentedPager.container
-                                                     attribute:NSLayoutAttributeLeft
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self.segmentedPager.segmentedControl
-                                                     attribute:NSLayoutAttributeLeft
-                                                    multiplier:0
-                                                      constant:0]];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -90,6 +48,7 @@
         self.delegate = self;
         self.alwaysBounceVertical = NO;
         self.showsVerticalScrollIndicator = NO;
+        self.directionalLockEnabled = YES;
         
         self.minimumHeigth = 0;
     }
@@ -104,8 +63,7 @@
     if (self.progressBlock) {
         self.progressBlock(scrollView.parallaxHeader.progress);
     }
-    
-    NSLog(@"y: %f", self.contentOffset.y);
+
     if (self.contentOffset.y > -self.minimumHeigth) {
         self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
     }

@@ -238,12 +238,12 @@ NSString * const MXKeyPathContainer = @"container";
         [self.container addSubview:view];
         
         CGRect frame = (CGRect) {
-            .origin.x = view.frame.origin.x + width,
+            .origin.x = width,
             .origin.y = view.frame.origin.y,
             .size = view.frame.size
         };
         view.frame = frame;
-        width += view.frame.size.width;
+        width += self.frame.size.width;
         
         CGFloat boundary = frame.origin.x + (frame.size.width / 2);
         [boundaries addObject:[NSNumber numberWithFloat:boundary]];
