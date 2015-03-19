@@ -146,12 +146,12 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
     return self.scrollView.parallaxHeader;
 }
 
-- (CGFloat)minimunHeaderHeight {
+- (CGFloat)minimumHeaderHeight {
     return self.scrollView.minimumHeigth;
 }
 
-- (void)setMinimunHeaderHeight:(CGFloat)minimunHeaderHeight {
-    self.scrollView.minimumHeigth = minimunHeaderHeight;
+- (void)setMinimumHeaderHeight:(CGFloat)minimumHeaderHeight {
+    self.scrollView.minimumHeigth = minimumHeaderHeight;
 }
 
 - (MXProgressBlock)progressBlock {

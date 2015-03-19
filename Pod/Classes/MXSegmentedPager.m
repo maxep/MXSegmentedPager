@@ -22,8 +22,6 @@
 
 #import "MXSegmentedPager.h"
 
-NSString * const MXKeyPathContainer = @"container";
-
 @interface MXSegmentedPager () <UIScrollViewDelegate>
 @property (nonatomic, strong) NSArray* boundaries;
 @property (nonatomic, readwrite) BOOL moveSegment;
@@ -227,7 +225,6 @@ NSString * const MXKeyPathContainer = @"container";
 }
 
 - (void)layoutContainer {
-    [self willChangeValueForKey:MXKeyPathContainer];
     
     CGFloat width = 0.f;
     
@@ -250,8 +247,6 @@ NSString * const MXKeyPathContainer = @"container";
     }
     self.container.contentSize = CGSizeMake(width, self.containerSize.height);
     self.boundaries = boundaries;
-    
-    [self didChangeValueForKey:MXKeyPathContainer];
 }
 
 @end

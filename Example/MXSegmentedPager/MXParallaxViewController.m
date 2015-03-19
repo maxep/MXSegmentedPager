@@ -27,7 +27,7 @@
     self.segmentedPager.delegate = self;
     self.segmentedPager.dataSource = self;
     [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:self.cover.frame.size.height];
-    self.segmentedPager.minimunHeaderHeight = 64.f;
+    self.segmentedPager.minimumHeaderHeight = 64.f;
     
     [self.view addSubview:self.segmentedPager];
 }
