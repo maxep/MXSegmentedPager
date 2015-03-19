@@ -24,16 +24,21 @@
 
 #import "MXSegmentedPager+ParallaxHeader.h"
 
-@interface MXHeaderView : UIScrollView <UIScrollViewDelegate>
+typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
+    MXPanGestureDirectionNone  = 1 << 0,
+    MXPanGestureDirectionRight = 1 << 1,
+    MXPanGestureDirectionLeft  = 1 << 2,
+    MXPanGestureDirectionUp    = 1 << 3,
+    MXPanGestureDirectionDown  = 1 << 4
+};
+
+@interface MXScrollView : UIScrollView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, assign) CGFloat minimumHeigth;
 @property (nonatomic, strong) MXSegmentedPager *segmentedPager;
 @property (nonatomic, strong) MXProgressBlock progressBlock;
-
-- (void) setRelativeOffsetWithScrollView:(UIScrollView*)scrollView delta:(CGFloat)delta;
-
 @end
 
-@implementation MXHeaderView
+@implementation MXScrollView
 
 - (void)setSegmentedPager:(MXSegmentedPager*)segmentedPager {
     _segmentedPager = segmentedPager;
@@ -55,9 +60,10 @@
     return self;
 }
 
+#pragma mark <UIScrollViewDelegate>
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    // This must be called in order to work
     [scrollView shouldPositionParallaxHeader];
     
     if (self.progressBlock) {
@@ -69,73 +75,91 @@
     }
 }
 
-- (void) setRelativeOffsetWithScrollView:(UIScrollView*)scrollView delta:(CGFloat)delta {
-    
-    CGFloat y = self.contentOffset.y + delta;
+#pragma mark <UIGestureRecognizerDelegate>
 
-    if(scrollView.contentOffset.y > -self.minimumHeigth) {
-        y = -self.minimumHeigth;
-    }
-    else if (scrollView.contentOffset.y - scrollView.contentInset.top < 0) {
-        y = scrollView.contentOffset.y - scrollView.contentInset.top + self.contentInset.top;
-    }
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
     
-    self.contentOffset = CGPointMake(self.contentOffset.x, y);
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        MXPanGestureDirection direction = [self getDirectionOfPanGestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer];
+        
+        if (direction == MXPanGestureDirectionLeft || direction == MXPanGestureDirectionRight) {
+            return NO;
+        }
+    }
+
+    return YES;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     return YES;
+}
+
+#pragma mark Private methods
+
+- (MXPanGestureDirection) getDirectionOfPanGestureRecognizer:(UIPanGestureRecognizer*) panGestureRecognizer {
+    
+    CGPoint velocity = [panGestureRecognizer velocityInView:self];
+    CGFloat absX = fabs(velocity.x);
+    CGFloat absY = fabs(velocity.y);
+    
+    if (absX > absY) {
+        return (velocity.x > 0)? MXPanGestureDirectionRight : MXPanGestureDirectionLeft;
+    }
+    else if (absX < absY) {
+        return (velocity.y > 0)? MXPanGestureDirectionDown : MXPanGestureDirectionUp;
+    }
+    return MXPanGestureDirectionNone;
 }
 
 @end
 
 @interface MXSegmentedPager ()
-@property (nonatomic, strong) MXHeaderView * headerView;
+@property (nonatomic, strong) MXScrollView * scrollView;
 @end
 
 @implementation MXSegmentedPager (ParallaxHeader)
 
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
     
-    self.headerView = [[MXHeaderView alloc] initWithFrame:(CGRect){
+    self.scrollView = [[MXScrollView alloc] initWithFrame:(CGRect){
         .origin = CGPointZero,
         .size   = self.frame.size
     }];
     
-    self.headerView.segmentedPager = self;
-    self.headerView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height + height);
-    [self.headerView setParallaxHeaderView:view mode:mode height:height];
-    [self addSubview:self.headerView];
+    self.scrollView.segmentedPager = self;
+    self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height + height);
+    [self.scrollView setParallaxHeaderView:view mode:mode height:height];
+    [self addSubview:self.scrollView];
 }
 
 #pragma mark Properties
 
-- (MXHeaderView *)headerView {
-    return objc_getAssociatedObject(self, @selector(headerView));
+- (MXScrollView *)scrollView {
+    return objc_getAssociatedObject(self, @selector(scrollView));
 }
 
-- (void)setHeaderView:(MXHeaderView *)headerView {
-    objc_setAssociatedObject(self, @selector(headerView), headerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setScrollView:(MXScrollView *)scrollView {
+    objc_setAssociatedObject(self, @selector(scrollView), scrollView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (VGParallaxHeader *)parallaxHeader {
-    return self.headerView.parallaxHeader;
+    return self.scrollView.parallaxHeader;
 }
 
 - (CGFloat)minimunHeaderHeight {
-    return self.headerView.minimumHeigth;
+    return self.scrollView.minimumHeigth;
 }
 
 - (void)setMinimunHeaderHeight:(CGFloat)minimunHeaderHeight {
-    self.headerView.minimumHeigth = minimunHeaderHeight;
+    self.scrollView.minimumHeigth = minimunHeaderHeight;
 }
 
 - (MXProgressBlock)progressBlock {
-    return self.headerView.progressBlock;
+    return self.scrollView.progressBlock;
 }
 
 - (void)setProgressBlock:(MXProgressBlock)progressBlock {
-    self.headerView.progressBlock = progressBlock;
+    self.scrollView.progressBlock = progressBlock;
 }
 
 @end
