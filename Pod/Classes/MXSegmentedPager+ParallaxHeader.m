@@ -86,7 +86,6 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
             return NO;
         }
     }
-
     return YES;
 }
 
@@ -119,6 +118,8 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 
 @implementation MXSegmentedPager (ParallaxHeader)
 
+static NSString* const kContaineFrameKeyPath = @"container.frame";
+
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
     
     self.scrollView = [[MXScrollView alloc] initWithFrame:(CGRect){
@@ -130,6 +131,9 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
     self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height + height);
     [self.scrollView setParallaxHeaderView:view mode:mode height:height];
     [self addSubview:self.scrollView];
+    
+    //I'm not a big fan of KVO but its the only way I found to subtract minimum height to container frame.
+    [self addObserver:self forKeyPath:kContaineFrameKeyPath options:NSKeyValueObservingOptionNew context:nil];
 }
 
 #pragma mark Properties
@@ -160,6 +164,25 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 
 - (void)setProgressBlock:(MXProgressBlock)progressBlock {
     self.scrollView.progressBlock = progressBlock;
+}
+
+#pragma mark KVO 
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == self && [keyPath isEqualToString:kContaineFrameKeyPath]) {
+        [self removeObserver:self forKeyPath:kContaineFrameKeyPath];
+        
+        self.container.frame = (CGRect){
+            .origin         = self.container.frame.origin,
+            .size.width     = self.container.frame.size.width,
+            .size.height    = self.container.frame.size.height - self.scrollView.minimumHeigth
+        };
+        
+        [self addObserver:self forKeyPath:kContaineFrameKeyPath options:NSKeyValueObservingOptionNew context:nil];
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:nil];
+    }
 }
 
 @end

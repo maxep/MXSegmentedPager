@@ -146,7 +146,7 @@
 /**
  The pages container size. Use this property to set up your pages frame.
  */
-@property (nonatomic, readwrite) CGSize containerSize;
+@property (nonatomic, assign) CGSize containerSize;
 
 /**
  Reloads everything from scratch. redisplays pages in container.

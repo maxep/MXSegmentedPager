@@ -126,6 +126,13 @@
     return self.container.frame.size;
 }
 
+- (void)setContainerSize:(CGSize)containerSize {
+    self.container.frame = (CGRect){
+        .origin = self.container.frame.origin,
+        .size   = containerSize
+    };
+}
+
 #pragma mark HMSegmentedControl target
 
 - (void)pageControlValueChanged:(HMSegmentedControl*)segmentedControl {
@@ -196,10 +203,10 @@
         UIView* view = [self.pages objectAtIndex:index];
         [self.container addSubview:view];
         
-        CGRect frame = (CGRect) {
-            .origin.x = width,
-            .origin.y = view.frame.origin.y,
-            .size = view.frame.size
+        CGRect frame = (CGRect){
+            .origin.x   = width,
+            .origin.y   = 0.f,
+            .size       = self.containerSize
         };
         view.frame = frame;
         width += self.frame.size.width;
@@ -213,17 +220,17 @@
 
 - (void) layoutWithHeight:(CGFloat)height {
     CGRect subFrame = (CGRect) {
-        .origin = CGPointZero,
-        .size.width = self.frame.size.width,
-        .size.height = height
+        .origin         = CGPointZero,
+        .size.width     = self.frame.size.width,
+        .size.height    = height
     };
     self.segmentedControl.frame = subFrame;
     
     subFrame = (CGRect) {
-        .origin.x = 0.f,
-        .origin.y = height,
-        .size.width = self.frame.size.width,
-        .size.height = self.frame.size.height - height
+        .origin.x       = 0.f,
+        .origin.y       = height,
+        .size.width     = self.frame.size.width,
+        .size.height    = self.frame.size.height - height
     };
     self.container.frame = subFrame;
 }

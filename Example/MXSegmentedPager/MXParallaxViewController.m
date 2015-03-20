@@ -23,6 +23,11 @@
 {
     [super viewDidLoad];
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                             forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     // Setup the segmented pager properties
     self.segmentedPager.delegate = self;
     self.segmentedPager.dataSource = self;
@@ -52,7 +57,10 @@
     if (!_segmentedPager) {
         
         // Set a segmented pager below the cover
-        _segmentedPager = [[MXSegmentedPager alloc] initWithFrame:self.view.frame];
+        _segmentedPager = [[MXSegmentedPager alloc] initWithFrame:(CGRect){
+            .origin = CGPointZero,
+            .size   = self.view.frame.size
+        }];
     }
     return _segmentedPager;
 }
