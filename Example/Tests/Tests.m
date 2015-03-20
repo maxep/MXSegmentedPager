@@ -6,3 +6,4 @@
 //  Copyright (c) 2014 Maxime Epain. All rights reserved.
 //
 
+//${TEST_EXAMPLE}

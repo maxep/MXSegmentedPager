@@ -113,6 +113,11 @@
 }
 
 #pragma -mark <UITableViewDelegate>
+
+- (CGFloat)heightForSegmentedControlInSegmentedPager:(MXSegmentedPager *)segmentedPager {
+    return 30.f;
+}
+
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 50;
 }

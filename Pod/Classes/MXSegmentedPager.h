@@ -55,6 +55,15 @@
  */
 - (void) segmentedPager:(MXSegmentedPager*)segmentedPager didSelectViewWithIndex:(NSInteger)index;
 
+/**
+ Asks the delegate to return the height of the segmented control in the segmented-pager.
+ 
+ @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
+ 
+ @return A nonnegative floating-point value that specifies the height (in points) that segmented-control should be.
+ */
+- (CGFloat) heightForSegmentedControlInSegmentedPager:(MXSegmentedPager*)segmentedPager;
+
 @end
 
 /**
