@@ -5,28 +5,36 @@
 [![License](https://img.shields.io/cocoapods/l/MXSegmentedPager.svg?style=flat)](http://cocoadocs.org/docsets/MXSegmentedPager)
 [![Platform](https://img.shields.io/cocoapods/p/MXSegmentedPager.svg?style=flat)](http://cocoadocs.org/docsets/MXSegmentedPager)
 
-UIScrollView paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl).
+The standard MXSegmentedPager class is a simple paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl). The ParallaxHeader category is an extension that allow you to had a [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) to your segmentated pager.
 
-![Demo](https://drive.google.com/uc?export=download&id=0B3oPAwr0Xxx-YTRobGhUVFF4MVU)
+
+|           Simple view         |           Parallax view         |
+|-------------------------------|---------------------------------|
+|![Demo](Example/SimpleView.gif)|![Demo](Example/ParallaxView.gif)|
+
 
 ## Usage
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
+To run the example project, clone the repo, and run `pod install` from the Example directory first. See MXSimpleViewController for a standard implementation. See MXParallaxViewController to implement a pager with a parallax header.
 
 ## Installation
 
 MXSegmentedPager is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-    pod "MXSegmentedPager"
+pod "MXSegmentedPager"
 
+## Documentation
+
+Documentation is available through [CocoaDocs](http://cocoadocs.org/docsets/MXSegmentedPager/).
+                                               
 ## Author
-
+                                               
 Maxime Epain, maxime.epain@gmail.com
-
+                                               
 ## License
+                                               
+MXSegmentedPager is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
 
-MXSegmentedPager is available under the MIT license. See the LICENSE file for more info.
+
 
