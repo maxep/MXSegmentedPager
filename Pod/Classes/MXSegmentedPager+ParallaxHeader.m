@@ -36,9 +36,14 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 @property (nonatomic, assign) CGFloat minimumHeigth;
 @property (nonatomic, strong) MXSegmentedPager *segmentedPager;
 @property (nonatomic, strong) MXProgressBlock progressBlock;
+
+@property (nonatomic, assign) BOOL moveView;
 @end
 
 @implementation MXScrollView
+
+static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
+static NSString* const kContentOffsetKeyPath = @"contentOffset";
 
 - (void)setSegmentedPager:(MXSegmentedPager*)segmentedPager {
     _segmentedPager = segmentedPager;
@@ -56,6 +61,9 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
         self.directionalLockEnabled = YES;
         
         self.minimumHeigth = 0;
+        
+        [self addObserver:self forKeyPath:kContentOffsetKeyPath options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:kMXScrollViewKVOContext];
+        self.moveView = YES;
     }
     return self;
 }
@@ -68,10 +76,6 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
     
     if (self.progressBlock) {
         self.progressBlock(scrollView.parallaxHeader.progress);
-    }
-
-    if (self.contentOffset.y > -self.minimumHeigth) {
-        self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
     }
 }
 
@@ -89,7 +93,7 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
     return YES;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
 }
 
@@ -110,6 +114,52 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
     return MXPanGestureDirectionNone;
 }
 
+- (void) didScrollWithDelta:(CGFloat)delta {
+    
+    self.moveView = NO;
+//    [self removeObserver:self forKeyPath:kContentOffsetKeyPath context:kMXScrollViewKVOContext];
+    
+    UIView<MXPageDelegate>* page = (id) self.segmentedPager.selectedPage;
+    
+    if (page) {
+        
+        BOOL isAtTop = ([page respondsToSelector:@selector(isAtTop)])? [page isAtTop] : YES;
+        
+        if (self.contentOffset.y > -self.minimumHeigth) {
+            self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
+        }
+        else if (self.contentOffset.y + delta >= -self.minimumHeigth && !isAtTop) {
+            self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
+        }
+        
+        if (self.contentOffset.y < -self.minimumHeigth && [page respondsToSelector:@selector(scrollToTop)]) {
+            [page scrollToTop];
+        }
+    }
+    
+    self.moveView = YES;
+//    [self addObserver:self forKeyPath:kContentOffsetKeyPath options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:kMXScrollViewKVOContext];
+}
+
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    if (context == kMXScrollViewKVOContext && [keyPath isEqualToString:kContentOffsetKeyPath]) {
+        
+        if (self.moveView) {
+            CGPoint newOffset = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
+            CGPoint oldOffset = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
+            CGFloat delta = oldOffset.y - newOffset.y;
+            
+            [self didScrollWithDelta:delta];
+        }
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 @end
 
 @interface MXSegmentedPager ()
@@ -118,7 +168,8 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 
 @implementation MXSegmentedPager (ParallaxHeader)
 
-static NSString* const kContaineFrameKeyPath = @"container.frame";
+static void * const kMXSegmentedPagerKVOContext = (void*)&kMXSegmentedPagerKVOContext;
+static NSString* const kFrameKeyPath = @"frame";
 
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
     
@@ -132,8 +183,7 @@ static NSString* const kContaineFrameKeyPath = @"container.frame";
     [self.scrollView setParallaxHeaderView:view mode:mode height:height];
     [self addSubview:self.scrollView];
     
-    //I'm not a big fan of KVO but its the only way I found to subtract minimum height to container frame.
-    [self addObserver:self forKeyPath:kContaineFrameKeyPath options:NSKeyValueObservingOptionNew context:nil];
+    [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
 }
 
 #pragma mark Properties
@@ -169,8 +219,8 @@ static NSString* const kContaineFrameKeyPath = @"container.frame";
 #pragma mark KVO 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object == self && [keyPath isEqualToString:kContaineFrameKeyPath]) {
-        [self removeObserver:self forKeyPath:kContaineFrameKeyPath];
+    if (context == kMXSegmentedPagerKVOContext && [keyPath isEqualToString:kFrameKeyPath]) {
+        [self.container removeObserver:self forKeyPath:kFrameKeyPath context:kMXSegmentedPagerKVOContext];
         
         self.container.frame = (CGRect){
             .origin         = self.container.frame.origin,
@@ -178,11 +228,38 @@ static NSString* const kContaineFrameKeyPath = @"container.frame";
             .size.height    = self.container.frame.size.height - self.scrollView.minimumHeigth
         };
         
-        [self addObserver:self forKeyPath:kContaineFrameKeyPath options:NSKeyValueObservingOptionNew context:nil];
+        [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
     }
     else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:nil];
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
+@end
+
+@implementation UIScrollView (MXSegmentedPager)
+
+#pragma mark <MXPageDelegate>
+
+- (BOOL) isAtTop {
+    return (self.contentOffset.y <= -self.contentInset.top);
+}
+
+- (void) scrollToTop {
+    self.contentOffset = CGPointMake(self.contentOffset.x, -self.contentInset.top);
+}
+
+@end
+
+@implementation UIWebView (MXSegmentedPager)
+
+#pragma mark <MXPageDelegate>
+
+- (BOOL) isAtTop {
+    return (self.scrollView.contentOffset.y <= self.scrollView.contentInset.top);
+}
+
+- (void) scrollToTop {
+    self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, -self.scrollView.contentInset.top);
+}
 @end

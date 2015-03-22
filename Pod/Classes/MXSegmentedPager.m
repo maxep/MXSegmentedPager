@@ -133,6 +133,14 @@
     };
 }
 
+- (UIView*) selectedPage {
+    NSInteger index = self.segmentedControl.selectedSegmentIndex;
+    if (self.pages.count > index) {
+         return [self.pages objectAtIndex:index];
+    }
+    return nil;
+}
+
 #pragma mark HMSegmentedControl target
 
 - (void)pageControlValueChanged:(HMSegmentedControl*)segmentedControl {

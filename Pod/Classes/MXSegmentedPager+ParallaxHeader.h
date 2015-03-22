@@ -62,3 +62,37 @@ typedef void (^MXProgressBlock) (CGFloat progress);
                        height:(CGFloat)height;
 
 @end
+
+/**
+ While using MXSegmentedPager with Parallax header, your pages can adopt the MXPageDelegate protocol to have a nice effect while scrolling.
+ This is useful when you have a page with a scrolling subview (e.g. UIWebView).
+ */
+@protocol MXPageDelegate <NSObject>
+
+@optional
+
+/**
+ Tells if the view is at its scrolling top.
+ 
+ @return Whether or nor the view is at its scroll top.
+ */
+- (BOOL) isAtTop;
+
+/**
+ Scrolls to top with no animation.
+ */
+- (void) scrollToTop;
+
+@end
+
+/**
+ UIScrollView category that adopt the MXPageDelegate protocol.
+ */
+@interface UIScrollView (MXSegmentedPager) <MXPageDelegate>
+@end
+
+/**
+ UIWebView category that adopt the MXPageDelegate protocol.
+ */
+@interface UIWebView (MXSegmentedPager) <MXPageDelegate>
+@end

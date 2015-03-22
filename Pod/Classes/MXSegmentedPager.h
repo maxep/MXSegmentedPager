@@ -149,6 +149,11 @@
 @property (nonatomic, assign) CGSize containerSize;
 
 /**
+ The current selected page view.
+ */
+@property (nonatomic, readonly) UIView* selectedPage;
+
+/**
  Reloads everything from scratch. redisplays pages in container.
  */
 - (void) reloadData;
