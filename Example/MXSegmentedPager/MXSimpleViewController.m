@@ -24,7 +24,6 @@
 #import "MXSegmentedPager.h"
 
 @interface MXSimpleViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) UIImageView       * cover;
 @property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
 @property (nonatomic, strong) UITableView       * tableView;
 @property (nonatomic, strong) UIWebView         * webView;
@@ -37,7 +36,7 @@
 {
     [super viewDidLoad];
     
-    [self.view addSubview:self.cover];
+    self.navigationController.navigationBar.translucent = NO;
     
     // Setup the segmented pager properties
     self.segmentedPager.delegate = self;
@@ -46,36 +45,16 @@
     [self.view addSubview:self.segmentedPager];
 }
 
-#pragma -mark private methods
-
-- (UIImageView *)cover {
-    if (!_cover) {
-        // Boundary between cover and segmented pager
-        CGFloat boundary = self.view.frame.size.height / 3;
-        
-        // Set a cover on the top of the view
-        _cover = [[UIImageView alloc] initWithFrame:(CGRect){
-            .origin         = CGPointZero,
-            .size.width     = self.view.frame.size.width,
-            .size.height    = boundary
-        }];
-        _cover.contentMode = UIViewContentModeScaleAspectFill;
-        _cover.image = [UIImage imageNamed:@"success-baby"];
-    }
-    return _cover;
-}
+#pragma -mark Properties
 
 - (MXSegmentedPager *)segmentedPager {
     if (!_segmentedPager) {
-        // Boundary between cover and segmented pager
-        CGFloat boundary = self.view.frame.size.height / 3;
         
-        // Set a segmented pager below the cover
+        // Set a segmented pager
         _segmentedPager = [[MXSegmentedPager alloc] initWithFrame:(CGRect){
-            .origin.x       = 0,
-            .origin.y       = boundary,
+            .origin         = CGPointZero,
             .size.width     = self.view.frame.size.width,
-            .size.height    = 2 * boundary
+            .size.height    = self.view.frame.size.height - 64.f
         }];
     }
     return _segmentedPager;
@@ -123,6 +102,7 @@
 }
 
 #pragma -mark <MXSegmentedPagerDataSource>
+
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
     return 3;
 }
@@ -136,6 +116,7 @@
 }
 
 #pragma -mark <UITableViewDelegate>
+
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 50;
 }
@@ -146,6 +127,7 @@
 }
 
 #pragma -mark <UITableViewDataSource>
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     

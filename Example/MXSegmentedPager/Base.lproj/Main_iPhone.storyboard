@@ -1,46 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="o9c-rq-WX6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eDJ-9o-8JA">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
-        <scene sceneID="xN4-dL-yXS">
+        <!--MXSegmentedPager-->
+        <scene sceneID="c6S-qu-64f">
             <objects>
-                <tableViewController id="FJE-cX-rWX" customClass="MXMenuViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pjH-Pf-vM2">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                <tableViewController id="HbT-Vv-rK7" customClass="MXMenuViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dYQ-CF-Lof">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
-                            <outlet property="dataSource" destination="FJE-cX-rWX" id="UcH-bB-ebM"/>
-                            <outlet property="delegate" destination="FJE-cX-rWX" id="rBY-8j-Yak"/>
+                            <outlet property="dataSource" destination="HbT-Vv-rK7" id="8E1-d1-ORE"/>
+                            <outlet property="delegate" destination="HbT-Vv-rK7" id="CJN-ad-q1o"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="6fg-kX-tp3"/>
+                    <navigationItem key="navigationItem" title="MXSegmentedPager" id="ReK-Cs-xLW"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="htH-hM-tiz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1CN-I1-5KB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1156" y="261"/>
+            <point key="canvasLocation" x="848" y="642"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="J4n-66-rW8">
+        <scene sceneID="3zV-0y-auB">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="o9c-rq-WX6" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" opaque="NO" contentMode="scaleToFill" id="l1S-Xk-xhx">
+                <navigationController id="eDJ-9o-8JA" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MXn-X4-8kR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="FJE-cX-rWX" kind="relationship" relationship="rootViewController" id="Rb0-mr-dtc"/>
+                        <segue destination="HbT-Vv-rK7" kind="relationship" relationship="rootViewController" id="paF-Kv-sBG"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6D0-pX-rGd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HS2-kZ-qI0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="616" y="261"/>
+            <point key="canvasLocation" x="308" y="642"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
