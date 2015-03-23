@@ -164,6 +164,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 
 @interface MXSegmentedPager ()
 @property (nonatomic, strong) MXScrollView * scrollView;
+@property (nonatomic, assign) BOOL changeContainerFrame;
 @end
 
 @implementation MXSegmentedPager (ParallaxHeader)
@@ -184,6 +185,8 @@ static NSString* const kFrameKeyPath = @"frame";
     [self addSubview:self.scrollView];
     
     [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
+    
+    self.changeContainerFrame = YES;
 }
 
 #pragma mark Properties
@@ -216,19 +219,35 @@ static NSString* const kFrameKeyPath = @"frame";
     self.scrollView.progressBlock = progressBlock;
 }
 
+- (BOOL)changeContainerFrame {
+    NSNumber *number = objc_getAssociatedObject(self, @selector(changeContainerFrame));
+    return [number boolValue];
+}
+
+- (void)setChangeContainerFrame:(BOOL)changeContainerFrame {
+    NSNumber *number = [NSNumber numberWithBool:changeContainerFrame];
+    objc_setAssociatedObject(self, @selector(changeContainerFrame), number , OBJC_ASSOCIATION_RETAIN);
+}
+
 #pragma mark KVO 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == kMXSegmentedPagerKVOContext && [keyPath isEqualToString:kFrameKeyPath]) {
-        [self.container removeObserver:self forKeyPath:kFrameKeyPath context:kMXSegmentedPagerKVOContext];
+//        [self.container removeObserver:self forKeyPath:kFrameKeyPath context:kMXSegmentedPagerKVOContext];
         
-        self.container.frame = (CGRect){
-            .origin         = self.container.frame.origin,
-            .size.width     = self.container.frame.size.width,
-            .size.height    = self.container.frame.size.height - self.scrollView.minimumHeigth
-        };
+        if (self.changeContainerFrame) {
+            self.changeContainerFrame = NO;
+            
+            self.container.frame = (CGRect){
+                .origin         = self.container.frame.origin,
+                .size.width     = self.container.frame.size.width,
+                .size.height    = self.container.frame.size.height - self.scrollView.minimumHeigth
+            };
+            
+            self.changeContainerFrame = YES;
+        }
         
-        [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
+//        [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
