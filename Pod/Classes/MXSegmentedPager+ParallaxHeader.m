@@ -70,8 +70,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 
 #pragma mark <UIScrollViewDelegate>
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [scrollView shouldPositionParallaxHeader];
     
     if (self.progressBlock) {
@@ -117,7 +116,6 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 - (void) didScrollWithDelta:(CGFloat)delta {
     
     self.moveView = NO;
-//    [self removeObserver:self forKeyPath:kContentOffsetKeyPath context:kMXScrollViewKVOContext];
     
     UIView<MXPageDelegate>* page = (id) self.segmentedPager.selectedPage;
     
@@ -138,7 +136,6 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
     }
     
     self.moveView = YES;
-//    [self addObserver:self forKeyPath:kContentOffsetKeyPath options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:kMXScrollViewKVOContext];
 }
 
 #pragma mark KVO
@@ -233,7 +230,6 @@ static NSString* const kFrameKeyPath = @"frame";
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == kMXSegmentedPagerKVOContext && [keyPath isEqualToString:kFrameKeyPath]) {
-//        [self.container removeObserver:self forKeyPath:kFrameKeyPath context:kMXSegmentedPagerKVOContext];
         
         if (self.changeContainerFrame) {
             self.changeContainerFrame = NO;
@@ -246,8 +242,6 @@ static NSString* const kFrameKeyPath = @"frame";
             
             self.changeContainerFrame = YES;
         }
-        
-//        [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -281,4 +275,5 @@ static NSString* const kFrameKeyPath = @"frame";
 - (void) scrollToTop {
     self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, -self.scrollView.contentInset.top);
 }
+
 @end

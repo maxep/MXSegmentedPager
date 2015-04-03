@@ -31,12 +31,12 @@
 typedef void (^MXProgressBlock) (CGFloat progress);
 
 /**
- MXSegmentedPager with parallax header. This category uses [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/ ) to set up a parallax header on top of a segmented-pager.
+ MXSegmentedPager with parallax header. This category uses [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) to set up a parallax header on top of a segmented-pager.
  */
 @interface MXSegmentedPager (ParallaxHeader)
 
 /**
- The parallax header. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/ ) for more details.
+ The parallax header. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
  */
 @property (nonatomic, strong, readonly) VGParallaxHeader *parallaxHeader;
 
@@ -54,7 +54,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  Sets the parallax header view.
  
  @param view   The parallax header view.
- @param mode   The parallax header mode. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/ ) for more details.
+ @param mode   The parallax header mode. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
  @param height The header height.
  */
 - (void)setParallaxHeaderView:(UIView *)view
@@ -69,7 +69,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  */
 @protocol MXPageDelegate <NSObject>
 
-@optional
+@required
 
 /**
  Tells if the view is at its scrolling top.
