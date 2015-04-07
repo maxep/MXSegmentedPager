@@ -116,7 +116,7 @@
         _container.alwaysBounceVertical = NO;
         _container.showsVerticalScrollIndicator = NO;
         _container.showsHorizontalScrollIndicator = NO;
-        _container.keyboardDismissMode = YES;
+        _container.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
         [self addSubview:_container];
     }
     return _container;
