@@ -31,8 +31,10 @@ pod "MXSegmentedPager"
 Documentation is available through [CocoaDocs](http://cocoadocs.org/docsets/MXSegmentedPager/1.0/).
                                                
 ## Author
-                                               
-Maxime Epain, maxime.epain@gmail.com
+
+[![GitHub](https://img.shields.io/badge/github-maxep-lightgrey.svg?style=flat)](https://github.com/maxep)
+[![Twitter](https://img.shields.io/badge/twitter-%40MaximeEpain-blue.svg?style=flat)](https://twitter.com/MaximeEpain)
+[![Email](https://img.shields.io/badge/email-maxime.epain%40gmail.com-red.svg?style=flat)](mailto:maxime.epain@gmail.com)
                                                
 ## License
                                                
