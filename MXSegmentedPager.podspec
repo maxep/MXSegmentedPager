@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'MXSegmentedPager' => ['Pod/Assets/*.png']
   }
-  s.dependency 'HMSegmentedControl', '~> 1.4'
+  s.dependency 'HMSegmentedControl', '~> 1.5.1'
   s.dependency 'VGParallaxHeader', '~> 0.0.6'
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
