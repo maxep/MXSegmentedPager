@@ -23,6 +23,16 @@
 #import <UIKit/UIKit.h>
 #import "HMSegmentedControl.h"
 
+/**
+ The segmented control position options relative to the segmented-pager.
+ */
+typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
+    /** Top position. */
+    MXSegmentedControlPositionTop,
+    /** Bottom position. */
+    MXSegmentedControlPositionBottom
+};
+
 @class MXSegmentedPager;
 
 /**
@@ -134,9 +144,14 @@
 @property (nonatomic, assign) id<MXSegmentedPagerDataSource> dataSource;
 
 /**
- The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/ ) for customazation.
+ The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
  */
 @property (nonatomic, strong) HMSegmentedControl* segmentedControl;
+
+/**
+ The segmented control position option.
+ */
+@property (nonatomic, assign) MXSegmentedControlPosition segmentedControlPosition;
 
 /**
  The pages container. The container will be placed below the segmented control.
@@ -146,7 +161,7 @@
 /**
  The pages container size. Use this property to set up your pages frame.
  */
-@property (nonatomic, assign) CGSize containerSize;
+@property (nonatomic, readonly) CGSize containerSize;
 
 /**
  The current selected page view.

@@ -168,6 +168,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 
 static void * const kMXSegmentedPagerKVOContext = (void*)&kMXSegmentedPagerKVOContext;
 static NSString* const kFrameKeyPath = @"frame";
+static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosition";
 
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
     
@@ -182,6 +183,12 @@ static NSString* const kFrameKeyPath = @"frame";
     [self addSubview:self.scrollView];
     
     [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
+    
+    [self addObserver:self forKeyPath:kSegmentedControlPositionKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
+    
+    if(self.segmentedControlPosition == MXSegmentedControlPositionBottom) {
+        [self addSubview:self.segmentedControl];
+    }
     
     self.changeContainerFrame = YES;
 }
@@ -229,18 +236,25 @@ static NSString* const kFrameKeyPath = @"frame";
 #pragma mark KVO 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == kMXSegmentedPagerKVOContext && [keyPath isEqualToString:kFrameKeyPath]) {
+    if (context == kMXSegmentedPagerKVOContext) {
+        if ([keyPath isEqualToString:kFrameKeyPath]) {
         
-        if (self.changeContainerFrame) {
-            self.changeContainerFrame = NO;
-            
-            self.container.frame = (CGRect){
-                .origin         = self.container.frame.origin,
-                .size.width     = self.container.frame.size.width,
-                .size.height    = self.container.frame.size.height - self.scrollView.minimumHeigth
-            };
-            
-            self.changeContainerFrame = YES;
+            if (self.changeContainerFrame) {
+                self.changeContainerFrame = NO;
+                
+                self.container.frame = (CGRect){
+                    .origin         = self.container.frame.origin,
+                    .size.width     = self.container.frame.size.width,
+                    .size.height    = self.container.frame.size.height - self.scrollView.minimumHeigth
+                };
+                
+                self.changeContainerFrame = YES;
+            }
+        }
+        else if ([keyPath isEqualToString:kSegmentedControlPositionKeyPath]) {
+            if(self.segmentedControlPosition == MXSegmentedControlPositionBottom) {
+                [self addSubview:self.segmentedControl];
+            }
         }
     }
     else {

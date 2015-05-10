@@ -31,16 +31,15 @@
 
 @implementation MXSegmentedPager
 
+- (void)drawRect:(CGRect)rect {
+    [self reloadData];
+}
+
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
     if (newSuperview) {
         [self reloadData];
     }
-}
-
-- (void) setFrame:(CGRect)frame {
-    [super setFrame:frame];
-    [self reloadData];
 }
 
 - (void)reloadData {
@@ -126,19 +125,19 @@
     return self.container.frame.size;
 }
 
-- (void)setContainerSize:(CGSize)containerSize {
-    self.container.frame = (CGRect){
-        .origin = self.container.frame.origin,
-        .size   = containerSize
-    };
-}
-
 - (UIView*) selectedPage {
     NSInteger index = self.segmentedControl.selectedSegmentIndex;
     if (self.pages.count > index) {
          return [self.pages objectAtIndex:index];
     }
     return nil;
+}
+
+- (void)setSegmentedControlPosition:(MXSegmentedControlPosition)segmentedControlPosition {
+    [self willChangeValueForKey:@"segmentedControlPosition"];
+    _segmentedControlPosition = segmentedControlPosition;
+    [self layoutWithHeight:self.segmentedControl.frame.size.height];
+    [self didChangeValueForKey:@"segmentedControlPosition"];
 }
 
 #pragma mark HMSegmentedControl target
@@ -206,9 +205,9 @@
     CGFloat width = 0.f;
     
     NSMutableArray* boundaries = [NSMutableArray arrayWithObject:@0];
-    for (NSInteger index = 0; index < self.pages.count; index++) {
-        
-        UIView* view = [self.pages objectAtIndex:index];
+    
+    for (UIView* view in self.pages) {
+            
         [self.container addSubview:view];
         
         CGRect frame = (CGRect){
@@ -227,16 +226,22 @@
 }
 
 - (void) layoutWithHeight:(CGFloat)height {
+    
+    CGPoint position = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
+        CGPointZero : CGPointMake(0.f, self.frame.size.height - height);
+    
     CGRect subFrame = (CGRect) {
-        .origin         = CGPointZero,
+        .origin         = position,
         .size.width     = self.frame.size.width,
         .size.height    = height
     };
     self.segmentedControl.frame = subFrame;
     
+    position = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
+        CGPointMake(0.f, height) : CGPointZero;
+    
     subFrame = (CGRect) {
-        .origin.x       = 0.f,
-        .origin.y       = height,
+        .origin         = position,
         .size.width     = self.frame.size.width,
         .size.height    = self.frame.size.height - height
     };
