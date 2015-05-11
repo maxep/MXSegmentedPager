@@ -29,13 +29,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.segmentedPager.segmentedControl.backgroundColor = [UIColor colorWithRed:0.7 green:0.7 blue:0.7 alpha:1];
-    self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
+    self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};
     self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1]};
-    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor colorWithRed:0.3 green:0.3 blue:0.3 alpha:1];
-    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
-    self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationUp;
-    
+    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor blackColor];
+    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
+    self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     
     self.segmentedPager.segmentedControlPosition = MXSegmentedControlPositionBottom;
 }

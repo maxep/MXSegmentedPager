@@ -43,13 +43,12 @@
     
     self.segmentedPager.minimumHeaderHeight = 20.f;
     
-    self.segmentedPager.segmentedControl.selectionIndicatorHeight = 4.0f;
-    self.segmentedPager.segmentedControl.backgroundColor = [UIColor colorWithRed:0.1 green:0.4 blue:0.8 alpha:1];
-    self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
-    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
     self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    self.segmentedPager.segmentedControl.shouldAnimateUserSelection = NO;
+    self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
+    self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};
+    self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor orangeColor]};
+    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
+    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
 }
 
 #pragma -mark private methods

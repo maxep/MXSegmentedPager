@@ -47,6 +47,11 @@
         .size.width     = self.view.frame.size.width,
         .size.height    = self.view.frame.size.height - 20.f
     };
+    
+    self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
+    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
+    self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor orangeColor]};
 }
 
 #pragma -mark Properties
