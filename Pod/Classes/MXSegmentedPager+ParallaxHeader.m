@@ -157,6 +157,10 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
     }
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end
 
 @interface MXSegmentedPager ()
@@ -242,10 +246,14 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
             if (self.changeContainerFrame) {
                 self.changeContainerFrame = NO;
                 
+                CGFloat height = self.scrollView.frame.size.height;
+                height -= self.segmentedControl.frame.size.height;
+                height -= self.scrollView.minimumHeigth;
+                
                 self.container.frame = (CGRect){
                     .origin         = self.container.frame.origin,
                     .size.width     = self.container.frame.size.width,
-                    .size.height    = self.container.frame.size.height - self.scrollView.minimumHeigth
+                    .size.height    = height
                 };
                 
                 self.changeContainerFrame = YES;
@@ -260,6 +268,10 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

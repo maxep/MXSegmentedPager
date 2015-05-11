@@ -144,9 +144,9 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 @property (nonatomic, assign) id<MXSegmentedPagerDataSource> dataSource;
 
 /**
- The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
+ The segmented control. @see [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
  */
-@property (nonatomic, strong) HMSegmentedControl* segmentedControl;
+@property (nonatomic, readonly) HMSegmentedControl* segmentedControl;
 
 /**
  The segmented control position option.
@@ -156,12 +156,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 /**
  The pages container. The container will be placed below the segmented control.
  */
-@property (nonatomic, strong) UIScrollView* container;
-
-/**
- The pages container size. Use this property to set up your pages frame.
- */
-@property (nonatomic, readonly) CGSize containerSize;
+@property (nonatomic, readonly) UIScrollView* container;
 
 /**
  The current selected page view.

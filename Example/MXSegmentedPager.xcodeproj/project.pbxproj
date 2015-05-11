@@ -23,8 +23,8 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		B10F7A080B4570658946BDC6 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9BB96F1D81164F56C1E5BB /* libPods-Tests.a */; };
 		D02CC1BD1AB0EF7A00492C51 /* MXParallaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D02CC1BC1AB0EF7A00492C51 /* MXParallaxViewController.m */; };
-		D077BEEF1AAA0728001F1396 /* MXMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D077BEEB1AAA0728001F1396 /* MXMenuViewController.m */; };
 		D077BEF01AAA0728001F1396 /* MXSimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D077BEED1AAA0728001F1396 /* MXSimpleViewController.m */; };
+		D08B319A1B0030E400B74C30 /* MXExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B31991B0030E400B74C30 /* MXExampleViewController.m */; };
 		D0DD86071AA35B720077F3CD /* LongText.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0DD86061AA35B720077F3CD /* LongText.txt */; };
 /* End PBXBuildFile section */
 
@@ -67,10 +67,10 @@
 		B7583AB295328300927EBFB5 /* Pods-MXSegmentedPager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MXSegmentedPager.release.xcconfig"; path = "Pods/Target Support Files/Pods-MXSegmentedPager/Pods-MXSegmentedPager.release.xcconfig"; sourceTree = "<group>"; };
 		D02CC1BB1AB0EF7A00492C51 /* MXParallaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXParallaxViewController.h; sourceTree = "<group>"; };
 		D02CC1BC1AB0EF7A00492C51 /* MXParallaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXParallaxViewController.m; sourceTree = "<group>"; };
-		D077BEEA1AAA0728001F1396 /* MXMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXMenuViewController.h; sourceTree = "<group>"; };
-		D077BEEB1AAA0728001F1396 /* MXMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXMenuViewController.m; sourceTree = "<group>"; };
 		D077BEEC1AAA0728001F1396 /* MXSimpleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSimpleViewController.h; sourceTree = "<group>"; };
 		D077BEED1AAA0728001F1396 /* MXSimpleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSimpleViewController.m; sourceTree = "<group>"; };
+		D08B31981B0030E400B74C30 /* MXExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXExampleViewController.h; sourceTree = "<group>"; };
+		D08B31991B0030E400B74C30 /* MXExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXExampleViewController.m; sourceTree = "<group>"; };
 		D0DD86061AA35B720077F3CD /* LongText.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongText.txt; sourceTree = "<group>"; };
 		DFC056F91C12A3D9A99247EE /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,8 +140,8 @@
 			children = (
 				6003F59C195388D20070C39A /* MXAppDelegate.h */,
 				6003F59D195388D20070C39A /* MXAppDelegate.m */,
-				D077BEEA1AAA0728001F1396 /* MXMenuViewController.h */,
-				D077BEEB1AAA0728001F1396 /* MXMenuViewController.m */,
+				D08B31981B0030E400B74C30 /* MXExampleViewController.h */,
+				D08B31991B0030E400B74C30 /* MXExampleViewController.m */,
 				D077BEEC1AAA0728001F1396 /* MXSimpleViewController.h */,
 				D077BEED1AAA0728001F1396 /* MXSimpleViewController.m */,
 				D02CC1BB1AB0EF7A00492C51 /* MXParallaxViewController.h */,
@@ -375,7 +375,7 @@
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				D02CC1BD1AB0EF7A00492C51 /* MXParallaxViewController.m in Sources */,
 				D077BEF01AAA0728001F1396 /* MXSimpleViewController.m in Sources */,
-				D077BEEF1AAA0728001F1396 /* MXMenuViewController.m in Sources */,
+				D08B319A1B0030E400B74C30 /* MXExampleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

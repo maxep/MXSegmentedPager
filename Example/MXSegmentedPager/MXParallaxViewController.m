@@ -19,20 +19,37 @@
 
 @implementation MXParallaxViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationController.navigationBar.translucent = YES;
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    // Setup the segmented pager properties
-    self.segmentedPager.delegate = self;
-    self.segmentedPager.dataSource = self;
-    [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:self.cover.frame.size.height];
-    self.segmentedPager.minimumHeaderHeight = 64.f;
-    
+    self.view.backgroundColor = UIColor.whiteColor;
+        
     [self.view addSubview:self.segmentedPager];
+}
+
+- (void)viewWillLayoutSubviews {
+    
+    self.segmentedPager.frame = (CGRect){
+        .origin = CGPointZero,
+        .size   = self.view.frame.size
+    };
+    
+    self.cover.frame = (CGRect){
+        .origin         = CGPointZero,
+        .size.width     = self.view.frame.size.width,
+        .size.height    = 150.f
+    };
+    
+    [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:self.cover.frame.size.height];
+    
+    self.segmentedPager.minimumHeaderHeight = 20.f;
+    
+    self.segmentedPager.segmentedControl.selectionIndicatorHeight = 4.0f;
+    self.segmentedPager.segmentedControl.backgroundColor = [UIColor colorWithRed:0.1 green:0.4 blue:0.8 alpha:1];
+    self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
+    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
+    self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    self.segmentedPager.segmentedControl.shouldAnimateUserSelection = NO;
 }
 
 #pragma -mark private methods
@@ -40,11 +57,7 @@
 - (UIImageView *)cover {
     if (!_cover) {
         // Set a cover on the top of the view
-        _cover = [[UIImageView alloc] initWithFrame:(CGRect){
-            .origin         = CGPointZero,
-            .size.width     = self.view.frame.size.width,
-            .size.height    = 150.f
-        }];
+        _cover = [[UIImageView alloc] init];
         _cover.contentMode = UIViewContentModeScaleAspectFill;
         _cover.image = [UIImage imageNamed:@"success-baby"];
     }
@@ -55,10 +68,9 @@
     if (!_segmentedPager) {
         
         // Set a segmented pager below the cover
-        _segmentedPager = [[MXSegmentedPager alloc] initWithFrame:(CGRect){
-            .origin = CGPointZero,
-            .size   = self.view.frame.size
-        }];
+        _segmentedPager = [[MXSegmentedPager alloc] init];
+        _segmentedPager.delegate    = self;
+        _segmentedPager.dataSource  = self;
     }
     return _segmentedPager;
 }
@@ -66,10 +78,7 @@
 - (UITableView *)tableView {
     if (!_tableView) {
         //Add a table page
-        _tableView = [[UITableView alloc] initWithFrame:(CGRect){
-            .origin = CGPointZero,
-            .size   = self.segmentedPager.containerSize
-        }];
+        _tableView = [[UITableView alloc] init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
@@ -79,10 +88,7 @@
 - (UIWebView *)webView {
     if (!_webView) {
         // Add a web page
-        _webView = [[UIWebView alloc] initWithFrame:(CGRect){
-            .origin = CGPointZero,
-            .size   = self.segmentedPager.containerSize
-        }];
+        _webView = [[UIWebView alloc] init];
         NSString *strURL = @"http://nshipster.com/";
         NSURL *url = [NSURL URLWithString:strURL];
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
@@ -94,10 +100,7 @@
 - (UITextView *)textView {
     if (!_textView) {
         // Add a text page
-        _textView = [[UITextView alloc] initWithFrame:(CGRect){
-            .origin = CGPointZero,
-            .size   = self.segmentedPager.containerSize
-        }];
+        _textView = [[UITextView alloc] init];
         NSString *filePath = [[NSBundle mainBundle]pathForResource:@"LongText" ofType:@"txt"];
         _textView.text = [[NSString alloc]initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
     }
@@ -126,11 +129,6 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 50;
-}
-
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MXParallaxViewController *parallaxViewController = [[MXParallaxViewController alloc] init];
-    [self.navigationController pushViewController:parallaxViewController animated:YES];
 }
 
 #pragma -mark <UITableViewDataSource>

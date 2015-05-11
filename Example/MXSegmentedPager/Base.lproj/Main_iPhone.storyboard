@@ -1,44 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eDJ-9o-8JA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="5kW-UJ-8eW">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
-        <!--MXSegmentedPager-->
-        <scene sceneID="c6S-qu-64f">
+        <!--Example View Controller-->
+        <scene sceneID="Crr-va-awX">
             <objects>
-                <tableViewController id="HbT-Vv-rK7" customClass="MXMenuViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dYQ-CF-Lof">
+                <viewController id="5kW-UJ-8eW" customClass="MXExampleViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cZj-xT-idK"/>
+                        <viewControllerLayoutGuide type="bottom" id="se7-ZO-V6O"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nvo-q8-iSL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <connections>
-                            <outlet property="dataSource" destination="HbT-Vv-rK7" id="8E1-d1-ORE"/>
-                            <outlet property="delegate" destination="HbT-Vv-rK7" id="CJN-ad-q1o"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="MXSegmentedPager" id="ReK-Cs-xLW"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1CN-I1-5KB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NIO-oM-Nxc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="848" y="642"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="3zV-0y-auB">
-            <objects>
-                <navigationController id="eDJ-9o-8JA" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MXn-X4-8kR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="HbT-Vv-rK7" kind="relationship" relationship="rootViewController" id="paF-Kv-sBG"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HS2-kZ-qI0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="308" y="642"/>
+            <point key="canvasLocation" x="506" y="1131"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

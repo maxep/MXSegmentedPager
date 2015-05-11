@@ -23,6 +23,10 @@
 #import "MXSegmentedPager.h"
 
 @interface MXSegmentedPager () <UIScrollViewDelegate>
+
+@property (nonatomic, strong) HMSegmentedControl* segmentedControl;
+@property (nonatomic, strong) UIScrollView* container;
+
 @property (nonatomic, strong) NSArray   *boundaries;
 @property (nonatomic, assign) BOOL      moveSegment;
 @property (nonatomic, strong) NSArray   *pages;
@@ -31,15 +35,9 @@
 
 @implementation MXSegmentedPager
 
-- (void)drawRect:(CGRect)rect {
+- (void)layoutSubviews {
+    [super layoutSubviews];
     [self reloadData];
-}
-
-- (void)willMoveToSuperview:(UIView *)newSuperview {
-    [super willMoveToSuperview:newSuperview];
-    if (newSuperview) {
-        [self reloadData];
-    }
 }
 
 - (void)reloadData {
@@ -113,16 +111,13 @@
         _container.pagingEnabled = YES;
         _container.directionalLockEnabled = YES;
         _container.alwaysBounceVertical = NO;
+        _container.alwaysBounceHorizontal = NO;
         _container.showsVerticalScrollIndicator = NO;
         _container.showsHorizontalScrollIndicator = NO;
         _container.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
         [self addSubview:_container];
     }
     return _container;
-}
-
-- (CGSize)containerSize {
-    return self.container.frame.size;
 }
 
 - (UIView*) selectedPage {
@@ -213,7 +208,7 @@
         CGRect frame = (CGRect){
             .origin.x   = width,
             .origin.y   = 0.f,
-            .size       = self.containerSize
+            .size       = self.container.frame.size
         };
         view.frame = frame;
         width += self.frame.size.width;
@@ -221,7 +216,7 @@
         CGFloat boundary = frame.origin.x + (frame.size.width / 2);
         [boundaries addObject:[NSNumber numberWithFloat:boundary]];
     }
-    self.container.contentSize = CGSizeMake(width, self.containerSize.height);
+    self.container.contentSize = CGSizeMake(width, self.container.frame.size.height);
     self.boundaries = boundaries;
 }
 

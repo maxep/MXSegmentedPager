@@ -1,4 +1,4 @@
-// MXMenuViewController.h
+// MXExampleViewController.h
 //
 // Copyright (c) 2015 Maxime Epain
 //
@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "MXPageController.h"
 
-@interface MXMenuViewController : UITableViewController
+@interface MXExampleViewController : MXPageController
 
 @end

@@ -32,17 +32,21 @@
 
 @implementation MXSimpleViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationController.navigationBar.translucent = NO;
-    
-    // Setup the segmented pager properties
-    self.segmentedPager.delegate = self;
-    self.segmentedPager.dataSource = self;
+    self.view.backgroundColor = UIColor.whiteColor;
     
     [self.view addSubview:self.segmentedPager];
+}
+
+- (void)viewWillLayoutSubviews {
+    
+    self.segmentedPager.frame = (CGRect){
+        .origin.x       = 0.f,
+        .origin.y       = 20.f,
+        .size.width     = self.view.frame.size.width,
+        .size.height    = self.view.frame.size.height - 20.f
+    };
 }
 
 #pragma -mark Properties
@@ -51,11 +55,9 @@
     if (!_segmentedPager) {
         
         // Set a segmented pager
-        _segmentedPager = [[MXSegmentedPager alloc] initWithFrame:(CGRect){
-            .origin         = CGPointZero,
-            .size.width     = self.view.frame.size.width,
-            .size.height    = self.view.frame.size.height - 64.f
-        }];
+        _segmentedPager = [[MXSegmentedPager alloc] init];
+        _segmentedPager.delegate    = self;
+        _segmentedPager.dataSource  = self;
     }
     return _segmentedPager;
 }
@@ -63,10 +65,7 @@
 - (UITableView *)tableView {
     if (!_tableView) {
         //Add a table page
-        _tableView = [[UITableView alloc] initWithFrame:(CGRect){
-            .origin = CGPointZero,
-            .size   = self.segmentedPager.containerSize
-        }];
+        _tableView = [[UITableView alloc] init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
@@ -76,10 +75,7 @@
 - (UIWebView *)webView {
     if (!_webView) {
         // Add a web page
-        _webView = [[UIWebView alloc] initWithFrame:(CGRect){
-            .origin = CGPointZero,
-            .size   = self.segmentedPager.containerSize
-        }];
+        _webView = [[UIWebView alloc] init];
         NSString *strURL = @"http://nshipster.com/";
         NSURL *url = [NSURL URLWithString:strURL];
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
@@ -91,10 +87,7 @@
 - (UITextView *)textView {
     if (!_textView) {
         // Add a text page
-        _textView = [[UITextView alloc] initWithFrame:(CGRect){
-            .origin = CGPointZero,
-            .size   = self.segmentedPager.containerSize
-        }];
+        _textView = [[UITextView alloc] init];
         NSString *filePath = [[NSBundle mainBundle]pathForResource:@"LongText" ofType:@"txt"];
         _textView.text = [[NSString alloc]initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
     }
@@ -119,11 +112,6 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 50;
-}
-
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MXSimpleViewController *simpleViewController = [[MXSimpleViewController alloc] init];
-    [self.navigationController pushViewController:simpleViewController animated:YES];
 }
 
 #pragma -mark <UITableViewDataSource>
