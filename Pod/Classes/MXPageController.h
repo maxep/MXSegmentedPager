@@ -55,9 +55,9 @@
 @end
 
 /**
- While using MXPageController, your child controller can adopt the MXPageControllerDelegate protocol to specify a view that you want to use as page. By default, the page is the controller's view.
+ While using MXPageController, your child controller can adopt the MXPageControllerProtocol protocol to specify a view that you want to use as page. By default, the page is the controller's view.
  */
-@protocol MXPageControllerDelegate <NSObject>
+@protocol MXPageControllerProtocol <NSObject>
 /**
  Returns the page.
  */
@@ -66,7 +66,7 @@
 @end
 
 /**
- UIViewController category that adopt the MXPageControllerDelegate protocol.
+ UIViewController category that adopt the MXPageControllerProtocol protocol.
  */
-@interface UIViewController (MXPageController) <MXPageControllerDelegate>
+@interface UIViewController (MXPageController) <MXPageControllerProtocol>
 @end

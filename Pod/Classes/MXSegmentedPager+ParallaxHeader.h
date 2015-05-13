@@ -67,7 +67,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  While using MXSegmentedPager with Parallax header, your pages can adopt the MXPageDelegate protocol to have a nice effect while scrolling.
  This is useful when you have a page with a scrolling subview (e.g. UIWebView).
  */
-@protocol MXPageDelegate <NSObject>
+@protocol MXPageProtocol <NSObject>
 
 @required
 
@@ -86,13 +86,13 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 @end
 
 /**
- UIScrollView category that adopt the MXPageDelegate protocol.
+ UIScrollView category that adopt the MXPageProtocol protocol.
  */
-@interface UIScrollView (MXSegmentedPager) <MXPageDelegate>
+@interface UIScrollView (MXSegmentedPager) <MXPageProtocol>
 @end
 
 /**
- UIWebView category that adopt the MXPageDelegate protocol.
+ UIWebView category that adopt the MXPageProtocol protocol.
  */
-@interface UIWebView (MXSegmentedPager) <MXPageDelegate>
+@interface UIWebView (MXSegmentedPager) <MXPageProtocol>
 @end

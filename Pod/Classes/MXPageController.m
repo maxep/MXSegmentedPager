@@ -71,7 +71,7 @@
 
 @implementation UIViewController (MXPageController)
 
-#pragma mark <MXPageControllerDelegate>
+#pragma mark <MXPageControllerProtocol>
 
 - (UIView *)page {
     return self.view;

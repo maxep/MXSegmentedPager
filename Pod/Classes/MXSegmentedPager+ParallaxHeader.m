@@ -117,7 +117,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
     
     self.moveView = NO;
     
-    UIView<MXPageDelegate>* page = (id) self.segmentedPager.selectedPage;
+    UIView<MXPageProtocol>* page = (id) self.segmentedPager.selectedPage;
     
     if (page) {
         
@@ -278,7 +278,7 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
 
 @implementation UIScrollView (MXSegmentedPager)
 
-#pragma mark <MXPageDelegate>
+#pragma mark <MXPageProtocol>
 
 - (BOOL) isAtTop {
     return (self.contentOffset.y <= -self.contentInset.top);
@@ -292,7 +292,7 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
 
 @implementation UIWebView (MXSegmentedPager)
 
-#pragma mark <MXPageDelegate>
+#pragma mark <MXPageProtocol>
 
 - (BOOL) isAtTop {
     return [self.scrollView isAtTop];
