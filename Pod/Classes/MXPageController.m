@@ -58,13 +58,21 @@
         [self addChildViewController:viewController];
         [viewController didMoveToParentViewController:self];
 
-        return viewController.view;
+        return viewController.page;
     }
     return nil;
 }
 
 - (UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index {
     return nil;
+}
+
+@end
+
+@implementation UIViewController (MXPageController)
+
+- (UIView *)page {
+    return self.view;
 }
 
 @end
