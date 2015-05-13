@@ -295,11 +295,11 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
 #pragma mark <MXPageDelegate>
 
 - (BOOL) isAtTop {
-    return (self.scrollView.contentOffset.y <= self.scrollView.contentInset.top);
+    return [self.scrollView isAtTop];
 }
 
 - (void) scrollToTop {
-    self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, -self.scrollView.contentInset.top);
+    [self.scrollView scrollToTop];
 }
 
 @end
