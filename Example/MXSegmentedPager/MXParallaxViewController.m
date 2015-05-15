@@ -106,6 +106,12 @@
     return _textView;
 }
 
+#pragma -mark <MXSegmentedPagerDelegate>
+
+- (CGFloat)heightForSegmentedControlInSegmentedPager:(MXSegmentedPager *)segmentedPager {
+    return 30.f;
+}
+
 #pragma -mark <MXSegmentedPagerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
@@ -122,15 +128,18 @@
 
 #pragma -mark <UITableViewDelegate>
 
-- (CGFloat)heightForSegmentedControlInSegmentedPager:(MXSegmentedPager *)segmentedPager {
-    return 30.f;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSInteger index = (indexPath.row % 2) + 1;
+    [self.segmentedPager scrollToPageAtIndex:index animated:YES];
 }
+
+#pragma -mark <UITableViewDataSource>
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 50;
 }
 
-#pragma -mark <UITableViewDataSource>
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     

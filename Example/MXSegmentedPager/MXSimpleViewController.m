@@ -115,11 +115,17 @@
 
 #pragma -mark <UITableViewDelegate>
 
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 50;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSInteger index = (indexPath.row % 2) + 1;
+    [self.segmentedPager scrollToPageAtIndex:index animated:YES];
 }
 
 #pragma -mark <UITableViewDataSource>
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 50;
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";

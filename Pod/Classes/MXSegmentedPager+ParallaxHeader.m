@@ -184,23 +184,23 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
     
     //Add constraints to the scroll view
     self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *binding  = @{@"v" : self.scrollView};
     [self addConstraints:[NSLayoutConstraint
-                               constraintsWithVisualFormat:@"H:|-0-[scrollView]-0-|"
+                               constraintsWithVisualFormat:@"H:|-0-[v]-0-|"
                                options:NSLayoutFormatDirectionLeadingToTrailing
                                metrics:nil
-                          views:@{@"scrollView" : self.scrollView}]];
+                          views:binding]];
     
     [self addConstraints:[NSLayoutConstraint
-                               constraintsWithVisualFormat:@"V:|-0-[scrollView]-0-|"
+                               constraintsWithVisualFormat:@"V:|-0-[v]-0-|"
                                options:NSLayoutFormatDirectionLeadingToTrailing
                                metrics:nil
-                          views:@{@"scrollView" : self.scrollView}]];
+                          views:binding]];
     
     [self.scrollView addSubview:self.container];
     if(self.segmentedControlPosition == MXSegmentedControlPositionTop) {
         [self.scrollView addSubview:self.segmentedControl];
     }
-    
     
     // Add KVO
     [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
@@ -275,6 +275,9 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
         else if ([keyPath isEqualToString:kSegmentedControlPositionKeyPath]) {
             if(self.segmentedControlPosition == MXSegmentedControlPositionBottom) {
                 [self addSubview:self.segmentedControl];
+            }
+            else {
+                [self.scrollView addSubview:self.segmentedControl];
             }
         }
     }

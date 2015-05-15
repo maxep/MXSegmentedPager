@@ -48,22 +48,24 @@
     }
     [self layoutWithHeight:height];
     
+    //Gets the number of page
     NSInteger numberOfPages = 0;
     if ([self.dataSource respondsToSelector:@selector(numberOfPagesInSegmentedPager:)]) {
         numberOfPages = [self.dataSource numberOfPagesInSegmentedPager:self];
     }
     
+    //Gets new data
     NSMutableArray* images  = [NSMutableArray array];
-    NSMutableArray* titles    = [NSMutableArray array];
+    NSMutableArray* titles  = [NSMutableArray array];
     NSMutableArray* pages   = [NSMutableArray array];
     
     for (NSInteger index = 0; index < numberOfPages; index++) {
         
-        NSString* key = [NSString stringWithFormat:@"Page %ld", (long)index];
+        NSString* title = [NSString stringWithFormat:@"Page %ld", (long)index];
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
-            key = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
+            title = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
         }
-        [titles addObject:key];
+        [titles addObject:title];
         
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:viewForPageAtIndex:)]) {
             UIView* view = [self.dataSource segmentedPager:self viewForPageAtIndex:index];
@@ -76,6 +78,7 @@
         }
     }
     
+    //Saves new data
     self.pages = pages;
     self.titles = titles;
     if (images.count > 0) {
@@ -86,6 +89,13 @@
     }
     
     [self layoutContainer];
+}
+
+- (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated {
+    [self.segmentedControl setSelectedSegmentIndex:index animated:animated];
+    
+    CGFloat x = self.frame.size.width * index;
+    [self.container setContentOffset:CGPointMake(x, 0) animated:animated];
 }
 
 #pragma mark Properties
