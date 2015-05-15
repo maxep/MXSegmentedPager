@@ -107,8 +107,6 @@
                               action:@selector(pageControlValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
         [self addSubview:_segmentedControl];
-        
-        self.moveSegment = YES;
     }
     return _segmentedControl;
 }
@@ -151,14 +149,13 @@
     NSInteger index = segmentedControl.selectedSegmentIndex;
     
     CGFloat x = self.frame.size.width * index;
-    self.moveSegment = NO;
     [self.container setContentOffset:CGPointMake(x, 0) animated:YES];
     [self changedToIndex:index];
 }
 
 #pragma mark <UIScrollViewDelegate>
 
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     self.moveSegment = YES;
 }
 
@@ -182,6 +179,7 @@
         if (curIndex != index) {
             [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
             [self changedToIndex:index];
+            self.moveSegment = NO;
         }
     }
 }
@@ -226,10 +224,13 @@
         CGFloat boundary = frame.origin.x + (frame.size.width / 2);
         [boundaries addObject:[NSNumber numberWithFloat:boundary]];
     }
+     self.boundaries = boundaries;
     
     self.container.contentSize = CGSizeMake(width, self.container.frame.size.height);
-    [self pageControlValueChanged:self.segmentedControl];
-    self.boundaries = boundaries;
+    
+    //Adjusts the container's content offset
+    CGFloat x = self.frame.size.width * self.segmentedControl.selectedSegmentIndex;
+    [self.container setContentOffset:CGPointMake(x, 0) animated:NO];
 }
 
 - (void) layoutWithHeight:(CGFloat)height {
