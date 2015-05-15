@@ -42,6 +42,12 @@
 
 - (void)reloadData {
     
+    //Removes current pages
+    for(UIView *view in self.pages) {
+        [view removeFromSuperview];
+    }
+    
+    //Gets the segmented control height
     CGFloat height = 44.f;
     if ([self.delegate respondsToSelector:@selector(heightForSegmentedControlInSegmentedPager:)]) {
         height = [self.delegate heightForSegmentedControlInSegmentedPager:self];
