@@ -45,12 +45,6 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
 static NSString* const kContentOffsetKeyPath = @"contentOffset";
 
-- (void)setSegmentedPager:(MXSegmentedPager*)segmentedPager {
-    _segmentedPager = segmentedPager;
-    [self addSubview:segmentedPager.segmentedControl];
-    [self addSubview:segmentedPager.container];
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -180,19 +174,38 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
         .origin = CGPointZero,
         .size   = self.frame.size
     }];
+    [self addSubview:self.scrollView];
     
     self.scrollView.segmentedPager = self;
     self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height + height);
-    [self.scrollView setParallaxHeaderView:view mode:mode height:height];
-    [self addSubview:self.scrollView];
     
+    //Set up the parallax header
+    [self.scrollView setParallaxHeaderView:view mode:mode height:height];
+    
+    //Add constraints to the scroll view
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addConstraints:[NSLayoutConstraint
+                               constraintsWithVisualFormat:@"H:|-0-[scrollView]-0-|"
+                               options:NSLayoutFormatDirectionLeadingToTrailing
+                               metrics:nil
+                          views:@{@"scrollView" : self.scrollView}]];
+    
+    [self addConstraints:[NSLayoutConstraint
+                               constraintsWithVisualFormat:@"V:|-0-[scrollView]-0-|"
+                               options:NSLayoutFormatDirectionLeadingToTrailing
+                               metrics:nil
+                          views:@{@"scrollView" : self.scrollView}]];
+    
+    [self.scrollView addSubview:self.container];
+    if(self.segmentedControlPosition == MXSegmentedControlPositionTop) {
+        [self.scrollView addSubview:self.segmentedControl];
+    }
+    
+    
+    // Add KVO
     [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
     
     [self addObserver:self forKeyPath:kSegmentedControlPositionKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
-    
-    if(self.segmentedControlPosition == MXSegmentedControlPositionBottom) {
-        [self addSubview:self.segmentedControl];
-    }
     
     self.changeContainerFrame = YES;
 }

@@ -30,7 +30,7 @@
 @property (nonatomic, strong) NSArray   *boundaries;
 @property (nonatomic, assign) BOOL      moveSegment;
 @property (nonatomic, strong) NSArray   *pages;
-@property (nonatomic, strong) NSArray   *keys;
+@property (nonatomic, strong) NSArray   *titles;
 @end
 
 @implementation MXSegmentedPager
@@ -54,7 +54,7 @@
     }
     
     NSMutableArray* images  = [NSMutableArray array];
-    NSMutableArray* keys    = [NSMutableArray array];
+    NSMutableArray* titles    = [NSMutableArray array];
     NSMutableArray* pages   = [NSMutableArray array];
     
     for (NSInteger index = 0; index < numberOfPages; index++) {
@@ -63,7 +63,7 @@
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
             key = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
         }
-        [keys addObject:key];
+        [titles addObject:key];
         
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:viewForPageAtIndex:)]) {
             UIView* view = [self.dataSource segmentedPager:self viewForPageAtIndex:index];
@@ -77,12 +77,12 @@
     }
     
     self.pages = pages;
-    self.keys = keys;
+    self.titles = titles;
     if (images.count > 0) {
         self.segmentedControl.sectionImages = images;
     }
     else {
-        self.segmentedControl.sectionTitles = keys;
+        self.segmentedControl.sectionTitles = titles;
     }
     
     [self layoutContainer];
@@ -183,7 +183,7 @@
         [self.delegate segmentedPager:self didSelectViewWithIndex:index];
     }
     
-    NSString* title = [self.keys objectAtIndex:index];
+    NSString* title = [self.titles objectAtIndex:index];
     UIView* view = [self.pages objectAtIndex:index];
     
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithTitle:)]) {
@@ -216,7 +216,9 @@
         CGFloat boundary = frame.origin.x + (frame.size.width / 2);
         [boundaries addObject:[NSNumber numberWithFloat:boundary]];
     }
+    
     self.container.contentSize = CGSizeMake(width, self.container.frame.size.height);
+    [self pageControlValueChanged:self.segmentedControl];
     self.boundaries = boundaries;
 }
 
