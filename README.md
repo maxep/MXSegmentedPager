@@ -16,6 +16,7 @@ The standard MXSegmentedPager class is a simple paging control using [HMSegmente
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first. See MXSimpleViewController for a standard implementation. See MXParallaxViewController to implement a pager with a parallax header.
+The MXPageController class creates a controller object that manages a segmented-pager. The MXExampleViewController provide an example of a MXPageContoller subclass.
 
 ## Installation
 
@@ -28,13 +29,12 @@ pod "MXSegmentedPager"
 
 ## Documentation
 
-Documentation is available through [CocoaDocs](http://cocoadocs.org/docsets/MXSegmentedPager/1.0/).
+Documentation is available through [CocoaDocs](http://cocoadocs.org/docsets/MXSegmentedPager/).
                                                
 ## Author
 
-[![GitHub](https://img.shields.io/badge/github-maxep-lightgrey.svg?style=flat)](https://github.com/maxep)
+[![Site](https://img.shields.io/badge/site-Maxime%20Epain-red.svg?style=flat)](http://maxep.github.io)
 [![Twitter](https://img.shields.io/badge/twitter-%40MaximeEpain-blue.svg?style=flat)](https://twitter.com/MaximeEpain)
-[![Email](https://img.shields.io/badge/email-maxime.epain%40gmail.com-red.svg?style=flat)](mailto:maxime.epain@gmail.com)
                                                
 ## License
                                                
