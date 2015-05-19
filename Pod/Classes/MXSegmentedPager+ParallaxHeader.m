@@ -37,34 +37,69 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 @property (nonatomic, strong) MXSegmentedPager *segmentedPager;
 @property (nonatomic, strong) MXProgressBlock progressBlock;
 
-@property (nonatomic, assign) BOOL moveView;
+@property (nonatomic, weak) NSArray *pages;
 @end
 
-@implementation MXScrollView
+@implementation MXScrollView {
+    BOOL _isObserving;
+    BOOL _isAtTop;
+}
 
 static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
 static NSString* const kContentOffsetKeyPath = @"contentOffset";
+static NSString* const kPagesKeyPath = @"pages";
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+- (instancetype)init {
+    self = [super init];
     if (self) {
         
         self.delegate = self;
         self.alwaysBounceVertical = NO;
         self.showsVerticalScrollIndicator = NO;
         self.directionalLockEnabled = YES;
+        self.autoresizingMask =(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        self.contentMode = UIViewContentModeTopRight;
         
         self.minimumHeigth = 0;
+        [self addObserver:self forKeyPath:kContentOffsetKeyPath
+                  options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
+                  context:kMXScrollViewKVOContext];
         
-        [self addObserver:self forKeyPath:kContentOffsetKeyPath options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:kMXScrollViewKVOContext];
-        self.moveView = YES;
+        _isObserving = YES;
+        _isAtTop = YES;
     }
     return self;
+}
+
+#pragma mark Properties
+
+- (void)setSegmentedPager:(MXSegmentedPager *)segmentedPager {
+    @try {
+        [_segmentedPager removeObserver:self forKeyPath:kPagesKeyPath context:kMXScrollViewKVOContext];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception while removing observer: %@", exception);
+    }
+    @finally {
+        _segmentedPager = segmentedPager;
+        [_segmentedPager addObserver:self forKeyPath:kPagesKeyPath options:NSKeyValueObservingOptionNew context:kMXScrollViewKVOContext];
+    }
+}
+
+- (void)setPages:(NSArray *)pages {
+    [self removeScrollObservers];
+    _pages = pages;
+    [self addScrollObservers];
 }
 
 #pragma mark <UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if ((self.contentOffset.y >= -self.minimumHeigth)) {
+        self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
+    }
+
     [scrollView shouldPositionParallaxHeader];
     
     if (self.progressBlock) {
@@ -107,48 +142,85 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
     return MXPanGestureDirectionNone;
 }
 
-- (void) didScrollWithDelta:(CGFloat)delta {
-    
-    self.moveView = NO;
-    
-    UIView<MXPageProtocol>* page = (id) self.segmentedPager.selectedPage;
-    
-    if (page) {
-        
-        BOOL isAtTop = ([page respondsToSelector:@selector(isAtTop)])? [page isAtTop] : YES;
-        
-        if (self.contentOffset.y > -self.minimumHeigth) {
-            self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
-        }
-        else if (self.contentOffset.y + delta >= -self.minimumHeigth && !isAtTop) {
-            self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
-        }
-        
-        if (self.contentOffset.y < -self.minimumHeigth && [page respondsToSelector:@selector(scrollToTop)]) {
-            [page scrollToTop];
-        }
-    }
-    
-    self.moveView = YES;
-}
-
 #pragma mark KVO
 
+- (void) addScrollObservers {
+    
+    for (UIView<MXPageProtocol> *page in _pages) {
+        if ([page respondsToSelector:@selector(addScrollObserver:forKeyPath:options:context:)]) {
+            [page addScrollObserver:self
+                         forKeyPath:kContentOffsetKeyPath
+                            options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
+                            context:kMXScrollViewKVOContext];
+        }
+    }
+}
+
+- (void) removeScrollObservers {
+    
+    for (UIView<MXPageProtocol> *page in _pages) {
+        @try {
+            if ([page respondsToSelector:@selector(removeScrollObserver:forKeyPath:context:)]) {
+                [page removeScrollObserver:self
+                                forKeyPath:kContentOffsetKeyPath
+                                   context:kMXScrollViewKVOContext];
+            }
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Exception while removing observer: %@", exception);
+        }
+    }
+}
+
+//This is where the magic happens...
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
     if (context == kMXScrollViewKVOContext && [keyPath isEqualToString:kContentOffsetKeyPath]) {
         
-        if (self.moveView) {
-            CGPoint newOffset = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
-            CGPoint oldOffset = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
-            CGFloat delta = oldOffset.y - newOffset.y;
+        CGFloat delta = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue].y;
+        delta -= [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue].y;
+        
+        if (_isObserving && object == self) {
             
-            [self didScrollWithDelta:delta];
+            //Adjust self scroll offset
+            if (!_isAtTop) {
+                if (self.contentOffset.y + delta >= -self.minimumHeigth && !_isAtTop) {
+                    [self scrollView:self setContentOffset:CGPointMake(self.contentOffset.x, -self.minimumHeigth)];
+                }
+                else if (delta > 0){
+                    [self scrollView:self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y + delta)];
+                }
+            }
         }
+        else if (_isObserving && [object isKindOfClass:[UIScrollView class]]) {
+            
+            //Adjust the observed scrollview's content offset
+            UIScrollView *scrollView = object;
+            _isAtTop = (scrollView.contentOffset.y <= -scrollView.contentInset.top);
+            
+            //Manage scroll up
+            if (self.contentOffset.y < -self.minimumHeigth && !_isAtTop && delta < 0) {
+                [self scrollView:scrollView setContentOffset:[[change objectForKey:NSKeyValueChangeOldKey] CGPointValue]];
+            }
+            //Disable bouncing when scroll down
+            if (_isAtTop) {
+                [self scrollView:scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top)];
+            }
+        }
+    }
+    else if (context == kMXScrollViewKVOContext && [keyPath isEqualToString:kPagesKeyPath]) {
+        self.pages = self.segmentedPager.pages;
+        self.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height + self.parallaxHeader.frame.size.height - self.minimumHeigth);
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+}
+
+- (void) scrollView:(UIScrollView*)scrollView setContentOffset:(CGPoint)offset {
+    _isObserving = NO;
+    scrollView.contentOffset = offset;
+    _isObserving = YES;
 }
 
 - (void)dealloc {
@@ -169,51 +241,50 @@ static NSString* const kFrameKeyPath = @"frame";
 static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosition";
 
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
-    
-    self.scrollView = [[MXScrollView alloc] initWithFrame:(CGRect){
-        .origin = CGPointZero,
-        .size   = self.frame.size
-    }];
-    [self addSubview:self.scrollView];
-    
-    self.scrollView.segmentedPager = self;
-    self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height + height);
-    
-    //Set up the parallax header
     [self.scrollView setParallaxHeaderView:view mode:mode height:height];
-    
-    //Add constraints to the scroll view
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *binding  = @{@"v" : self.scrollView};
-    [self addConstraints:[NSLayoutConstraint
-                               constraintsWithVisualFormat:@"H:|-0-[v]-0-|"
-                               options:NSLayoutFormatDirectionLeadingToTrailing
-                               metrics:nil
-                          views:binding]];
-    
-    [self addConstraints:[NSLayoutConstraint
-                               constraintsWithVisualFormat:@"V:|-0-[v]-0-|"
-                               options:NSLayoutFormatDirectionLeadingToTrailing
-                               metrics:nil
-                          views:binding]];
-    
-    [self.scrollView addSubview:self.container];
-    if(self.segmentedControlPosition == MXSegmentedControlPositionTop) {
-        [self.scrollView addSubview:self.segmentedControl];
-    }
-    
-    // Add KVO
-    [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
-    
-    [self addObserver:self forKeyPath:kSegmentedControlPositionKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
-    
-    self.changeContainerFrame = YES;
 }
 
 #pragma mark Properties
 
 - (MXScrollView *)scrollView {
-    return objc_getAssociatedObject(self, @selector(scrollView));
+    MXScrollView *_scrollView = objc_getAssociatedObject(self, @selector(scrollView));
+    if (!_scrollView) {
+        
+        // Create scroll-view
+        _scrollView = [[MXScrollView alloc] init];
+        _scrollView.segmentedPager = self;
+        
+        //Organize subviews
+        [self addSubview:_scrollView];
+        [_scrollView addSubview:self.container];
+        if(self.segmentedControlPosition == MXSegmentedControlPositionTop) {
+            [_scrollView addSubview:self.segmentedControl];
+        }
+        
+        //Add constraints to the scroll-view
+        _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSDictionary *binding  = @{@"v" : _scrollView};
+        [self addConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|-0-[v]-0-|"
+                              options:NSLayoutFormatDirectionLeadingToTrailing
+                              metrics:nil
+                              views:binding]];
+        
+        [self addConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:|-0-[v]-0-|"
+                              options:NSLayoutFormatDirectionLeadingToTrailing
+                              metrics:nil
+                              views:binding]];
+        
+        // Add KVO
+        [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
+        [self addObserver:self forKeyPath:kSegmentedControlPositionKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
+        
+        self.changeContainerFrame = YES;
+        
+        objc_setAssociatedObject(self, @selector(scrollView), _scrollView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return _scrollView;
 }
 
 - (void)setScrollView:(MXScrollView *)scrollView {
@@ -296,12 +367,17 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
 
 #pragma mark <MXPageProtocol>
 
-- (BOOL) isAtTop {
-    return (self.contentOffset.y <= -self.contentInset.top);
+- (void)addScrollObserver:(NSObject *)observer
+               forKeyPath:(NSString *)keyPath
+                  options:(NSKeyValueObservingOptions)options
+                  context:(void *)context {
+    [self addObserver:observer forKeyPath:keyPath options:options context:context];
 }
 
-- (void) scrollToTop {
-    self.contentOffset = CGPointMake(self.contentOffset.x, -self.contentInset.top);
+- (void)removeScrollObserver:(NSObject *)observer
+                  forKeyPath:(NSString *)keyPath
+                     context:(void *)context {
+    [self removeObserver:observer forKeyPath:keyPath context:context];
 }
 
 @end
@@ -310,12 +386,17 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
 
 #pragma mark <MXPageProtocol>
 
-- (BOOL) isAtTop {
-    return [self.scrollView isAtTop];
+- (void)addScrollObserver:(NSObject *)observer
+               forKeyPath:(NSString *)keyPath
+                  options:(NSKeyValueObservingOptions)options
+                  context:(void *)context {
+    [self.scrollView addScrollObserver:observer forKeyPath:keyPath options:options context:context];
 }
 
-- (void) scrollToTop {
-    [self.scrollView scrollToTop];
+- (void)removeScrollObserver:(NSObject *)observer
+                  forKeyPath:(NSString *)keyPath
+                     context:(void *)context{
+    [self.scrollView removeScrollObserver:observer forKeyPath:keyPath context:context];
 }
 
 @end

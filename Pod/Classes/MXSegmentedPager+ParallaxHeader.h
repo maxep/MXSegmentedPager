@@ -72,16 +72,28 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 @required
 
 /**
- Tells if the view is at its scrolling top.
+ Registers observer to receive KVO notifications for the specified key-path relative to the receiver. You can add the given observer to any scrolling view of your page.
  
- @return Whether or nor the view is at its scroll top.
+ @param observer The object to register for KVO notifications.
+ @param keyPath  The key path, relative to the receiver, of the property to observe.
+ @param options  A combination of the NSKeyValueObservingOptions values that specifies what is included in observation notifications.
+ @param context  Arbitrary data that is passed to observer.
  */
-- (BOOL) isAtTop;
+- (void)addScrollObserver:(NSObject *)observer
+               forKeyPath:(NSString *)keyPath
+                  options:(NSKeyValueObservingOptions)options
+                  context:(void *)context;
 
 /**
- Scrolls to top with no animation.
+ Stops a given object from receiving change notifications for the property specified by a given key-path relative to the receiver and a context.
+ 
+ @param observer The object to remove as an observer.
+ @param keyPath  A key-path, relative to the receiver, for which observer is registered to receive KVO change notifications.
+ @param context  Arbitrary data that more specifically identifies the observer to be removed.
  */
-- (void) scrollToTop;
+- (void)removeScrollObserver:(NSObject *)observer
+                  forKeyPath:(NSString *)keyPath
+                     context:(void *)context;
 
 @end
 

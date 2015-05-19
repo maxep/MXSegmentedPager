@@ -8,6 +8,7 @@
 
 #import "MXParallaxViewController.h"
 #import "MXSegmentedPager+ParallaxHeader.h"
+#import "MXCustomView.h"
 
 @interface MXParallaxViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIImageView       * cover;
@@ -15,6 +16,7 @@
 @property (nonatomic, strong) UITableView       * tableView;
 @property (nonatomic, strong) UIWebView         * webView;
 @property (nonatomic, strong) UITextView        * textView;
+@property (nonatomic, strong) MXCustomView      * customView;
 @end
 
 @implementation MXParallaxViewController
@@ -24,22 +26,8 @@
     self.view.backgroundColor = UIColor.whiteColor;
         
     [self.view addSubview:self.segmentedPager];
-}
-
-- (void)viewWillLayoutSubviews {
     
-    self.segmentedPager.frame = (CGRect){
-        .origin = CGPointZero,
-        .size   = self.view.frame.size
-    };
-    
-    self.cover.frame = (CGRect){
-        .origin         = CGPointZero,
-        .size.width     = self.view.frame.size.width,
-        .size.height    = 150.f
-    };
-    
-    [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:self.cover.frame.size.height];
+    [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:150.f];
     
     self.segmentedPager.minimumHeaderHeight = 20.f;
     
@@ -49,6 +37,13 @@
     self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor orangeColor]};
     self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
     self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
+}
+
+- (void)viewWillLayoutSubviews {
+    self.segmentedPager.frame = (CGRect){
+        .origin = CGPointZero,
+        .size   = self.view.frame.size
+    };
 }
 
 #pragma -mark private methods
@@ -106,6 +101,13 @@
     return _textView;
 }
 
+- (MXCustomView *)customView {
+    if (!_customView) {
+        _customView = [[MXCustomView alloc] init];
+    }
+    return _customView;
+}
+
 #pragma -mark <MXSegmentedPagerDelegate>
 
 - (CGFloat)heightForSegmentedControlInSegmentedPager:(MXSegmentedPager *)segmentedPager {
@@ -115,15 +117,15 @@
 #pragma -mark <MXSegmentedPagerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
-    return 3;
+    return 4;
 }
 
 - (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index {
-    return [@[@"Table", @"Web", @"Text"] objectAtIndex:index];
+    return [@[@"Table", @"Web", @"Text", @"Custom"] objectAtIndex:index];
 }
 
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
-    return [@[self.tableView, self.webView, self.textView] objectAtIndex:index];
+    return [@[self.tableView, self.webView, self.textView, self.customView] objectAtIndex:index];
 }
 
 #pragma -mark <UITableViewDelegate>
@@ -147,7 +149,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"Row %ld", (long)indexPath.row];
+    cell.textLabel.text = (indexPath.row % 2)? @"Text" : @"Web";
     
     return cell;
 }

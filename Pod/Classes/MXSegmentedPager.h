@@ -163,6 +163,8 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  */
 @property (nonatomic, readonly) UIView* selectedPage;
 
+@property (nonatomic, readonly) NSArray *pages;
+
 /**
  Reloads everything from scratch. redisplays pages in container.
  */

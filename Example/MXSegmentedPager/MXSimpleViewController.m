@@ -37,21 +37,19 @@
     self.view.backgroundColor = UIColor.whiteColor;
     
     [self.view addSubview:self.segmentedPager];
+    self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
+    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
+    self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor orangeColor]};
 }
 
 - (void)viewWillLayoutSubviews {
-    
     self.segmentedPager.frame = (CGRect){
         .origin.x       = 0.f,
         .origin.y       = 20.f,
         .size.width     = self.view.frame.size.width,
         .size.height    = self.view.frame.size.height - 20.f
     };
-    
-    self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
-    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
-    self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor orangeColor]};
 }
 
 #pragma -mark Properties
@@ -134,7 +132,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"Row %ld", (long)indexPath.row];
+    cell.textLabel.text = (indexPath.row % 2)? @"Text": @"Web";
     
     return cell;
 }
