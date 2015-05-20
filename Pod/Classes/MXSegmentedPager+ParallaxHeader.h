@@ -70,12 +70,12 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 
 @optional
 /**
- Asks the page if the segmented-pager should should scroll with the view.
+ Asks the page if the segmented-pager should scroll with the view.
  
- @param segmentedPager The segmented-pager. This is the object sendig the message.
+ @param segmentedPager The segmented-pager. This is the object sending the message.
  @param view           An instance of a sub view.
  
- @return YES to allow  segmented-pager and view to scroll together. The default implementation returns YES—segmented-pager and view will scroll together.
+ @return YES to allow segmented-pager and view to scroll together. The default implementation returns YES.
  */
 - (BOOL) segmentedPager:(MXSegmentedPager *)segmentedPager shouldScrollWithView:(UIView*)view;
 
