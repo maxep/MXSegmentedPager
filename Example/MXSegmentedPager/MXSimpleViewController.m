@@ -50,6 +50,7 @@
         .size.width     = self.view.frame.size.width,
         .size.height    = self.view.frame.size.height - 20.f
     };
+    [super viewWillLayoutSubviews];
 }
 
 #pragma -mark Properties

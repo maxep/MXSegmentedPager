@@ -44,6 +44,7 @@
         .origin = CGPointZero,
         .size   = self.view.frame.size
     };
+    [super viewWillLayoutSubviews];
 }
 
 #pragma -mark private methods

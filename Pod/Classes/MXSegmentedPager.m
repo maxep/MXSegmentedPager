@@ -38,6 +38,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self reloadData];
+    [self layoutIfNeeded];
 }
 
 - (void)reloadData {
