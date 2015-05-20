@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/MXSegmentedPager.svg?style=flat)](http://cocoadocs.org/docsets/MXSegmentedPager)
 [![Platform](https://img.shields.io/cocoapods/p/MXSegmentedPager.svg?style=flat)](http://cocoadocs.org/docsets/MXSegmentedPager)
 
-The standard MXSegmentedPager class is a simple paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl). The ParallaxHeader category is an extension that allow you to had a [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) to your segmentated pager.
+The standard MXSegmentedPager class is a simple paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl). The ParallaxHeader category is an extension that allow you to add a [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) to your segmented pager.
 
 
 |           Simple view         |           Parallax view         |
