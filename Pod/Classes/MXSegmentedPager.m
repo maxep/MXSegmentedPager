@@ -142,12 +142,6 @@
     return nil;
 }
 
-- (void)setPages:(NSArray *)pages {
-    [self willChangeValueForKey:@"pages"];
-    _pages = pages;
-    [self didChangeValueForKey:@"pages"];
-}
-
 - (void)setSegmentedControlPosition:(MXSegmentedControlPosition)segmentedControlPosition {
     [self willChangeValueForKey:@"segmentedControlPosition"];
     _segmentedControlPosition = segmentedControlPosition;

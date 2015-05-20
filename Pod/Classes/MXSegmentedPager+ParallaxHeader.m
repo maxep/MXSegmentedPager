@@ -45,7 +45,6 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 
 static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
 static NSString* const kContentOffsetKeyPath = @"contentOffset";
-static NSString* const kPagesKeyPath = @"pages";
 
 - (instancetype)init {
     self = [super init];
