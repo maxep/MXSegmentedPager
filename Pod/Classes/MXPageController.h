@@ -53,20 +53,3 @@
 @property (nonatomic, strong) MXSegmentedPager *segmentedPager;
 
 @end
-
-/**
- While using MXPageController, your child controller can adopt the MXPageControllerProtocol protocol to specify a view that you want to use as page. By default, the page is the controller's view.
- */
-@protocol MXPageControllerProtocol <NSObject>
-/**
- Returns the page.
- */
-@property(nonatomic, readonly) UIView * page;
-
-@end
-
-/**
- UIViewController category that adopt the MXPageControllerProtocol protocol.
- */
-@interface UIViewController (MXPageController) <MXPageControllerProtocol>
-@end

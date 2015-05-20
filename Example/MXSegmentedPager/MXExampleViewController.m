@@ -24,6 +24,11 @@
 #import "MXSimpleViewController.h"
 #import "MXParallaxViewController.h"
 
+@interface MXExampleViewController ()
+@property (nonatomic, strong) MXSimpleViewController    *simpleController;
+@property (nonatomic, strong) MXParallaxViewController  *parallaxController;
+@end
+
 @implementation MXExampleViewController
 
 - (void)viewDidLoad {
@@ -39,11 +44,27 @@
     self.segmentedPager.segmentedControlPosition = MXSegmentedControlPositionBottom;
 }
 
+#pragma mark Properties
+
+- (MXSimpleViewController *)simpleController {
+    if (!_simpleController) {
+        _simpleController = [[MXSimpleViewController alloc] init];
+    }
+    return _simpleController;
+}
+
+-(MXParallaxViewController *)parallaxController {
+    if (!_parallaxController) {
+        _parallaxController = [[MXParallaxViewController alloc] init];
+    }
+    return _parallaxController;
+}
+
 #pragma mark <MXPageControllerDataSource>
 
 - (UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index {
     
-    return (index < 1)? [[MXSimpleViewController alloc] init] : [[MXParallaxViewController alloc] init];
+    return (index < 1)? self.simpleController : self.parallaxController;
 }
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {

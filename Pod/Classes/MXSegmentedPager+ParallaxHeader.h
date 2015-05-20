@@ -64,47 +64,20 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 @end
 
 /**
- While using MXSegmentedPager with Parallax header, your pages can adopt the MXPageDelegate protocol to have a nice effect while scrolling.
- This is useful when you have a page with a scrolling subview (e.g. UIWebView).
+ While using MXSegmentedPager with Parallax header, your pages can adopt the MXPageDelegate protocol to control subview's scrolling effect.
  */
 @protocol MXPageProtocol <NSObject>
 
-@required
-
+@optional
 /**
- Registers observer to receive KVO notifications for the specified key-path relative to the receiver. You can add the given observer to any scrolling view of your page.
+ Asks the page if the segmented-pager should should scroll with the view.
  
- @param observer The object to register for KVO notifications.
- @param keyPath  The key path, relative to the receiver, of the property to observe.
- @param options  A combination of the NSKeyValueObservingOptions values that specifies what is included in observation notifications.
- @param context  Arbitrary data that is passed to observer.
- */
-- (void)addScrollObserver:(NSObject *)observer
-               forKeyPath:(NSString *)keyPath
-                  options:(NSKeyValueObservingOptions)options
-                  context:(void *)context;
-
-/**
- Stops a given object from receiving change notifications for the property specified by a given key-path relative to the receiver and a context.
+ @param segmentedPager The segmented-pager. This is the object sendig the message.
+ @param view           An instance of a sub view.
  
- @param observer The object to remove as an observer.
- @param keyPath  A key-path, relative to the receiver, for which observer is registered to receive KVO change notifications.
- @param context  Arbitrary data that more specifically identifies the observer to be removed.
+ @return YES to allow  segmented-pager and view to scroll together. The default implementation returns YES—segmented-pager and view will scroll together.
  */
-- (void)removeScrollObserver:(NSObject *)observer
-                  forKeyPath:(NSString *)keyPath
-                     context:(void *)context;
+- (BOOL) segmentedPager:(MXSegmentedPager *)segmentedPager shouldScrollWithView:(UIView*)view;
 
 @end
 
-/**
- UIScrollView category that adopt the MXPageProtocol protocol.
- */
-@interface UIScrollView (MXSegmentedPager) <MXPageProtocol>
-@end
-
-/**
- UIWebView category that adopt the MXPageProtocol protocol.
- */
-@interface UIWebView (MXSegmentedPager) <MXPageProtocol>
-@end

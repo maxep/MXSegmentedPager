@@ -36,8 +36,6 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 @property (nonatomic, assign) CGFloat minimumHeigth;
 @property (nonatomic, strong) MXSegmentedPager *segmentedPager;
 @property (nonatomic, strong) MXProgressBlock progressBlock;
-
-@property (nonatomic, weak) NSArray *pages;
 @end
 
 @implementation MXScrollView {
@@ -65,31 +63,9 @@ static NSString* const kPagesKeyPath = @"pages";
                   options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
                   context:kMXScrollViewKVOContext];
         
-        _isObserving = YES;
         _isAtTop = YES;
     }
     return self;
-}
-
-#pragma mark Properties
-
-- (void)setSegmentedPager:(MXSegmentedPager *)segmentedPager {
-    @try {
-        [_segmentedPager removeObserver:self forKeyPath:kPagesKeyPath context:kMXScrollViewKVOContext];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Exception while removing observer: %@", exception);
-    }
-    @finally {
-        _segmentedPager = segmentedPager;
-        [_segmentedPager addObserver:self forKeyPath:kPagesKeyPath options:NSKeyValueObservingOptionNew context:kMXScrollViewKVOContext];
-    }
-}
-
-- (void)setPages:(NSArray *)pages {
-    [self removeScrollObservers];
-    _pages = pages;
-    [self addScrollObservers];
 }
 
 #pragma mark <UIScrollViewDelegate>
@@ -122,7 +98,16 @@ static NSString* const kPagesKeyPath = @"pages";
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return YES;
+    UIView<MXPageProtocol> *page = (id) self.segmentedPager.selectedPage;
+    BOOL shouldScroll = YES;
+    if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
+        shouldScroll = [page segmentedPager:self.segmentedPager shouldScrollWithView:otherGestureRecognizer.view];
+    }
+    if (shouldScroll) {
+        [self removeObserverFromView:otherGestureRecognizer.view];
+        [self addObserverToView:otherGestureRecognizer.view];
+    }
+    return shouldScroll;
 }
 
 #pragma mark Private methods
@@ -144,32 +129,32 @@ static NSString* const kPagesKeyPath = @"pages";
 
 #pragma mark KVO
 
-- (void) addScrollObservers {
-    
-    for (UIView<MXPageProtocol> *page in _pages) {
-        if ([page respondsToSelector:@selector(addScrollObserver:forKeyPath:options:context:)]) {
-            [page addScrollObserver:self
-                         forKeyPath:kContentOffsetKeyPath
-                            options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
-                            context:kMXScrollViewKVOContext];
-        }
+- (void) addObserverToView:(UIView *)view {
+    _isObserving = NO;
+    if ([view isKindOfClass:[UIScrollView class]]) {
+        [view addObserver:self
+               forKeyPath:kContentOffsetKeyPath
+                  options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
+                  context:kMXScrollViewKVOContext];
     }
+    _isObserving = YES;
 }
 
-- (void) removeScrollObservers {
-    
-    for (UIView<MXPageProtocol> *page in _pages) {
-        @try {
-            if ([page respondsToSelector:@selector(removeScrollObserver:forKeyPath:context:)]) {
-                [page removeScrollObserver:self
-                                forKeyPath:kContentOffsetKeyPath
-                                   context:kMXScrollViewKVOContext];
-            }
-        }
-        @catch (NSException *exception) {
-            NSLog(@"Exception while removing observer: %@", exception);
+- (void) removeObserverFromView:(UIView *)view {
+    @try {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            [view removeObserver:self
+                      forKeyPath:kContentOffsetKeyPath
+                         context:kMXScrollViewKVOContext];
         }
     }
+    @catch (NSException *exception) {}
+}
+
+- (void) scrollView:(UIScrollView*)scrollView setContentOffset:(CGPoint)offset {
+    _isObserving = NO;
+    scrollView.contentOffset = offset;
+    _isObserving = YES;
 }
 
 //This is where the magic happens...
@@ -208,19 +193,9 @@ static NSString* const kPagesKeyPath = @"pages";
             }
         }
     }
-    else if (context == kMXScrollViewKVOContext && [keyPath isEqualToString:kPagesKeyPath]) {
-        self.pages = self.segmentedPager.pages;
-        self.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height + self.parallaxHeader.frame.size.height - self.minimumHeigth);
-    }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
-}
-
-- (void) scrollView:(UIScrollView*)scrollView setContentOffset:(CGPoint)offset {
-    _isObserving = NO;
-    scrollView.contentOffset = offset;
-    _isObserving = YES;
 }
 
 - (void)dealloc {
@@ -340,6 +315,7 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
                     .size.height    = height
                 };
                 
+                self.scrollView.contentSize = CGSizeMake(self.frame.size.width, self.frame.size.height + self.parallaxHeader.frame.size.height - self.minimumHeaderHeight);
                 self.changeContainerFrame = YES;
             }
         }
@@ -359,44 +335,6 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-@end
-
-@implementation UIScrollView (MXSegmentedPager)
-
-#pragma mark <MXPageProtocol>
-
-- (void)addScrollObserver:(NSObject *)observer
-               forKeyPath:(NSString *)keyPath
-                  options:(NSKeyValueObservingOptions)options
-                  context:(void *)context {
-    [self addObserver:observer forKeyPath:keyPath options:options context:context];
-}
-
-- (void)removeScrollObserver:(NSObject *)observer
-                  forKeyPath:(NSString *)keyPath
-                     context:(void *)context {
-    [self removeObserver:observer forKeyPath:keyPath context:context];
-}
-
-@end
-
-@implementation UIWebView (MXSegmentedPager)
-
-#pragma mark <MXPageProtocol>
-
-- (void)addScrollObserver:(NSObject *)observer
-               forKeyPath:(NSString *)keyPath
-                  options:(NSKeyValueObservingOptions)options
-                  context:(void *)context {
-    [self.scrollView addScrollObserver:observer forKeyPath:keyPath options:options context:context];
-}
-
-- (void)removeScrollObserver:(NSObject *)observer
-                  forKeyPath:(NSString *)keyPath
-                     context:(void *)context{
-    [self.scrollView removeScrollObserver:observer forKeyPath:keyPath context:context];
 }
 
 @end

@@ -72,19 +72,11 @@
 
 #pragma mark <MXPageProtocol>
 
-- (void)addScrollObserver:(NSObject *)observer
-               forKeyPath:(NSString *)keyPath
-                  options:(NSKeyValueObservingOptions)options
-                  context:(void *)context {
-    [self.table1 addScrollObserver:observer forKeyPath:keyPath options:options context:context];
-    [self.table2 addScrollObserver:observer forKeyPath:keyPath options:options context:context];
-}
-
-- (void)removeScrollObserver:(NSObject *)observer
-                  forKeyPath:(NSString *)keyPath
-                     context:(void *)context{
-    [self.table1 removeScrollObserver:observer forKeyPath:keyPath context:context];
-    [self.table2 removeScrollObserver:observer forKeyPath:keyPath context:context];
+- (BOOL)segmentedPager:(MXSegmentedPager *)segmentedPager shouldScrollWithView:(UIView *)view {
+    if (view == self.table2) {
+        return NO;
+    }
+    return YES;
 }
 
 @end
