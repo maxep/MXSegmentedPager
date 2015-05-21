@@ -237,8 +237,13 @@ static void * const kMXSegmentedPagerKVOContext = (void*)&kMXSegmentedPagerKVOCo
 static NSString* const kFrameKeyPath = @"frame";
 static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosition";
 
+#pragma mark VGParallaxHeader
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
     [self.scrollView setParallaxHeaderView:view mode:mode height:height];
+}
+
+- (VGParallaxHeader *)parallaxHeader {
+    return self.scrollView.parallaxHeader;
 }
 
 #pragma mark Properties
@@ -286,10 +291,6 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
 
 - (void)setScrollView:(MXScrollView *)scrollView {
     objc_setAssociatedObject(self, @selector(scrollView), scrollView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (VGParallaxHeader *)parallaxHeader {
-    return self.scrollView.parallaxHeader;
 }
 
 - (CGFloat)minimumHeaderHeight {

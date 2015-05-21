@@ -53,11 +53,17 @@
     return _simpleController;
 }
 
--(MXParallaxViewController *)parallaxController {
+- (MXParallaxViewController *)parallaxController {
     if (!_parallaxController) {
         _parallaxController = [[MXParallaxViewController alloc] init];
     }
     return _parallaxController;
+}
+
+#pragma -mark <MXSegmentedPagerDelegate>
+
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didSelectViewWithTitle:(NSString *)title {
+    NSLog(@"%@ page selected.", title);
 }
 
 #pragma mark <MXPageControllerDataSource>

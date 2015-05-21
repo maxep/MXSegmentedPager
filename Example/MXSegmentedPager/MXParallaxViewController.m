@@ -115,6 +115,10 @@
     return 30.f;
 }
 
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didSelectViewWithTitle:(NSString *)title {
+    NSLog(@"%@ page selected.", title);
+}
+
 #pragma -mark <MXSegmentedPagerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {

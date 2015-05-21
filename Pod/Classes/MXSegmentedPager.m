@@ -28,12 +28,13 @@
 @property (nonatomic, strong) UIScrollView* container;
 
 @property (nonatomic, strong) NSArray   *boundaries;
-@property (nonatomic, assign) BOOL      moveSegment;
 @property (nonatomic, strong) NSArray   *pages;
 @property (nonatomic, strong) NSArray   *titles;
 @end
 
-@implementation MXSegmentedPager
+@implementation MXSegmentedPager {
+    BOOL _moveSegment;
+}
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -155,20 +156,24 @@
 - (void)pageControlValueChanged:(HMSegmentedControl*)segmentedControl {
     NSInteger index = segmentedControl.selectedSegmentIndex;
     
+    _moveSegment = NO;
     CGFloat x = self.frame.size.width * index;
     [self.container setContentOffset:CGPointMake(x, 0) animated:YES];
+    
     [self changedToIndex:index];
 }
 
 #pragma mark <UIScrollViewDelegate>
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    self.moveSegment = YES;
+    if (scrollView == self.container) {
+        _moveSegment = YES;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    if (self.moveSegment && scrollView == self.container && self.pages.count > 1) {
+    if (scrollView == self.container && self.pages.count > 1 && _moveSegment) {
         NSInteger curIndex = self.segmentedControl.selectedSegmentIndex;
         NSInteger index = 0;
         for (NSInteger i = 0; i < self.boundaries.count - 2;) {
@@ -186,7 +191,6 @@
         if (curIndex != index) {
             [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
             [self changedToIndex:index];
-            self.moveSegment = NO;
         }
     }
 }
