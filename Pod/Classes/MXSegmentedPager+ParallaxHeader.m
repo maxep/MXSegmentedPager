@@ -21,7 +21,6 @@
 // THE SOFTWARE.
 
 #import <objc/runtime.h>
-
 #import "MXSegmentedPager+ParallaxHeader.h"
 
 typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
@@ -36,6 +35,8 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 @property (nonatomic, assign) CGFloat minimumHeigth;
 @property (nonatomic, strong) MXSegmentedPager *segmentedPager;
 @property (nonatomic, strong) MXProgressBlock progressBlock;
+
+@property (nonatomic, strong) NSMutableArray *observedViews;
 @end
 
 @implementation MXScrollView {
@@ -57,12 +58,12 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
         self.autoresizingMask =(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         self.contentMode = UIViewContentModeTopRight;
         
+        self.observedViews = [NSMutableArray array];
+        
         self.minimumHeigth = 0;
         [self addObserver:self forKeyPath:kContentOffsetKeyPath
                   options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
                   context:kMXScrollViewKVOContext];
-        
-        _isAtTop = YES;
     }
     return self;
 }
@@ -82,6 +83,10 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
     }
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self removeObservedViews];
+}
+
 #pragma mark <UIGestureRecognizerDelegate>
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
@@ -97,19 +102,19 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    
     UIView<MXPageProtocol> *page = (id) self.segmentedPager.selectedPage;
     BOOL shouldScroll = YES;
+    
     if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
         shouldScroll = [page segmentedPager:self.segmentedPager shouldScrollWithView:otherGestureRecognizer.view];
     }
+    
     if (shouldScroll) {
-        [self removeObserverFromView:otherGestureRecognizer.view];
-        [self addObserverToView:otherGestureRecognizer.view];
+        [self addObservedView:otherGestureRecognizer.view];
     }
     return shouldScroll;
 }
-
-#pragma mark Private methods
 
 - (MXPanGestureDirection) getDirectionOfPanGestureRecognizer:(UIPanGestureRecognizer*) panGestureRecognizer {
     
@@ -148,12 +153,6 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
         }
     }
     @catch (NSException *exception) {}
-}
-
-- (void) scrollView:(UIScrollView*)scrollView setContentOffset:(CGPoint)offset {
-    _isObserving = NO;
-    scrollView.contentOffset = offset;
-    _isObserving = YES;
 }
 
 //This is where the magic happens...
@@ -195,6 +194,28 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+}
+
+#pragma mark Scrolling views handlers
+
+- (void) addObservedView:(UIView *)view {
+    if (![self.observedViews containsObject:view]) {
+        [self.observedViews addObject:view];
+        [self addObserverToView:view];
+    }
+}
+
+- (void) removeObservedViews {
+    for (UIView *view in self.observedViews) {
+        [self removeObserverFromView:view];
+    }
+    [self.observedViews removeAllObjects];
+}
+
+- (void) scrollView:(UIScrollView*)scrollView setContentOffset:(CGPoint)offset {
+    _isObserving = NO;
+    scrollView.contentOffset = offset;
+    _isObserving = YES;
 }
 
 - (void)dealloc {
