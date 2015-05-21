@@ -160,18 +160,20 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
     
     if (context == kMXScrollViewKVOContext && [keyPath isEqualToString:kContentOffsetKeyPath]) {
         
-        CGFloat delta = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue].y;
-        delta -= [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue].y;
+        CGPoint new = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
+        CGPoint old = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
+        
+        if (old.y == new.y) return;
         
         if (_isObserving && object == self) {
             
             //Adjust self scroll offset
             if (!_isAtTop) {
-                if (self.contentOffset.y + delta >= -self.minimumHeigth && !_isAtTop) {
+                if (old.y >= -self.minimumHeigth) {
                     [self scrollView:self setContentOffset:CGPointMake(self.contentOffset.x, -self.minimumHeigth)];
                 }
-                else if (delta > 0){
-                    [self scrollView:self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y + delta)];
+                else if ((old.y - new.y) > 0) {
+                    [self scrollView:self setContentOffset:old];
                 }
             }
         }
@@ -182,8 +184,8 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
             _isAtTop = (scrollView.contentOffset.y <= -scrollView.contentInset.top);
             
             //Manage scroll up
-            if (self.contentOffset.y < -self.minimumHeigth && !_isAtTop && delta < 0) {
-                [self scrollView:scrollView setContentOffset:[[change objectForKey:NSKeyValueChangeOldKey] CGPointValue]];
+            if (self.contentOffset.y < -self.minimumHeigth && !_isAtTop && (old.y - new.y) < 0) {
+                [self scrollView:scrollView setContentOffset:old];
             }
             //Disable bouncing when scroll down
             if (_isAtTop) {
