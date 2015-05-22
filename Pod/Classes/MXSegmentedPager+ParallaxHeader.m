@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 
 @implementation MXScrollView {
     BOOL _isObserving;
-    BOOL _isAtTop;
+    BOOL _lock;
 }
 
 static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
@@ -84,7 +84,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    _isAtTop = YES;
+    _lock = NO;
     [self removeObservedViews];
 }
 
@@ -167,29 +167,23 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
         if (old.y == new.y) return;
         
         if (_isObserving && object == self) {
-            
             //Adjust self scroll offset
-            if (!_isAtTop) {
-                if (old.y >= -self.minimumHeigth) {
-                    [self scrollView:self setContentOffset:CGPointMake(self.contentOffset.x, -self.minimumHeigth)];
-                }
-                else if ((old.y - new.y) > 0) {
-                    [self scrollView:self setContentOffset:old];
-                }
+            if ((old.y - new.y) > 0 && _lock) {
+                [self scrollView:self setContentOffset:old];
             }
         }
         else if (_isObserving && [object isKindOfClass:[UIScrollView class]]) {
             
             //Adjust the observed scrollview's content offset
             UIScrollView *scrollView = object;
-            _isAtTop = (scrollView.contentOffset.y <= -scrollView.contentInset.top);
+            _lock = !(scrollView.contentOffset.y <= -scrollView.contentInset.top);
             
             //Manage scroll up
-            if (self.contentOffset.y < -self.minimumHeigth && !_isAtTop && (old.y - new.y) < 0) {
+            if (self.contentOffset.y < -self.minimumHeigth && _lock && (old.y - new.y) < 0) {
                 [self scrollView:scrollView setContentOffset:old];
             }
             //Disable bouncing when scroll down
-            if (_isAtTop) {
+            if (!_lock) {
                 [self scrollView:scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top)];
             }
         }
