@@ -49,10 +49,3 @@ Documentation is available through [CocoaDocs](http://cocoadocs.org/docsets/MXSe
 ## License
                                                
 MXSegmentedPager is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
-
-
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/maxep/mxsegmentedpager/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
