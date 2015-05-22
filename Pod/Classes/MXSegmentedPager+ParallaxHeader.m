@@ -84,6 +84,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    _isAtTop = YES;
     [self removeObservedViews];
 }
 
@@ -238,6 +239,7 @@ static NSString* const kFrameKeyPath = @"frame";
 static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosition";
 
 #pragma mark VGParallaxHeader
+
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
     [self.scrollView setParallaxHeaderView:view mode:mode height:height];
 }
