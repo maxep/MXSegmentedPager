@@ -52,3 +52,7 @@ MXSegmentedPager is available under the MIT license. See the [LICENSE](LICENSE) 
 
 
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/maxep/mxsegmentedpager/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
