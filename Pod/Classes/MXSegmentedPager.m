@@ -247,11 +247,11 @@
 - (void) layoutWithHeight:(CGFloat)height {
     
     CGPoint position = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
-        CGPointZero : CGPointMake(0.f, self.frame.size.height - height);
+        CGPointMake(self.segmentedControlEdgeInsets.left, self.segmentedControlEdgeInsets.top) : CGPointMake(self.segmentedControlEdgeInsets.left, self.frame.size.height - height - self.segmentedControlEdgeInsets.bottom);
     
     CGRect subFrame = (CGRect) {
         .origin         = position,
-        .size.width     = self.frame.size.width,
+        .size.width     = self.frame.size.width - self.segmentedControlEdgeInsets.left - self.segmentedControlEdgeInsets.right,
         .size.height    = height
     };
     self.segmentedControl.frame = subFrame;
@@ -262,7 +262,7 @@
     subFrame = (CGRect) {
         .origin         = position,
         .size.width     = self.frame.size.width,
-        .size.height    = self.frame.size.height - height
+        .size.height    = self.frame.size.height - height - self.segmentedControl.frame.origin.y - self.segmentedControlEdgeInsets.bottom
     };
     self.container.frame = subFrame;
 }
