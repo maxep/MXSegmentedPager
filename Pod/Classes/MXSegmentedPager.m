@@ -115,6 +115,7 @@
                               action:@selector(pageControlValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
         [self addSubview:_segmentedControl];
+        self.segmentedControlEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     }
     return _segmentedControl;
 }
@@ -149,6 +150,11 @@
     _segmentedControlPosition = segmentedControlPosition;
     [self layoutWithHeight:self.segmentedControl.frame.size.height];
     [self didChangeValueForKey:@"segmentedControlPosition"];
+}
+
+- (void)setSegmentedControlEdgeInsets:(UIEdgeInsets)segmentedControlEdgeInsets {
+    _segmentedControlEdgeInsets = segmentedControlEdgeInsets;
+    [self reloadData];
 }
 
 #pragma mark HMSegmentedControl target
