@@ -1,4 +1,4 @@
-// MXPageController.m
+// MXSegmentedPagerController.m
 //
 // Copyright (c) 2015 Maxime Epain
 //

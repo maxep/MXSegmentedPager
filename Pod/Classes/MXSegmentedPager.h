@@ -22,6 +22,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HMSegmentedControl.h"
+#import "MXPagerView.h"
 
 /**
  The segmented control position options relative to the segmented-pager.
@@ -78,7 +79,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 
 /**
  MXSegmentedPager data source protocol.
- The MXSegmentedPager protocol is adopted by an object that mediates the application’s data model for a MXSegmentedPager object. The data source provides the segmented-pager object with the information it needs to construct and modify a MXSegmentedPager view.
+ The MXSegmentedPagerDataSource protocol is adopted by an object that mediates the application’s data model for a MXSegmentedPager object. The data source provides the segmented-pager object with the information it needs to construct and modify a MXSegmentedPager view.
  
  The required methods of the protocol provide the pages to be displayed by the segmented-pager as well as inform the MXSegmentedPager object about the number of pages. The data source may implement optional methods to configure the segmented control.
  */
@@ -154,17 +155,12 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 @property (nonatomic, assign) MXSegmentedControlPosition segmentedControlPosition;
 
 /**
- The pages container. The container will be placed below the segmented control.
+ The pager. The pager will be placed below the segmented control.
  */
-@property (nonatomic, readonly) UIScrollView* container;
+@property (nonatomic, readonly) MXPagerView* pager;
 
 /**
- The current selected page view.
- */
-@property (nonatomic, readonly) UIView* selectedPage;
-
-/**
- Reloads everything from scratch. redisplays pages in container.
+ Reloads everything from scratch. redisplays pages.
  */
 - (void) reloadData;
 
