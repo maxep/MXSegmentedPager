@@ -233,7 +233,8 @@
         CGRect frame = (CGRect){
             .origin.x   = width,
             .origin.y   = 0.f,
-            .size       = self.container.frame.size
+            .size.width     = self.container.frame.size.width,
+            .size.height    = self.container.frame.size.height - self.segmentedControlEdgeInsets.top - self.segmentedControlEdgeInsets.bottom
         };
         view.frame = frame;
         width += self.frame.size.width;
@@ -253,7 +254,7 @@
 - (void) layoutWithHeight:(CGFloat)height {
     
     CGPoint position = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
-        CGPointMake(self.segmentedControlEdgeInsets.left, self.segmentedControlEdgeInsets.top) : CGPointMake(self.segmentedControlEdgeInsets.left, self.frame.size.height - height - self.segmentedControlEdgeInsets.bottom);
+    CGPointMake(self.segmentedControlEdgeInsets.left, self.segmentedControlEdgeInsets.top) : CGPointMake(self.segmentedControlEdgeInsets.left, self.frame.size.height - height - self.segmentedControlEdgeInsets.bottom);
     
     CGRect subFrame = (CGRect) {
         .origin         = position,
@@ -262,13 +263,12 @@
     };
     self.segmentedControl.frame = subFrame;
     
-    position = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
-        CGPointMake(0.f, height) : CGPointZero;
+    position = (self.segmentedControlPosition == MXSegmentedControlPositionTop)? CGPointMake(0, height + self.segmentedControlEdgeInsets.top + self.segmentedControlEdgeInsets.bottom) : CGPointZero;
     
     subFrame = (CGRect) {
         .origin         = position,
         .size.width     = self.frame.size.width,
-        .size.height    = self.frame.size.height - height - self.segmentedControl.frame.origin.y - self.segmentedControlEdgeInsets.bottom
+        .size.height    = self.frame.size.height - height
     };
     self.container.frame = subFrame;
 }
