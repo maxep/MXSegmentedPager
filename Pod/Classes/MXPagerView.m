@@ -22,6 +22,15 @@
 
 #import "MXPagerView.h"
 
+#define MXPagerViewLoadPage(index) { \
+    [self loadPageAtIndex:index]; \
+    if(self.behavior == MXPagerViewBehaviorSlide) { \
+        [self loadPageAtIndex:(index - 1)]; \
+        [self loadPageAtIndex:index]; \
+        [self loadPageAtIndex:(index + 1)]; \
+    } \
+}
+
 @interface MXPagerView ()
 @property (nonatomic, strong) NSMutableDictionary *pages;
 @property (nonatomic, assign) NSInteger index;
@@ -46,6 +55,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
         self.showsVerticalScrollIndicator = NO;
         self.showsHorizontalScrollIndicator = NO;
         self.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+        self.behavior = MXPagerViewBehaviorSlide;
         
         _index = 0;
         [self addObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset))
@@ -81,17 +91,20 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     
     self.count = [self.dataSource numberOfPagesInPagerView:self];
     
-    [self loadPageAtIndex:(self.index - 1)];
-    [self loadPageAtIndex:self.index];
-    [self loadPageAtIndex:(self.index + 1)];
+    MXPagerViewLoadPage(self.index);
     
     self.contentSize    = CGSizeMake(self.frame.size.width * self.count, self.frame.size.height);
     self.contentOffset  = CGPointMake(self.frame.size.width * self.index, 0);
 }
 
-- (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated {
+- (void) showPageAtIndex:(NSInteger)index animated:(BOOL)animated {
     CGFloat x = self.frame.size.width * index;
-    [self setContentOffset:CGPointMake(x, 0) animated:animated];
+    if (self.behavior == MXPagerViewBehaviorSlide) {
+        [self setContentOffset:CGPointMake(x, 0) animated:animated];
+    }
+    else {
+        self.contentOffset = CGPointMake(x, 0);
+    }
 }
 
 #pragma mark Properties
@@ -115,6 +128,10 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     return self.pages[key];
 }
 
+- (void)setBehavior:(MXPagerViewBehavior)behavior {
+    _behavior = behavior;
+    self.scrollEnabled = (behavior == MXPagerViewBehaviorSlide);
+}
 #pragma Private Methods
 
 - (void) didScrollFromPosition:(NSInteger)fromPosition ToPosition:(NSInteger)toPosition {
@@ -141,10 +158,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
         if ([self.delegate respondsToSelector:@selector(pagerView:willMoveToPageAtIndex:)]) {
             [self.delegate pagerView:self willMoveToPageAtIndex:index];
         }
-        
-        [self loadPageAtIndex:(index - 1)];
-        [self loadPageAtIndex:index];
-        [self loadPageAtIndex:(index + 1)];
+        MXPagerViewLoadPage(index);
     }
 }
 

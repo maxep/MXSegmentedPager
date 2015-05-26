@@ -22,6 +22,16 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ The pager options.
+ */
+typedef NS_ENUM(NSInteger, MXPagerViewBehavior) {
+    /** The slide behavior lets the user to slide between pages. */
+    MXPagerViewBehaviorSlide,
+    /** The tab behavior presents pages programmatically without animation. */
+    MXPagerViewBehaviorTab
+};
+
 @class MXPagerView;
 
 /**
@@ -98,17 +108,19 @@
  */
 @property (nonatomic, readonly) UIView *selectedPage;
 
+@property (nonatomic, assign) MXPagerViewBehavior behavior;
+
 /**
  Reloads everything from scratch. redisplays pages.
  */
 - (void) reloadData;
 
 /**
- Scrolls through the pager until a page identified by index is at a particular location on the screen.
+ show through the pager until a page identified by index is at a particular location on the screen.
  
  @param index       An index that identifies a page.
- @param animated    YES if you want to animate the change in position; NO if it should be immediate.
+ @param animated    YES if you want to animate the change in position; NO if it should be immediate. Animated parameter has no effect on MXPagerViewBehaviorTab.
  */
-- (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated;
+- (void) showPageAtIndex:(NSInteger)index animated:(BOOL)animated;
 
 @end

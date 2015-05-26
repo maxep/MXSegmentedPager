@@ -80,7 +80,7 @@
 
 - (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated {
     [self.segmentedControl setSelectedSegmentIndex:index animated:animated];
-    [self.pager scrollToPageAtIndex:index animated:animated];
+    [self.pager showPageAtIndex:index animated:animated];
 }
 
 #pragma mark Properties
@@ -122,7 +122,7 @@
 
 - (void)pageControlValueChanged:(HMSegmentedControl*)segmentedControl {
     _moveSegment = NO;
-    [self.pager scrollToPageAtIndex:segmentedControl.selectedSegmentIndex animated:YES];
+    [self.pager showPageAtIndex:segmentedControl.selectedSegmentIndex animated:YES];
 }
 
 #pragma mark <MXPagerViewDelegate>
