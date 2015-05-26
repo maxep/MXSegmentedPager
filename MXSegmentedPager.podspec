@@ -25,9 +25,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'MXSegmentedPager' => ['Pod/Assets/*.png']
-  }
   s.dependency 'HMSegmentedControl', '~> 1.5.1'
   s.dependency 'VGParallaxHeader', '~> 0.0.6'
 end

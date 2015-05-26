@@ -45,7 +45,7 @@
 /**
  The MXPageController class creates a controller object that manages a segmengted-pager view.
  */
-@interface MXPageController : UIViewController <MXSegmentedPagerDelegate, MXPageControllerDataSource>
+@interface MXSegmentedPagerController : UIViewController <MXSegmentedPagerDelegate, MXPageControllerDataSource>
 
 /**
  Returns the segmengted-pager view managed by the controller object.

@@ -20,9 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "MXPageController.h"
+#import "MXSegmentedPagerController.h"
 
-@implementation MXPageController
+@implementation MXSegmentedPagerController
 
 - (void)loadView {
     self.view = self.segmentedPager;
