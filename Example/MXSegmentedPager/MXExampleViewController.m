@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.segmentedPager.pager.behavior = MXPagerViewBehaviorTab;
+    self.segmentedPager.pager.transitionStyle = MXPagerViewTransitionStyleTab;
     
     self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
     self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};

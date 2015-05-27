@@ -46,7 +46,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
         self.showsVerticalScrollIndicator = NO;
         self.showsHorizontalScrollIndicator = NO;
         self.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-        self.behavior = MXPagerViewBehaviorSlide;
+        self.transitionStyle = MXPagerViewTransitionStyleScroll;
         
         self.index = 0;
         [self addObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset))
@@ -89,7 +89,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     CGFloat x = self.frame.size.width * index;
     
     //The tab behavior disable animation
-    animated = (self.behavior == MXPagerViewBehaviorTab)? NO : animated;
+    animated = (self.transitionStyle == MXPagerViewTransitionStyleTab)? NO : animated;
     
     [self willMovePageToIndex:index];
     [self setContentOffset:CGPointMake(x, 0) animated:animated];
@@ -120,10 +120,10 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     return self.pages[key];
 }
 
-- (void)setBehavior:(MXPagerViewBehavior)behavior {
-    _behavior = behavior;
+- (void)setTransitionStyle:(MXPagerViewTransitionStyle)transitionStyle {
+    _transitionStyle = transitionStyle;
     //the tab behavior disable the scroll
-    self.scrollEnabled = (behavior != MXPagerViewBehaviorTab);
+    self.scrollEnabled = (transitionStyle != MXPagerViewTransitionStyleTab);
 }
 
 #pragma Private Methods
@@ -185,7 +185,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     loadPage(index);
     
     //In  case of slide behavior, its loads the neighbors as well.
-    if (self.behavior == MXPagerViewBehaviorSlide) {
+    if (self.transitionStyle == MXPagerViewTransitionStyleScroll) {
         loadPage(index - 1);
         loadPage(index + 1);
     }
@@ -201,7 +201,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
         if (index != self.index) {
             
             //In case if slide behavior, it keeps the neighbors, otherwise it unloads all hidden pages.
-            if ((self.behavior == MXPagerViewBehaviorTab) ||
+            if ((self.transitionStyle == MXPagerViewTransitionStyleTab) ||
                 ( (index != self.index-1) && (index != self.index+1) )) {
                 
                 UIView *page = self.pages[key];

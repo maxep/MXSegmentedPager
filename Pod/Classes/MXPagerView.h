@@ -25,11 +25,11 @@
 /**
  The pager options.
  */
-typedef NS_ENUM(NSInteger, MXPagerViewBehavior) {
+typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
     /** The slide behavior lets the user to slide between pages. */
-    MXPagerViewBehaviorSlide,
+    MXPagerViewTransitionStyleScroll,
     /** The tab behavior presents pages programmatically without animation. */
-    MXPagerViewBehaviorTab
+    MXPagerViewTransitionStyleTab
 };
 
 @class MXPagerView;
@@ -111,7 +111,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewBehavior) {
 /**
  The pager behavior.
  */
-@property (nonatomic, assign) MXPagerViewBehavior behavior;
+@property (nonatomic, assign) MXPagerViewTransitionStyle transitionStyle;
 
 /**
  Reloads everything from scratch. redisplays pages.
