@@ -23,12 +23,12 @@
 #import <UIKit/UIKit.h>
 
 /**
- The pager options.
+ The pager transition styles.
  */
 typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
-    /** The slide behavior lets the user to slide between pages. */
+    /** The scroll transition style allows the user to slide between pages. */
     MXPagerViewTransitionStyleScroll,
-    /** The tab behavior presents pages programmatically without animation. */
+    /** The tab transition style presents pages programmatically without animation. */
     MXPagerViewTransitionStyleTab
 };
 
@@ -109,7 +109,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 @property (nonatomic, readonly) UIView *selectedPage;
 
 /**
- The pager behavior.
+ The pager transition style.
  */
 @property (nonatomic, assign) MXPagerViewTransitionStyle transitionStyle;
 
