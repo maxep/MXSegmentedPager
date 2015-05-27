@@ -20,12 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <objc/runtime.h>
 #import "MXPagerView.h"
+
+@interface UIView (ReuseIdentifier)
+@property (nonatomic, copy) NSString *reuseIdentifier;
+@end
+
+@implementation UIView (ReuseIdentifier)
+
+- (NSString *)reuseIdentifier {
+    return objc_getAssociatedObject(self, @selector(reuseIdentifier));
+}
+
+- (void)setReuseIdentifier:(NSString *)reuseIdentifier {
+    objc_setAssociatedObject(self, @selector(reuseIdentifier), reuseIdentifier, OBJC_ASSOCIATION_COPY);
+}
+
+@end
 
 @interface MXPagerView ()
 @property (nonatomic, strong) NSMutableDictionary *pages;
 @property (nonatomic, assign) NSInteger index;
 @property (nonatomic, assign) NSInteger count;
+
+@property (nonatomic, strong) NSMutableDictionary   *registration;
+@property (nonatomic, strong) NSMutableArray        *reuseQueue;
 @end
 
 @implementation MXPagerView
@@ -95,6 +115,43 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     [self setContentOffset:CGPointMake(x, 0) animated:animated];
 }
 
+#pragma mark Reusable Pages
+
+- (void)registerNib:(UINib *)nib forPageReuseIdentifier:(NSString *)identifier {
+    [self.registration setValue:nib forKey:identifier];
+}
+
+- (void)registerClass:(Class)pageClass forPageReuseIdentifier:(NSString *)identifier {
+    [self.registration setValue:NSStringFromClass(pageClass) forKey:identifier];
+}
+
+- (id)dequeueReusablePageWithIdentifier:(NSString *)identifier {
+    
+    for (UIView *page in self.reuseQueue) {
+        if (!page.superview && [page.reuseIdentifier isEqualToString:identifier]) {
+            return page;
+        }
+    }
+    
+    id builder = self.registration[identifier];
+    UIView *page = nil;
+    
+    if ([builder isKindOfClass:[UINib class]]) {
+        page = [[(UINib*)builder instantiateWithOwner:nil options:nil] firstObject];
+    }
+    else if ([builder isKindOfClass:[NSString class]]) {
+        page = [[NSClassFromString(builder) alloc] init];
+    }
+    else {
+        page = [[UIView alloc] init];
+    }
+    
+    page.reuseIdentifier = identifier;
+    [self.reuseQueue addObject:page];
+    
+    return page;
+}
+
 #pragma mark Properties
 
 - (void)setIndex:(NSInteger)index {
@@ -124,6 +181,19 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     _transitionStyle = transitionStyle;
     //the tab behavior disable the scroll
     self.scrollEnabled = (transitionStyle != MXPagerViewTransitionStyleTab);
+}
+
+- (NSMutableDictionary *)registration {
+    if (_registration) {
+        _registration = [NSMutableDictionary dictionary];
+    }
+    return _registration;
+}
+- (NSMutableArray *)reuseQueue {
+    if (!_reuseQueue) {
+        _reuseQueue = [NSMutableArray array];
+    }
+    return _reuseQueue;
 }
 
 #pragma Private Methods

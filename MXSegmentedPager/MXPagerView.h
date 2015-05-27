@@ -126,4 +126,39 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  */
 - (void) showPageAtIndex:(NSInteger)index animated:(BOOL)animated;
 
+/**
+ Registers a nib object containing a page with the pager view under a specified identifier.
+ 
+ Before dequeueing any pages, call this method or the ```registerClass:forPageReuseIdentifier:``` method to tell the pager view how to create new pages. If a page of the specified type is not currently in a reuse queue, the pager view uses the provided information to create a new page object automatically.
+ 
+ If you previously registered a class or nib file with the same reuse identifier, the nib you specify in the nib parameter replaces the old entry. You may specify nil for nib if you want to unregister the nib from the specified reuse identifier.
+ 
+ @param nib        A nib object that specifies the nib file to use to create the page.
+ @param identifier The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
+ */
+- (void)registerNib:(UINib *)nib forPageReuseIdentifier:(NSString *)identifier;
+
+/**
+ Registers a class for use in creating new page.
+ 
+ Prior to dequeueing any pages, call this method or the ```registerNib:forPageReuseIdentifier:``` method to tell the pager view how to create new pages. If a page of the specified type is not currently in a reuse queue, the table view uses the provided information to create a new page object automatically.
+ 
+ If you previously registered a class or nib file with the same reuse identifier, the class you specify in the pageClass parameter replaces the old entry. You may specify nil for pageClass if you want to unregister the class from the specified reuse identifier.
+ 
+ @param pageClass  The class of a page that you want to use in the pager.
+ @param identifier The reuse identifier for the page. This parameter must not be nil and must not be an empty string.
+ */
+- (void)registerClass:(Class)pageClass forPageReuseIdentifier:(NSString *)identifier;
+
+/**
+ Returns a reusable page object located by its identifier.
+ 
+ A pager view maintains a queue or list of page objects that the data source has marked for reuse. Call this method from your data source object when asked to provide a new page for the table view. This method dequeues an existing page if one is available or creates a new one using the class or nib file you previously registered. If no page is available for reuse and you did not register a class or nib file, this method returns a UIView object.
+ 
+ @param identifier A string identifying the page object to be reused. This parameter must not be nil.
+ 
+ @return A page object with the associated identifier
+ */
+- (id)dequeueReusablePageWithIdentifier:(NSString *)identifier;
+
 @end
