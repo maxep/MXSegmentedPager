@@ -55,7 +55,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
         self.alwaysBounceVertical = NO;
         self.showsVerticalScrollIndicator = NO;
         self.directionalLockEnabled = YES;
-        self.autoresizingMask =(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         self.contentMode = UIViewContentModeTopRight;
         
         self.observedViews = [NSMutableArray array];
@@ -104,7 +104,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     
-    UIView<MXPageProtocol> *page = (id) self.segmentedPager.selectedPage;
+    UIView<MXPageProtocol> *page = (id) self.segmentedPager.pager.selectedPage;
     BOOL shouldScroll = YES;
     
     if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
@@ -254,7 +254,7 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
         
         //Organize subviews
         [self addSubview:_scrollView];
-        [_scrollView addSubview:self.container];
+        [_scrollView addSubview:self.pager];
         if(self.segmentedControlPosition == MXSegmentedControlPositionTop) {
             [_scrollView addSubview:self.segmentedControl];
         }
@@ -275,7 +275,7 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
                               views:binding]];
         
         // Add KVO
-        [self.container addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
+        [self.pager addObserver:self forKeyPath:kFrameKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
         [self addObserver:self forKeyPath:kSegmentedControlPositionKeyPath options:NSKeyValueObservingOptionNew context:kMXSegmentedPagerKVOContext];
         
         self.changeContainerFrame = YES;
@@ -328,9 +328,9 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
                 height -= self.segmentedControl.frame.size.height;
                 height -= self.scrollView.minimumHeigth;
                 
-                self.container.frame = (CGRect){
-                    .origin         = self.container.frame.origin,
-                    .size.width     = self.container.frame.size.width,
+                self.pager.frame = (CGRect){
+                    .origin         = self.pager.frame.origin,
+                    .size.width     = self.pager.frame.size.width,
                     .size.height    = height
                 };
                 

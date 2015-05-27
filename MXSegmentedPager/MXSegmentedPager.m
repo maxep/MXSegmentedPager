@@ -22,14 +22,11 @@
 
 #import "MXSegmentedPager.h"
 
-@interface MXSegmentedPager () <UIScrollViewDelegate>
+@interface MXSegmentedPager () <MXPagerViewDelegate, MXPagerViewDataSource>
 
 @property (nonatomic, strong) HMSegmentedControl* segmentedControl;
-@property (nonatomic, strong) UIScrollView* container;
-
-@property (nonatomic, strong) NSArray   *boundaries;
-@property (nonatomic, strong) NSArray   *pages;
-@property (nonatomic, strong) NSArray   *titles;
+@property (nonatomic, strong) MXPagerView* pager;
+@property (nonatomic, assign) NSInteger count;
 @end
 
 @implementation MXSegmentedPager {
@@ -44,11 +41,6 @@
 
 - (void)reloadData {
     
-    //Removes current pages
-    for(UIView *view in self.pages) {
-        [view removeFromSuperview];
-    }
-    
     //Gets the segmented control height
     CGFloat height = 44.f;
     if ([self.delegate respondsToSelector:@selector(heightForSegmentedControlInSegmentedPager:)]) {
@@ -56,18 +48,13 @@
     }
     [self layoutWithHeight:height];
     
-    //Gets the number of page
-    NSInteger numberOfPages = 0;
-    if ([self.dataSource respondsToSelector:@selector(numberOfPagesInSegmentedPager:)]) {
-        numberOfPages = [self.dataSource numberOfPagesInSegmentedPager:self];
-    }
+    self.count = [self.dataSource numberOfPagesInSegmentedPager:self];
     
     //Gets new data
     NSMutableArray* images  = [NSMutableArray array];
     NSMutableArray* titles  = [NSMutableArray array];
-    NSMutableArray* pages   = [NSMutableArray array];
     
-    for (NSInteger index = 0; index < numberOfPages; index++) {
+    for (NSInteger index = 0; index < self.count; index++) {
         
         NSString* title = [NSString stringWithFormat:@"Page %ld", (long)index];
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
@@ -75,20 +62,12 @@
         }
         [titles addObject:title];
         
-        if ([self.dataSource respondsToSelector:@selector(segmentedPager:viewForPageAtIndex:)]) {
-            UIView* view = [self.dataSource segmentedPager:self viewForPageAtIndex:index];
-            [pages addObject:view];
-        }
-        
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:imageForSectionAtIndex:)]) {
             UIImage* image = [self.dataSource segmentedPager:self imageForSectionAtIndex:index];
             [images addObject:image];
         }
     }
     
-    //Saves new data
-    self.pages = pages;
-    self.titles = titles;
     if (images.count > 0) {
         self.segmentedControl.sectionImages = images;
     }
@@ -96,14 +75,12 @@
         self.segmentedControl.sectionTitles = titles;
     }
     
-    [self layoutContainer];
+    [self.pager reloadData];
 }
 
 - (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated {
     [self.segmentedControl setSelectedSegmentIndex:index animated:animated];
-    
-    CGFloat x = self.frame.size.width * index;
-    [self.container setContentOffset:CGPointMake(x, 0) animated:animated];
+    [self.pager showPageAtIndex:index animated:animated];
 }
 
 #pragma mark Properties
@@ -115,33 +92,23 @@
                               action:@selector(pageControlValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
         [self addSubview:_segmentedControl];
+        _moveSegment = YES;
     }
     return _segmentedControl;
 }
 
-- (UIScrollView *)container {
-    if (!_container) {
-        _container = [[UIScrollView alloc] init];
-        _container.delegate = self;
-        _container.scrollsToTop = NO;
-        _container.pagingEnabled = YES;
-        _container.directionalLockEnabled = YES;
-        _container.alwaysBounceVertical = NO;
-        _container.alwaysBounceHorizontal = NO;
-        _container.showsVerticalScrollIndicator = NO;
-        _container.showsHorizontalScrollIndicator = NO;
-        _container.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-        [self addSubview:_container];
+- (MXPagerView *)pager {
+    if (!_pager) {
+        _pager = [[MXPagerView alloc] init];
+        _pager.delegate = self;
+        _pager.dataSource = self;
+        [self addSubview:_pager];
     }
-    return _container;
+    return _pager;
 }
 
 - (UIView*) selectedPage {
-    NSInteger index = self.segmentedControl.selectedSegmentIndex;
-    if (self.pages.count > index) {
-         return [self.pages objectAtIndex:index];
-    }
-    return nil;
+    return self.pager.selectedPage;
 }
 
 - (void)setSegmentedControlPosition:(MXSegmentedControlPosition)segmentedControlPosition {
@@ -154,45 +121,32 @@
 #pragma mark HMSegmentedControl target
 
 - (void)pageControlValueChanged:(HMSegmentedControl*)segmentedControl {
-    NSInteger index = segmentedControl.selectedSegmentIndex;
-    
     _moveSegment = NO;
-    CGFloat x = self.frame.size.width * index;
-    [self.container setContentOffset:CGPointMake(x, 0) animated:YES];
-    
+    [self.pager showPageAtIndex:segmentedControl.selectedSegmentIndex animated:YES];
+}
+
+#pragma mark <MXPagerViewDelegate>
+
+- (void)pagerView:(MXPagerView *)pagerView willMoveToPageAtIndex:(NSInteger)index {
+    if (_moveSegment) {
+        [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
+    }
+}
+
+- (void)pagerView:(MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index {
+    [self.segmentedControl setSelectedSegmentIndex:index animated:NO];
     [self changedToIndex:index];
+    _moveSegment = YES;
 }
 
-#pragma mark <UIScrollViewDelegate>
+#pragma mark <MXPagerViewDataSource>
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (scrollView == self.container) {
-        _moveSegment = YES;
-    }
+- (NSInteger)numberOfPagesInPagerView:(MXPagerView *)pagerView {
+    return self.count;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    if (scrollView == self.container && self.pages.count > 1 && _moveSegment) {
-        NSInteger curIndex = self.segmentedControl.selectedSegmentIndex;
-        NSInteger index = 0;
-        for (NSInteger i = 0; i < self.boundaries.count - 2;) {
-            CGFloat left        = [(NSNumber*)[self.boundaries objectAtIndex:i] floatValue];
-            CGFloat right       = [(NSNumber*)[self.boundaries objectAtIndex:++i] floatValue];
-            CGFloat position    = scrollView.contentOffset.x;
-            
-            if (position > left && position < right) {
-                break;
-            }
-            if (position > 0 && position < scrollView.contentSize.width) {
-                index++;
-            }
-        }
-        if (curIndex != index) {
-            [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
-            [self changedToIndex:index];
-        }
-    }
+- (UIView*) pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
+    return [self.dataSource segmentedPager:self viewForPageAtIndex:index];
 }
 
 #pragma mark Private methods
@@ -202,9 +156,9 @@
         [self.delegate segmentedPager:self didSelectViewWithIndex:index];
     }
     
-    NSString* title = [self.titles objectAtIndex:index];
-    UIView* view = [self.pages objectAtIndex:index];
-    
+    NSString* title = self.segmentedControl.sectionTitles[index];
+    UIView* view = self.pager.selectedPage;
+                    
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithTitle:)]) {
         [self.delegate segmentedPager:self didSelectViewWithTitle:title];
     }
@@ -212,36 +166,6 @@
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectView:)]) {
         [self.delegate segmentedPager:self didSelectView:view];
     }
-}
-
-- (void)layoutContainer {
-    
-    CGFloat width = 0.f;
-    
-    NSMutableArray* boundaries = [NSMutableArray arrayWithObject:@0];
-    
-    for (UIView* view in self.pages) {
-            
-        [self.container addSubview:view];
-        
-        CGRect frame = (CGRect){
-            .origin.x   = width,
-            .origin.y   = 0.f,
-            .size       = self.container.frame.size
-        };
-        view.frame = frame;
-        width += self.frame.size.width;
-        
-        CGFloat boundary = frame.origin.x + (frame.size.width / 2);
-        [boundaries addObject:[NSNumber numberWithFloat:boundary]];
-    }
-     self.boundaries = boundaries;
-    
-    self.container.contentSize = CGSizeMake(width, self.container.frame.size.height);
-    
-    //Adjusts the container's content offset
-    CGFloat x = self.frame.size.width * self.segmentedControl.selectedSegmentIndex;
-    [self.container setContentOffset:CGPointMake(x, 0) animated:NO];
 }
 
 - (void) layoutWithHeight:(CGFloat)height {
@@ -264,7 +188,7 @@
         .size.width     = self.frame.size.width,
         .size.height    = self.frame.size.height - height
     };
-    self.container.frame = subFrame;
+    self.pager.frame = subFrame;
 }
 
 @end

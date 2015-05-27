@@ -25,7 +25,7 @@ Or clone the repo and run `pod install` from the Example directory first.
 + See MXSimpleViewController for a standard implementation.
 + See MXParallaxViewController to implement a pager with a parallax header.
 
-The MXPageController class creates a controller object that manages a segmented-pager. The MXExampleViewController provide an example of a MXPageContoller subclass.
+The MXSegmentedPagerController class creates a controller object that manages a segmented-pager. The MXExampleViewController provide an example of a MXSegmentedPagerController subclass.
 
 ## Installation
 

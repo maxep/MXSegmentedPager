@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "MXPageController.h"
+#import "MXSegmentedPagerController.h"
 
-@interface MXExampleViewController : MXPageController
+@interface MXExampleViewController : MXSegmentedPagerController
 
 @end

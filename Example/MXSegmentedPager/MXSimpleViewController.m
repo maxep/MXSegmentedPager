@@ -41,6 +41,9 @@
     self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
     self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
     self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor orangeColor]};
+    
+    //Register UItableView as page
+    [self.segmentedPager.pager registerClass:[UITextView class] forPageReuseIdentifier:@"TextPage"];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -107,15 +110,27 @@
 #pragma -mark <MXSegmentedPagerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
-    return 3;
+    return 10;
 }
 
 - (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index {
-    return [@[@"Table", @"Web", @"Text"] objectAtIndex:index];
+    if (index < 3) {
+        return [@[@"Table", @"Web", @"Text"] objectAtIndex:index];
+    }
+    return [NSString stringWithFormat:@"Page %li", (long) index];
 }
 
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
-    return [@[self.tableView, self.webView, self.textView] objectAtIndex:index];
+    if (index < 3) {
+        return [@[self.tableView, self.webView, self.textView] objectAtIndex:index];
+    }
+    
+    //Dequeue reusable page
+    UITextView *page = [segmentedPager.pager dequeueReusablePageWithIdentifier:@"TextPage"];
+    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"LongText" ofType:@"txt"];
+    page.text = [[NSString alloc]initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+    
+    return page;
 }
 
 #pragma -mark <UITableViewDelegate>
