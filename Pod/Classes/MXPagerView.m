@@ -67,6 +67,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
 
 - (void) reloadData {
     
+    // Removes all current pages.
     for (NSNumber *key in self.pages) {
         UIView *page = self.pages[key];
         [page removeFromSuperview];
@@ -78,6 +79,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
         self.count = [self.dataSource numberOfPagesInPagerView:self];
     }
     
+    //Loads the current selected page
     [self loadPageAtIndex:self.index];
     
     self.contentSize = CGSizeMake(self.bounds.size.width * self.count, self.bounds.size.height);
@@ -85,6 +87,8 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
 
 - (void) showPageAtIndex:(NSInteger)index animated:(BOOL)animated {
     CGFloat x = self.frame.size.width * index;
+    
+    //The tab behavior disable animation
     animated = (self.behavior == MXPagerViewBehaviorTab)? NO : animated;
     
     [self willMovePageToIndex:index];
@@ -99,6 +103,9 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     if ([self.delegate respondsToSelector:@selector(pagerView:didMoveToPageAtIndex:)]) {
         [self.delegate pagerView:self didMoveToPageAtIndex:index];
     }
+    
+    //The page did change, now unload hidden pages
+    [self unLoadHiddenPages];
 }
 
 - (NSMutableDictionary *)pages {
@@ -115,7 +122,8 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
 
 - (void)setBehavior:(MXPagerViewBehavior)behavior {
     _behavior = behavior;
-    self.scrollEnabled = (behavior == MXPagerViewBehaviorSlide);
+    //the tab behavior disable the scroll
+    self.scrollEnabled = (behavior != MXPagerViewBehaviorTab);
 }
 
 #pragma Private Methods
@@ -123,12 +131,14 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
 - (void) didScrollFromPosition:(NSInteger)fromPosition ToPosition:(NSInteger)toPosition {
     
     if (!(toPosition % (NSInteger)self.bounds.size.width)) {
+        //the page did change.
         self.index = toPosition / (NSInteger)self.bounds.size.width;
     }
     else {
         for (NSInteger index = 0; index < self.count; index++) {
             NSInteger boundary = self.frame.size.width * ((double)index + 0.5);
             
+            //If it passes half the page, it tells the delegate that the page will change.
             if (fromPosition <= boundary && toPosition > boundary) {
                 [self willMovePageToIndex:(index + 1)];
                 break;
@@ -159,6 +169,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
         if (!self.pages[key] && (index >= 0) && (index < self.count)) {
             
             if ([self.dataSource respondsToSelector:@selector(pagerView:viewForPageAtIndex:)]) {
+                
                 UIView *page = [self.dataSource pagerView:self viewForPageAtIndex:index];
                 page.frame = (CGRect) {
                     .origin.x   = self.bounds.size.width * index,
@@ -173,10 +184,33 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     
     loadPage(index);
     
+    //In  case of slide behavior, its loads the neighbors as well.
     if (self.behavior == MXPagerViewBehaviorSlide) {
         loadPage(index - 1);
         loadPage(index + 1);
     }
+}
+
+- (void) unLoadHiddenPages {
+    
+    NSMutableArray *toUnLoad = [NSMutableArray array];
+    
+    for (NSNumber *key in self.pages) {
+        NSInteger index = [key integerValue];
+        
+        if (index != self.index) {
+            
+            //In case if slide behavior, it keeps the neighbors, otherwise it unloads all hidden pages.
+            if ((self.behavior == MXPagerViewBehaviorTab) ||
+                ( (index != self.index-1) && (index != self.index+1) )) {
+                
+                UIView *page = self.pages[key];
+                [page removeFromSuperview];
+                [toUnLoad addObject:key];
+            }
+        }
+    }
+    [self.pages removeObjectsForKeys:toUnLoad];
 }
 
 #pragma KVO
