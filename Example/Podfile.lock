@@ -1,0 +1,23 @@
+PODS:
+  - HMSegmentedControl (1.5.1)
+  - MXSegmentedPager (1.1):
+    - HMSegmentedControl (~> 1.5.1)
+    - VGParallaxHeader (~> 0.0.6)
+  - PureLayout (2.0.6)
+  - VGParallaxHeader (0.0.6):
+    - PureLayout
+
+DEPENDENCIES:
+  - MXSegmentedPager (from `../`)
+
+EXTERNAL SOURCES:
+  MXSegmentedPager:
+    :path: ../
+
+SPEC CHECKSUMS:
+  HMSegmentedControl: 35460abdd15c3087368db2d3d956717f088b34d1
+  MXSegmentedPager: c14266a11c5588b9ada8a1d12fec9ed6a4a465b3
+  PureLayout: f25f0bb904d5ccfe6e31da3cb869185259f02e0d
+  VGParallaxHeader: 1213aba58c9b0aea84f9e81ad526fde57aa4fe48
+
+COCOAPODS: 0.35.0
