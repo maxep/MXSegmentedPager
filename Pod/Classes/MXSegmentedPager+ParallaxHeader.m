@@ -55,7 +55,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
         self.alwaysBounceVertical = NO;
         self.showsVerticalScrollIndicator = NO;
         self.directionalLockEnabled = YES;
-        self.autoresizingMask =(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         self.contentMode = UIViewContentModeTopRight;
         
         self.observedViews = [NSMutableArray array];

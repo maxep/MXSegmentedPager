@@ -22,15 +22,6 @@
 
 #import "MXPagerView.h"
 
-#define MXPagerViewLoadPage(index) { \
-    [self loadPageAtIndex:index]; \
-    if(self.behavior == MXPagerViewBehaviorSlide) { \
-        [self loadPageAtIndex:(index - 1)]; \
-        [self loadPageAtIndex:index]; \
-        [self loadPageAtIndex:(index + 1)]; \
-    } \
-}
-
 @interface MXPagerView ()
 @property (nonatomic, strong) NSMutableDictionary *pages;
 @property (nonatomic, assign) NSInteger index;
@@ -57,28 +48,21 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
         self.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
         self.behavior = MXPagerViewBehaviorSlide;
         
-        _index = 0;
+        self.index = 0;
         [self addObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset))
                   options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
+                  context:kMXPagerViewKVOContext];
+        
+        [self addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize))
+                  options:0
                   context:kMXPagerViewKVOContext];
     }
     return self;
 }
 
-- (void)drawRect:(CGRect)rect {
-    
-    for (NSNumber *key in self.pages) {
-        UIView *page = self.pages[key];
-        
-        NSInteger index = [key integerValue];
-        page.frame = (CGRect) {
-            .origin.x   = rect.size.width * index,
-            .origin.y   = 0.f,
-            .size       = rect.size
-        };
-    }
-    self.contentSize   = CGSizeMake(rect.size.width * self.count, rect.size.height);
-    self.contentOffset = CGPointMake(rect.size.width * self.index, 0);
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    [self reloadData];
 }
 
 - (void) reloadData {
@@ -89,28 +73,29 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     }
     [self.pages removeAllObjects];
     
-    self.count = [self.dataSource numberOfPagesInPagerView:self];
+    self.count = 1;
+    if ([self.dataSource respondsToSelector:@selector(numberOfPagesInPagerView:)]) {
+        self.count = [self.dataSource numberOfPagesInPagerView:self];
+    }
     
-    MXPagerViewLoadPage(self.index);
+    [self loadPageAtIndex:self.index];
     
-    self.contentSize    = CGSizeMake(self.frame.size.width * self.count, self.frame.size.height);
-    self.contentOffset  = CGPointMake(self.frame.size.width * self.index, 0);
+    self.contentSize = CGSizeMake(self.bounds.size.width * self.count, self.bounds.size.height);
 }
 
 - (void) showPageAtIndex:(NSInteger)index animated:(BOOL)animated {
     CGFloat x = self.frame.size.width * index;
-    if (self.behavior == MXPagerViewBehaviorSlide) {
-        [self setContentOffset:CGPointMake(x, 0) animated:animated];
-    }
-    else {
-        self.contentOffset = CGPointMake(x, 0);
-    }
+    animated = (self.behavior == MXPagerViewBehaviorTab)? NO : animated;
+    
+    [self willMovePageToIndex:index];
+    [self setContentOffset:CGPointMake(x, 0) animated:animated];
 }
 
 #pragma mark Properties
 
 - (void)setIndex:(NSInteger)index {
     _index = index;
+    
     if ([self.delegate respondsToSelector:@selector(pagerView:didMoveToPageAtIndex:)]) {
         [self.delegate pagerView:self didMoveToPageAtIndex:index];
     }
@@ -132,61 +117,84 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     _behavior = behavior;
     self.scrollEnabled = (behavior == MXPagerViewBehaviorSlide);
 }
+
 #pragma Private Methods
 
 - (void) didScrollFromPosition:(NSInteger)fromPosition ToPosition:(NSInteger)toPosition {
-
-    for (NSInteger index = 0; index < self.count; index++) {
-        NSInteger boundary = self.frame.size.width * ((double)index + 0.5);
-        
-        if (fromPosition <= boundary && toPosition > boundary) {
-            [self willMovePageToIndex:(index + 1)];
-            break;
-        }
-        else if (fromPosition > boundary && toPosition <= boundary) {
-            [self willMovePageToIndex:index];
-            break;
-        }
-        else if (toPosition == (self.frame.size.width * index)) {
-            self.index = index;
+    
+    if (!(toPosition % (NSInteger)self.bounds.size.width)) {
+        self.index = toPosition / (NSInteger)self.bounds.size.width;
+    }
+    else {
+        for (NSInteger index = 0; index < self.count; index++) {
+            NSInteger boundary = self.frame.size.width * ((double)index + 0.5);
+            
+            if (fromPosition <= boundary && toPosition > boundary) {
+                [self willMovePageToIndex:(index + 1)];
+                break;
+            }
+            else if (fromPosition > boundary && toPosition <= boundary) {
+                [self willMovePageToIndex:index];
+                break;
+            }
         }
     }
 }
 
 - (void) willMovePageToIndex:(NSInteger) index {
     if (index != self.index) {
+        [self loadPageAtIndex:index];
+        
         if ([self.delegate respondsToSelector:@selector(pagerView:willMoveToPageAtIndex:)]) {
             [self.delegate pagerView:self willMoveToPageAtIndex:index];
         }
-        MXPagerViewLoadPage(index);
     }
 }
 
 - (void) loadPageAtIndex:(NSInteger) index {
-    NSNumber *key = [NSNumber numberWithInteger:index];
     
-    if (!self.pages[key] && (index >= 0) && (index < self.count)) {
-        UIView *page = [self.dataSource pagerView:self viewForPageAtIndex:index];
-        page.frame = (CGRect) {
-            .origin.x   = self.frame.size.width * index,
-            .origin.y   = 0.f,
-            .size       = self.frame.size
-        };
-        [self addSubview:page];
-        [self.pages setObject:page forKey:key];
+    void(^loadPage)(NSInteger index) = ^(NSInteger index) {
+        NSNumber *key = [NSNumber numberWithInteger:index];
+        
+        if (!self.pages[key] && (index >= 0) && (index < self.count)) {
+            
+            if ([self.dataSource respondsToSelector:@selector(pagerView:viewForPageAtIndex:)]) {
+                UIView *page = [self.dataSource pagerView:self viewForPageAtIndex:index];
+                page.frame = (CGRect) {
+                    .origin.x   = self.bounds.size.width * index,
+                    .origin.y   = 0.f,
+                    .size       = self.bounds.size
+                };
+                [self addSubview:page];
+                [self.pages setObject:page forKey:key];
+            }
+        }
+    };
+    
+    loadPage(index);
+    
+    if (self.behavior == MXPagerViewBehaviorSlide) {
+        loadPage(index - 1);
+        loadPage(index + 1);
     }
 }
 
 #pragma KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == kMXPagerViewKVOContext && [keyPath isEqualToString:NSStringFromSelector(@selector(contentOffset))]) {
+    if (context == kMXPagerViewKVOContext) {
         
-        CGPoint new = [change[NSKeyValueChangeNewKey] CGPointValue];
-        CGPoint old = [change[NSKeyValueChangeOldKey] CGPointValue];
-        
-        if (new.x != old.x) {
-            [self didScrollFromPosition:old.x ToPosition:new.x];
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentOffset))]) {
+            
+            CGPoint new = [change[NSKeyValueChangeNewKey] CGPointValue];
+            CGPoint old = [change[NSKeyValueChangeOldKey] CGPointValue];
+            
+            if (new.x != old.x) {
+                [self didScrollFromPosition:old.x ToPosition:new.x];
+            }
+        }
+        else if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentSize))]) {
+            self.contentOffset = CGPointMake(self.index * self.bounds.size.width, 0);
         }
     }
     else {

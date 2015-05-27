@@ -134,7 +134,9 @@
 }
 
 - (void)pagerView:(MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index {
+    [self.segmentedControl setSelectedSegmentIndex:index animated:NO];
     [self changedToIndex:index];
+    _moveSegment = YES;
 }
 
 #pragma mark <MXPagerViewDataSource>
@@ -145,14 +147,6 @@
 
 - (UIView*) pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
     return [self.dataSource segmentedPager:self viewForPageAtIndex:index];
-}
-
-#pragma mark <UIScrollViewDelegate>
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    if (scrollView == self.pager) {
-        _moveSegment = YES;
-    }
 }
 
 #pragma mark Private methods

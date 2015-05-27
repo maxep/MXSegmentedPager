@@ -108,6 +108,9 @@ typedef NS_ENUM(NSInteger, MXPagerViewBehavior) {
  */
 @property (nonatomic, readonly) UIView *selectedPage;
 
+/**
+ The pager behavior.
+ */
 @property (nonatomic, assign) MXPagerViewBehavior behavior;
 
 /**
@@ -119,7 +122,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewBehavior) {
  show through the pager until a page identified by index is at a particular location on the screen.
  
  @param index       An index that identifies a page.
- @param animated    YES if you want to animate the change in position; NO if it should be immediate. Animated parameter has no effect on MXPagerViewBehaviorTab.
+ @param animated    YES if you want to animate the change in position; NO if it should be immediate. Animated parameter has no effect on pager with MXPagerViewBehaviorTab.
  */
 - (void) showPageAtIndex:(NSInteger)index animated:(BOOL)animated;
 
