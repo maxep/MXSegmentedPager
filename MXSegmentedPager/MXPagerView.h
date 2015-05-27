@@ -153,11 +153,11 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 /**
  Returns a reusable page object located by its identifier.
  
- A pager view maintains a queue or list of page objects that the data source has marked for reuse. Call this method from your data source object when asked to provide a new page for the table view. This method dequeues an existing page if one is available or creates a new one using the class or nib file you previously registered. If no page is available for reuse and you did not register a class or nib file, this method returns a UIView object.
+ A pager view maintains a queue or list of page objects that the data source has marked for reuse. Call this method from your data source object when asked to provide a new page for the table view. This method dequeues an existing page if one is available or creates a new one using the class or nib file you previously registered. If no page is available for reuse and you did not register a class or nib file, this method returns nil.
  
  @param identifier A string identifying the page object to be reused. This parameter must not be nil.
  
- @return A page object with the associated identifier
+ @return A page object with the associated identifier or nil if no such object exists in the reusable-page queue.
  */
 - (id)dequeueReusablePageWithIdentifier:(NSString *)identifier;
 

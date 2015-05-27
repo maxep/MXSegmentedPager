@@ -146,8 +146,10 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
         page = [[UIView alloc] init];
     }
     
-    page.reuseIdentifier = identifier;
-    [self.reuseQueue addObject:page];
+    if (page) {
+        page.reuseIdentifier = identifier;
+        [self.reuseQueue addObject:page];
+    }
     
     return page;
 }
@@ -184,11 +186,12 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
 }
 
 - (NSMutableDictionary *)registration {
-    if (_registration) {
+    if (!_registration) {
         _registration = [NSMutableDictionary dictionary];
     }
     return _registration;
 }
+
 - (NSMutableArray *)reuseQueue {
     if (!_reuseQueue) {
         _reuseQueue = [NSMutableArray array];
