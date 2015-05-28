@@ -327,6 +327,8 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
                 CGFloat height = self.scrollView.frame.size.height;
                 height -= self.segmentedControl.frame.size.height;
                 height -= self.scrollView.minimumHeigth;
+                height -= self.segmentedControlEdgeInsets.top;
+                height -=self.segmentedControlEdgeInsets.bottom;
                 
                 self.pager.frame = (CGRect){
                     .origin         = self.pager.frame.origin,
