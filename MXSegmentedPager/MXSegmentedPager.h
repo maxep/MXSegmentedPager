@@ -160,6 +160,11 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 @property (nonatomic, readonly) MXPagerView* pager;
 
 /**
+ The padding from the top, left, right, and bottom of the segmentedControl
+ */
+@property (nonatomic, assign) UIEdgeInsets segmentedControlEdgeInsets;
+
+/**
  Reloads everything from scratch. redisplays pages.
  */
 - (void) reloadData;

@@ -37,6 +37,8 @@
     self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor orangeColor]};
     self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
     self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
+    
+    self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
 }
 
 - (void)viewWillLayoutSubviews {

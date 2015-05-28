@@ -34,6 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.segmentedPager.backgroundColor = [UIColor whiteColor];
+    
     self.segmentedPager.pager.transitionStyle = MXPagerViewTransitionStyleTab;
     
     self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
@@ -44,6 +46,8 @@
     self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     
     self.segmentedPager.segmentedControlPosition = MXSegmentedControlPositionBottom;
+    
+    self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 0, 12);
 }
 
 #pragma mark Properties
