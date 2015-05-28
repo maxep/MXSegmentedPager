@@ -38,27 +38,6 @@
     self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
     self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
     
-    self.segmentedPager.backgroundColor = [UIColor whiteColor];
-    self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
-    self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
-    self.segmentedPager.segmentedControl.shouldAnimateUserSelection = NO;
-    self.segmentedPager.segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-    
-    self.segmentedPager.segmentedControl.segmentWidthStyle = HMSegmentedControlSegmentWidthStyleFixed;
-    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
-    
-    self.segmentedPager.segmentedControl.borderColor = [UIColor blueColor];
-    self.segmentedPager.segmentedControl.borderType = HMSegmentedControlBorderTypeTop | HMSegmentedControlBorderTypeLeft | HMSegmentedControlBorderTypeBottom | HMSegmentedControlBorderTypeRight;
-    self.segmentedPager.segmentedControl.layer.cornerRadius = 4;
-    self.segmentedPager.segmentedControl.layer.borderColor = [UIColor blueColor].CGColor;
-    self.segmentedPager.segmentedControl.layer.borderWidth = 2;
-    
-    self.segmentedPager.clipsToBounds = YES;
-    self.segmentedPager.segmentedControl.clipsToBounds = YES;
-    
-    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor blueColor];
-    self.segmentedPager.segmentedControl.selectionIndicatorBoxOpacity = 1;
-    
     self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
 }
 
