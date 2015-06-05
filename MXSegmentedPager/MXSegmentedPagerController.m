@@ -44,7 +44,7 @@
     return _segmentedPager;
 }
 
-#pragma mark <MXPageControllerDataSource>
+#pragma mark <MXSegmentedPagerControllerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
     return 0;
