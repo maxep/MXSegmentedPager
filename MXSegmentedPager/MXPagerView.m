@@ -310,7 +310,8 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset)) context:kMXPagerViewKVOContext];
+    [self removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) context:kMXPagerViewKVOContext];
 }
 
 @end
