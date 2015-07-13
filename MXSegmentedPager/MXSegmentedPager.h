@@ -113,9 +113,19 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  @param segmentedPager A segmented-pager object requesting the title.
  @param index          An index number identifying a page in segmented-pager.
  
- @return The title of the page in segmented-pager.
+ @return The NSString title of the page in segmented-pager.
  */
 - (NSString*) segmentedPager:(MXSegmentedPager*)segmentedPager titleForSectionAtIndex:(NSInteger)index;
+
+/**
+ Asks the data source for a title to assign to a particular page of the segmented-pager.
+ 
+ @param segmentedPager A segmented-pager object requesting the title.
+ @param index          An index number identifying a page in segmented-pager.
+ 
+ @return The NSAttributedString title of the page in segmented-pager.
+ */
+- (NSAttributedString*) segmentedPager:(MXSegmentedPager*)segmentedPager attributedTitleForSectionAtIndex:(NSInteger)index;
 
 /**
  Asks the data source for a image to assign to a particular page of the segmented-pager. The title will be override by the image.

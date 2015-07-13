@@ -56,9 +56,12 @@
     
     for (NSInteger index = 0; index < self.count; index++) {
         
-        NSString* title = [NSString stringWithFormat:@"Page %ld", (long)index];
+        id title = [NSString stringWithFormat:@"Page %ld", (long)index];
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
             title = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
+        }
+        else if ([self.dataSource respondsToSelector:@selector(segmentedPager:attributedTitleForSectionAtIndex:)]) {
+            title = [self.dataSource segmentedPager:self attributedTitleForSectionAtIndex:index];
         }
         [titles addObject:title];
         
@@ -68,12 +71,8 @@
         }
     }
     
-    if (images.count > 0) {
-        self.segmentedControl.sectionImages = images;
-    }
-    else {
-        self.segmentedControl.sectionTitles = titles;
-    }
+    self.segmentedControl.sectionImages = images;
+    self.segmentedControl.sectionTitles = titles;
     
     [self.pager reloadData];
 }
