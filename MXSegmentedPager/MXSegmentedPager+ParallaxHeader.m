@@ -234,6 +234,10 @@ static NSString* const kSegmentedControlPositionKeyPath = @"segmentedControlPosi
 
 #pragma mark VGParallaxHeader
 
+- (void)scrollToTop {
+    [self.scrollView setContentOffset:CGPointMake(0.0f, self.scrollView.parallaxHeader.frame.size.height) animated:YES];
+}
+
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
     [self.scrollView setParallaxHeaderView:view mode:mode height:height];
 }

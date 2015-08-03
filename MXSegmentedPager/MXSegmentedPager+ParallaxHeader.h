@@ -60,6 +60,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 - (void)setParallaxHeaderView:(UIView *)view
                          mode:(VGParallaxHeaderMode)mode
                        height:(CGFloat)height;
+- (void)scrollToTop;
 
 @end
 
@@ -78,6 +79,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  @return YES to allow segmented-pager and view to scroll together. The default implementation returns YES.
  */
 - (BOOL) segmentedPager:(MXSegmentedPager *)segmentedPager shouldScrollWithView:(UIView*)view;
+
 
 @end
 
