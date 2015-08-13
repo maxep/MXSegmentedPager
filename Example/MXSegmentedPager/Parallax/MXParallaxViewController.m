@@ -1,22 +1,39 @@
+// MXParallaxViewController.m
 //
-//  MXParallaxViewController.m
-//  MXSegmentedPager
+// Copyright (c) 2015 Maxime Epain
 //
-//  Created by Maxime Epain on 11/03/2015.
-//  Copyright (c) 2015 Maxime Epain. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 #import "MXParallaxViewController.h"
 #import "MXSegmentedPager+ParallaxHeader.h"
+#import "MXRefreshHeaderView.h"
 #import "MXCustomView.h"
 
-@interface MXParallaxViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) UIImageView       * cover;
+@interface MXParallaxViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
+@property (nonatomic, strong) MXRefreshHeaderView * cover;
 @property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
 @property (nonatomic, strong) UITableView       * tableView;
 @property (nonatomic, strong) UIWebView         * webView;
 @property (nonatomic, strong) UITextView        * textView;
 @property (nonatomic, strong) MXCustomView      * customView;
+
+@property (nonatomic, readonly) MXProgressBlock   progressBlock;
 @end
 
 @implementation MXParallaxViewController
@@ -24,13 +41,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
-        
+    
     [self.view addSubview:self.segmentedPager];
     
+    // Parallax Header
     [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:150.f];
-    
     self.segmentedPager.minimumHeaderHeight = 20.f;
     
+    // Segmented Control customization
     self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
     self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};
@@ -39,6 +57,9 @@
     self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
     
     self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
+    
+    // Refresh Progress
+    self.segmentedPager.progressBlock = self.progressBlock;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -49,14 +70,32 @@
     [super viewWillLayoutSubviews];
 }
 
-#pragma -mark private methods
+#pragma mark Private Methods
 
-- (UIImageView *)cover {
+- (MXProgressBlock) progressBlock {
+    return ^(CGFloat progress) {
+        
+        // Use the refresh control only on WebView
+        if (self.segmentedPager.pager.selectedPage == self.webView) {
+            
+            // progress > 2 means 'pulled down'
+            if (progress > 2) {
+                self.cover.indeterminate = YES;
+                [self.webView reload];
+            }
+            else {
+                self.cover.progress = progress - 1;
+            }
+        }
+    };
+}
+
+#pragma mark Properties
+
+- (MXRefreshHeaderView *)cover {
     if (!_cover) {
         // Set a cover on the top of the view
-        _cover = [[UIImageView alloc] init];
-        _cover.contentMode = UIViewContentModeScaleAspectFill;
-        _cover.image = [UIImage imageNamed:@"success-baby"];
+        _cover = [MXRefreshHeaderView instantiateFromNib];
     }
     return _cover;
 }
@@ -86,6 +125,7 @@
     if (!_webView) {
         // Add a web page
         _webView = [[UIWebView alloc] init];
+        _webView.delegate = self;
         NSString *strURL = @"http://nshipster.com/";
         NSURL *url = [NSURL URLWithString:strURL];
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
@@ -159,6 +199,13 @@
     cell.textLabel.text = (indexPath.row % 2)? @"Text" : @"Web";
     
     return cell;
+}
+
+#pragma mark <UIWebViewDelegate>
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    // Remove Refresh Controll when the web view did load
+    self.cover.indeterminate = NO;
 }
 
 @end
