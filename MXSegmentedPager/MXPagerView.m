@@ -23,11 +23,11 @@
 #import <objc/runtime.h>
 #import "MXPagerView.h"
 
-@interface UIView (ReuseIdentifier)
+@interface UIResponder (ReuseIdentifier)
 @property (nonatomic, copy) NSString *reuseIdentifier;
 @end
 
-@implementation UIView (ReuseIdentifier)
+@implementation UIResponder (ReuseIdentifier)
 
 - (NSString *)reuseIdentifier {
     return objc_getAssociatedObject(self, @selector(reuseIdentifier));
@@ -134,7 +134,7 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     }
     
     id builder = self.registration[identifier];
-    UIView *page = nil;
+    UIResponder *page = nil;
     
     if ([builder isKindOfClass:[UINib class]]) {
         page = [[(UINib*)builder instantiateWithOwner:nil options:nil] firstObject];
@@ -142,14 +142,11 @@ static void * const kMXPagerViewKVOContext = (void*)&kMXPagerViewKVOContext;
     else if ([builder isKindOfClass:[NSString class]]) {
         page = [[NSClassFromString(builder) alloc] init];
     }
-    else {
-        page = [[UIView alloc] init];
-    }
     
-    if (page) {
-        page.reuseIdentifier = identifier;
-        [self.reuseQueue addObject:page];
-    }
+    NSAssert(page, @"unable to dequeue a page with identifier %@ - must register a nib or a class for the identifier", identifier);
+    
+    page.reuseIdentifier = identifier;
+    [self.reuseQueue addObject:page];
     
     return page;
 }
