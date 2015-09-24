@@ -116,7 +116,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 @optional
 
 /**
- Asks the data source for a title to assign to a particular page of the segmented-pager.
+ Asks the data source for a title to assign to a particular page of the segmented-pager. The title will be used depending on the HMSegmentedControlType you have choosen.
  
  @param segmentedPager A segmented-pager object requesting the title.
  @param index          An index number identifying a page in segmented-pager.
@@ -126,7 +126,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 - (NSString*) segmentedPager:(MXSegmentedPager*)segmentedPager titleForSectionAtIndex:(NSInteger)index;
 
 /**
- Asks the data source for a title to assign to a particular page of the segmented-pager.
+ Asks the data source for a title to assign to a particular page of the segmented-pager. The title will be used depending on the HMSegmentedControlType you have choosen.
  
  @param segmentedPager A segmented-pager object requesting the title.
  @param index          An index number identifying a page in segmented-pager.
@@ -136,7 +136,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 - (NSAttributedString*) segmentedPager:(MXSegmentedPager*)segmentedPager attributedTitleForSectionAtIndex:(NSInteger)index;
 
 /**
- Asks the data source for a image to assign to a particular page of the segmented-pager. The title will be override by the image.
+ Asks the data source for a image to assign to a particular page of the segmented-pager. The image will be used depending on the HMSegmentedControlType you have choosen.
  
  @param segmentedPager A segmented-pager object requesting the title.
  @param index          An index number identifying a page in segmented-pager.
@@ -163,7 +163,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 @property (nonatomic, assign) id<MXSegmentedPagerDataSource> dataSource;
 
 /**
- The segmented control. @see [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
+ The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
  */
 @property (nonatomic, readonly) HMSegmentedControl* segmentedControl;
 
@@ -173,7 +173,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 @property (nonatomic, assign) MXSegmentedControlPosition segmentedControlPosition;
 
 /**
- The pager. The pager will be placed below the segmented control.
+ The pager. The pager will be placed above or below the segmented control depending on the segmentedControlPosition property.
  */
 @property (nonatomic, readonly) MXPagerView* pager;
 
@@ -188,7 +188,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 - (void) reloadData;
 
 /**
- Scrolls through the container view until a page identified by index is at a particular location on the screen.
+ Scrolls through the pager until a page identified by index is at a particular location on the screen.
  
  @param index       An index that identifies a page.
  @param animated    YES if you want to animate the change in position; NO if it should be immediate.
@@ -203,7 +203,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 @interface MXSegmentedPager (ParallaxHeader)
 
 /**
- The parallax header. @see [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
+ The parallax header. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
  */
 @property (nonatomic, strong, readonly) VGParallaxHeader *parallaxHeader;
 
@@ -221,7 +221,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  Sets the parallax header view.
  
  @param view   The parallax header view.
- @param mode   The parallax header mode. @see [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
+ @param mode   The parallax header mode. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
  @param height The header height.
  */
 - (void)setParallaxHeaderView:(UIView *)view
