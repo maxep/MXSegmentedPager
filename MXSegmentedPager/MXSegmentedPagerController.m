@@ -22,6 +22,10 @@
 
 #import "MXSegmentedPagerController.h"
 
+@interface MXSegmentedPagerController ()
+@property (nonatomic,weak) UIViewController *pageViewController;
+@end
+
 @implementation MXSegmentedPagerController
 
 - (void)loadView {
@@ -47,7 +51,8 @@
 #pragma mark <MXSegmentedPagerControllerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
-    return 0;
+    NSArray *segues = [self valueForKey:@"storyboardSegueTemplates"] ;
+    return segues.count;
 }
 
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
@@ -64,7 +69,34 @@
 }
 
 - (UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index {
+    if (self.storyboard) {
+        @try {
+            NSString *identifier = [self segmentedPager:segmentedPager segueIdentifierForPageAtIndex:index];
+            [self performSegueWithIdentifier:identifier sender:nil];
+            return self.pageViewController;
+        }
+        @catch(NSException *exception) {}
+    }
     return nil;
+}
+
+- (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index {
+    return [NSString stringWithFormat:MXSeguePageIdentifierFormat, (long)index];
+}
+
+@end
+
+#pragma mark MXSegmentedPagerControllerPageSegue class
+
+NSString * const MXSeguePageIdentifierFormat = @"mx_page_%ld";
+
+@implementation MXPageSegue
+
+- (void)perform {
+    if ([self.sourceViewController isKindOfClass:[MXSegmentedPagerController class]]) {
+        MXSegmentedPagerController *spc = self.sourceViewController;
+        spc.pageViewController = self.destinationViewController;
+    }
 }
 
 @end

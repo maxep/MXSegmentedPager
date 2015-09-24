@@ -18,10 +18,50 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="ewC-LR-FGs" kind="custom" identifier="mx_page_0" customClass="MXPageSegue" id="KIb-7p-mdU"/>
+                        <segue destination="dur-4W-NuB" kind="custom" identifier="mx_page_1" customClass="MXPageSegue" id="Xgo-uR-iCH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WSF-Ws-Gjh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="308" y="358"/>
+        </scene>
+        <!--Parallax View Controller-->
+        <scene sceneID="c4r-nS-dpp">
+            <objects>
+                <viewController id="dur-4W-NuB" customClass="MXParallaxViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d9e-cR-Cjb"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ybh-ey-cJL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SgR-Kn-0aL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ypX-js-jYN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1124" y="723"/>
+        </scene>
+        <!--Simple View Controller-->
+        <scene sceneID="bnl-dw-f8E">
+            <objects>
+                <viewController id="ewC-LR-FGs" customClass="MXSimpleViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GoG-K0-fgo"/>
+                        <viewControllerLayoutGuide type="bottom" id="ptL-ag-Za4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="W7w-yn-LnW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hJi-ER-Ill" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1124" y="20"/>
         </scene>
     </scenes>
 </document>
