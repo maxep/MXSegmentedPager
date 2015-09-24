@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import "MXCustomView.h"
-#import "MXSegmentedPager+ParallaxHeader.h"
+#import "MXSegmentedPager.h"
 
 @interface MXCustomView () <MXPageProtocol, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *table1;

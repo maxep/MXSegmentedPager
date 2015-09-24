@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import "MXParallaxViewController.h"
-#import "MXSegmentedPager+ParallaxHeader.h"
+#import "MXSegmentedPager.h"
 #import "MXRefreshHeaderView.h"
 #import "MXCustomView.h"
 
