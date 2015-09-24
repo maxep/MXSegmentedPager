@@ -20,13 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <objc/runtime.h>
 #import "MXSegmentedPager.h"
+
+typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
+    MXPanGestureDirectionNone  = 1 << 0,
+    MXPanGestureDirectionRight = 1 << 1,
+    MXPanGestureDirectionLeft  = 1 << 2,
+    MXPanGestureDirectionUp    = 1 << 3,
+    MXPanGestureDirectionDown  = 1 << 4
+};
+
+@interface MXScrollView : UIScrollView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@property (nonatomic, assign) CGFloat minimumHeigth;
+@property (nonatomic, strong) MXSegmentedPager *segmentedPager;
+@property (nonatomic, strong) MXProgressBlock progressBlock;
+@property (nonatomic, strong) NSMutableArray *observedViews;
+@end
+
 
 @interface MXSegmentedPager () <MXPagerViewDelegate, MXPagerViewDataSource>
 
 @property (nonatomic, strong) HMSegmentedControl* segmentedControl;
 @property (nonatomic, strong) MXPagerView* pager;
 @property (nonatomic, assign) NSInteger count;
+
+@property (nonatomic, strong) MXScrollView *contentView;
 @end
 
 @implementation MXSegmentedPager {
@@ -84,13 +103,40 @@
 
 #pragma mark Properties
 
+- (MXScrollView *)contentView {
+    if (!_contentView) {
+        
+        // Create scroll-view
+        _contentView = [[MXScrollView alloc] init];
+        _contentView.segmentedPager = self;
+        _contentView.scrollEnabled = NO;
+        [self addSubview:_contentView];
+        
+        //Add constraints to the scroll-view
+        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSDictionary *binding  = @{@"v" : _contentView};
+        [self addConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|-0-[v]-0-|"
+                              options:NSLayoutFormatDirectionLeadingToTrailing
+                              metrics:nil
+                              views:binding]];
+        
+        [self addConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:|-0-[v]-0-|"
+                              options:NSLayoutFormatDirectionLeadingToTrailing
+                              metrics:nil
+                              views:binding]];
+    }
+    return _contentView;
+}
+
 - (HMSegmentedControl *)segmentedControl {
     if (!_segmentedControl) {
         _segmentedControl = [[HMSegmentedControl alloc] init];
         [_segmentedControl addTarget:self
                               action:@selector(pageControlValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
-        [self addSubview:_segmentedControl];
+        [self.contentView addSubview:_segmentedControl];
         _moveSegment = YES;
         
         self.segmentedControlEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -103,7 +149,7 @@
         _pager = [[MXPagerView alloc] init];
         _pager.delegate = self;
         _pager.dataSource = self;
-        [self addSubview:_pager];
+        [self.contentView addSubview:_pager];
     }
     return _pager;
 }
@@ -113,10 +159,8 @@
 }
 
 - (void)setSegmentedControlPosition:(MXSegmentedControlPosition)segmentedControlPosition {
-    [self willChangeValueForKey:@"segmentedControlPosition"];
     _segmentedControlPosition = segmentedControlPosition;
     [self layoutWithHeight:self.segmentedControl.frame.size.height];
-    [self didChangeValueForKey:@"segmentedControlPosition"];
 }
 
 - (void)setSegmentedControlEdgeInsets:(UIEdgeInsets)segmentedControlEdgeInsets {
@@ -200,12 +244,254 @@
         position = CGPointZero;
     }
     
+    height = self.contentView.frame.size.height - height;
+    height -= self.contentView.minimumHeigth;
+    height -= self.segmentedControlEdgeInsets.top;
+    height -=self.segmentedControlEdgeInsets.bottom;
+    
     subFrame = (CGRect) {
         .origin         = position,
         .size.width     = self.frame.size.width,
-        .size.height    = self.frame.size.height - height - self.segmentedControlEdgeInsets.top - self.segmentedControlEdgeInsets.bottom
+        .size.height    = height
     };
     self.pager.frame = subFrame;
+    
+    self.contentView.contentSize = CGSizeMake(self.contentView.frame.size.width, self.contentView.frame.size.height);
 }
 
 @end
+
+@implementation MXSegmentedPager (ParallaxHeader)
+
+#pragma mark VGParallaxHeader
+
+- (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
+    [self.contentView setParallaxHeaderView:view mode:mode height:height];
+    
+    self.contentView.scrollEnabled = view;
+}
+
+- (VGParallaxHeader *)parallaxHeader {
+    return self.contentView.parallaxHeader;
+}
+
+#pragma mark Properties
+
+- (CGFloat)minimumHeaderHeight {
+    return self.contentView.minimumHeigth;
+}
+
+- (void)setMinimumHeaderHeight:(CGFloat)minimumHeaderHeight {
+    self.contentView.minimumHeigth = minimumHeaderHeight;
+}
+
+- (MXProgressBlock)progressBlock {
+    return self.contentView.progressBlock;
+}
+
+- (void)setProgressBlock:(MXProgressBlock)progressBlock {
+    self.contentView.progressBlock = progressBlock;
+}
+
+@end
+
+@implementation MXScrollView {
+    BOOL _isObserving;
+    BOOL _lock;
+}
+
+static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
+static NSString* const kContentOffsetKeyPath = @"contentOffset";
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.delegate = self;
+        self.showsVerticalScrollIndicator = NO;
+        self.directionalLockEnabled = YES;
+        self.bounces = YES;
+        self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        self.contentMode = UIViewContentModeTopRight;
+        self.minimumHeigth = 0;
+    }
+    return self;
+}
+
+#pragma mark Properties
+
+- (NSMutableArray *)observedViews {
+    if (!_observedViews) {
+        _observedViews = [NSMutableArray array];
+    }
+    return _observedViews;
+}
+
+- (void)setScrollEnabled:(BOOL)scrollEnabled {
+    [super setScrollEnabled:scrollEnabled];
+    
+    if (scrollEnabled) {
+        [self addObserver:self forKeyPath:kContentOffsetKeyPath
+                  options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
+                  context:kMXScrollViewKVOContext];
+    }
+    else {
+        @try {
+            [self removeObserver:self forKeyPath:kContentOffsetKeyPath];
+        }
+        @catch (NSException *exception) {}
+    }
+}
+
+#pragma mark <UIScrollViewDelegate>
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if ((self.contentOffset.y >= -self.minimumHeigth)) {
+        self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
+    }
+    
+    [scrollView shouldPositionParallaxHeader];
+    
+    if (self.progressBlock) {
+        self.progressBlock(scrollView.parallaxHeader.progress);
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    _lock = NO;
+    [self removeObservedViews];
+}
+
+#pragma mark <UIGestureRecognizerDelegate>
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        MXPanGestureDirection direction = [self getDirectionOfPanGestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer];
+        
+        if (direction == MXPanGestureDirectionLeft || direction == MXPanGestureDirectionRight) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    
+    UIView<MXPageProtocol> *page = (id) self.segmentedPager.pager.selectedPage;
+    BOOL shouldScroll = self.scrollEnabled;
+    
+    if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
+        shouldScroll = [page segmentedPager:self.segmentedPager shouldScrollWithView:otherGestureRecognizer.view];
+    }
+    
+    if (shouldScroll) {
+        [self addObservedView:otherGestureRecognizer.view];
+    }
+    return shouldScroll;
+}
+
+- (MXPanGestureDirection) getDirectionOfPanGestureRecognizer:(UIPanGestureRecognizer*) panGestureRecognizer {
+    
+    CGPoint velocity = [panGestureRecognizer velocityInView:self];
+    CGFloat absX = fabs(velocity.x);
+    CGFloat absY = fabs(velocity.y);
+    
+    if (absX > absY) {
+        return (velocity.x > 0)? MXPanGestureDirectionRight : MXPanGestureDirectionLeft;
+    }
+    else if (absX < absY) {
+        return (velocity.y > 0)? MXPanGestureDirectionDown : MXPanGestureDirectionUp;
+    }
+    return MXPanGestureDirectionNone;
+}
+
+#pragma mark KVO
+
+- (void) addObserverToView:(UIView *)view {
+    _isObserving = NO;
+    if ([view isKindOfClass:[UIScrollView class]]) {
+        [view addObserver:self
+               forKeyPath:kContentOffsetKeyPath
+                  options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
+                  context:kMXScrollViewKVOContext];
+    }
+    _isObserving = YES;
+}
+
+- (void) removeObserverFromView:(UIView *)view {
+    @try {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            [view removeObserver:self
+                      forKeyPath:kContentOffsetKeyPath
+                         context:kMXScrollViewKVOContext];
+        }
+    }
+    @catch (NSException *exception) {}
+}
+
+//This is where the magic happens...
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    if (context == kMXScrollViewKVOContext && [keyPath isEqualToString:kContentOffsetKeyPath]) {
+        
+        CGPoint new = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
+        CGPoint old = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
+        
+        if (old.y == new.y) return;
+        
+        if (_isObserving && object == self) {
+            //Adjust self scroll offset
+            if ((old.y - new.y) > 0 && _lock) {
+                [self scrollView:self setContentOffset:old];
+            }
+        }
+        else if (_isObserving && [object isKindOfClass:[UIScrollView class]]) {
+            
+            //Adjust the observed scrollview's content offset
+            UIScrollView *scrollView = object;
+            _lock = !(scrollView.contentOffset.y <= -scrollView.contentInset.top);
+            
+            //Manage scroll up
+            if (self.contentOffset.y < -self.minimumHeigth && _lock && (old.y - new.y) < 0) {
+                [self scrollView:scrollView setContentOffset:old];
+            }
+            //Disable bouncing when scroll down
+            if (!_lock) {
+                [self scrollView:scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top)];
+            }
+        }
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+#pragma mark Scrolling views handlers
+
+- (void) addObservedView:(UIView *)view {
+    if (![self.observedViews containsObject:view]) {
+        [self.observedViews addObject:view];
+        [self addObserverToView:view];
+    }
+}
+
+- (void) removeObservedViews {
+    for (UIView *view in self.observedViews) {
+        [self removeObserverFromView:view];
+    }
+    [self.observedViews removeAllObjects];
+}
+
+- (void) scrollView:(UIScrollView*)scrollView setContentOffset:(CGPoint)offset {
+    _isObserving = NO;
+    scrollView.contentOffset = offset;
+    _isObserving = YES;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+@end
+

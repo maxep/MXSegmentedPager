@@ -22,6 +22,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HMSegmentedControl.h"
+#import "UIScrollView+VGParallaxHeader.h"
 #import "MXPagerView.h"
 
 /**
@@ -33,6 +34,13 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
     /** Bottom position. */
     MXSegmentedControlPositionBottom
 };
+
+/**
+ MXProgressBlock type definition.
+ 
+ @param progress The scroll progress.
+ */
+typedef void (^MXProgressBlock) (CGFloat progress);
 
 @class MXSegmentedPager;
 
@@ -186,5 +194,55 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  @param animated    YES if you want to animate the change in position; NO if it should be immediate.
  */
 - (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated;
+
+@end
+
+/**
+ MXSegmentedPager with parallax header. This category uses [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) to set up a parallax header on top of a segmented-pager.
+ */
+@interface MXSegmentedPager (ParallaxHeader)
+
+/**
+ The parallax header. @see [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
+ */
+@property (nonatomic, strong, readonly) VGParallaxHeader *parallaxHeader;
+
+/**
+ The minimum header height, the header won't scroll below this value. By default, the minimum height is set to 0.
+ */
+@property (nonatomic, assign) CGFloat minimumHeaderHeight;
+
+/**
+ The progress block called when scroll is progressing.
+ */
+@property (nonatomic, strong) MXProgressBlock progressBlock;
+
+/**
+ Sets the parallax header view.
+ 
+ @param view   The parallax header view.
+ @param mode   The parallax header mode. @see [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
+ @param height The header height.
+ */
+- (void)setParallaxHeaderView:(UIView *)view
+                         mode:(VGParallaxHeaderMode)mode
+                       height:(CGFloat)height;
+@end
+
+/**
+ While using MXSegmentedPager with Parallax header, your pages can adopt the MXPageDelegate protocol to control subview's scrolling effect.
+ */
+@protocol MXPageProtocol <NSObject>
+
+@optional
+/**
+ Asks the page if the segmented-pager should scroll with the view.
+ 
+ @param segmentedPager The segmented-pager. This is the object sending the message.
+ @param view           An instance of a sub view.
+ 
+ @return YES to allow segmented-pager and view to scroll together. The default implementation returns YES.
+ */
+- (BOOL) segmentedPager:(MXSegmentedPager *)segmentedPager shouldScrollWithView:(UIView*)view;
 
 @end
