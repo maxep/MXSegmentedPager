@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  @param pagerView A pager object informing the delegate about the impending move.
  @param index     The selected page index.
  */
-- (void) pagerView:(MXPagerView *)pagerView willMoveToPageAtIndex:(NSInteger)index;
+- (void) pagerView:(nonnull MXPagerView *)pagerView willMoveToPageAtIndex:(NSInteger)index;
 
 /**
  Tells the delegate that the pager did move to a specified page.
@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  @param pagerView A pager object informing the delegate about the impending move.
  @param index     The selected page index.
  */
-- (void) pagerView:(MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index;
+- (void) pagerView:(nonnull MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index;
 
 @end
 
@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  
  @return The number of pages in pager.
  */
-- (NSInteger) numberOfPagesInPagerView:(MXPagerView *)pagerView;
+- (NSInteger) numberOfPagesInPagerView:(nonnull MXPagerView *)pagerView;
 
 /**
  Asks the data source for a view to insert in a particular page of the pager.
@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  
  @return An object inheriting from UIView that the pager can use for the specified page.
  */
-- (UIView*) pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index;
+- (nullable __kindof UIView*) pagerView:(nonnull MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index;
 
 @end
 
@@ -106,7 +106,17 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 /**
  The current selected page view.
  */
-@property (nonatomic, readonly) UIView *selectedPage;
+@property (nonatomic, readonly, nullable) UIView *selectedPage;
+
+/**
+ Returns index representing page of selection.
+ */
+@property (nonatomic, readonly) NSInteger indexForSelectedPage;
+
+/**
+ Returns the loaded pages.
+ */
+@property (nonatomic, readonly, nullable) NSArray<__kindof UIView *> *loadedPages;
 
 /**
  The pager transition style.
@@ -124,12 +134,21 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 - (void) reloadData;
 
 /**
- show through the pager until a page identified by index is at a particular location on the screen.
+ Shows through the pager until a page identified by index is at a particular location on the screen.
  
  @param index       An index that identifies a page.
  @param animated    YES if you want to animate the change in position; NO if it should be immediate. Animated parameter has no effect on pager with MXPagerViewBehaviorTab.
  */
 - (void) showPageAtIndex:(NSInteger)index animated:(BOOL)animated;
+
+/**
+ Gets a page at specific index.
+ 
+ @param indexPath Index representing page.
+ 
+ @return nil if page is not loaded or index is out of range.
+ */
+- (nullable __kindof UIView *) pageAtIndex:(NSInteger)index;
 
 /**
  Registers a nib object containing a page with the pager view under a specified identifier.
@@ -141,7 +160,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  @param nib        A nib object that specifies the nib file to use to create the page.
  @param identifier The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
  */
-- (void)registerNib:(UINib *)nib forPageReuseIdentifier:(NSString *)identifier;
+- (void)registerNib:(nullable UINib *)nib forPageReuseIdentifier:(nonnull NSString *)identifier;
 
 /**
  Registers a class for use in creating new page.
@@ -153,7 +172,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  @param pageClass  The class of a page that you want to use in the pager.
  @param identifier The reuse identifier for the page. This parameter must not be nil and must not be an empty string.
  */
-- (void)registerClass:(Class)pageClass forPageReuseIdentifier:(NSString *)identifier;
+- (void)registerClass:(nullable Class)pageClass forPageReuseIdentifier:(nonnull NSString *)identifier;
 
 /**
  Returns a reusable page object located by its identifier.
@@ -164,6 +183,6 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  
  @return A page object with the associated identifier or nil if no such object exists in the reusable-page queue.
  */
-- (id)dequeueReusablePageWithIdentifier:(NSString *)identifier;
+- (nullable __kindof UIView *)dequeueReusablePageWithIdentifier:(nonnull NSString *)identifier;
 
 @end

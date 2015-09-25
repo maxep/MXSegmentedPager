@@ -23,11 +23,11 @@
 #import <objc/runtime.h>
 #import "MXPagerView.h"
 
-@interface UIResponder (ReuseIdentifier)
+@interface UIView (ReuseIdentifier)
 @property (nonatomic, copy) NSString *reuseIdentifier;
 @end
 
-@implementation UIResponder (ReuseIdentifier)
+@implementation UIView (ReuseIdentifier)
 
 - (NSString *)reuseIdentifier {
     return objc_getAssociatedObject(self, @selector(reuseIdentifier));
@@ -110,6 +110,11 @@
     }
 }
 
+- (UIView *) pageAtIndex:(NSInteger)index {
+    NSNumber *key = [NSNumber numberWithInteger:index];
+    return self.pages[key];
+}
+
 #pragma mark Reusable Pages
 
 - (void)registerNib:(UINib *)nib forPageReuseIdentifier:(NSString *)identifier {
@@ -120,7 +125,7 @@
     [self.registration setValue:NSStringFromClass(pageClass) forKey:identifier];
 }
 
-- (id)dequeueReusablePageWithIdentifier:(NSString *)identifier {
+- (__kindof UIView *)dequeueReusablePageWithIdentifier:(NSString *)identifier {
     
     for (UIView *page in self.reuseQueue) {
         if (!page.superview && [page.reuseIdentifier isEqualToString:identifier]) {
@@ -129,7 +134,7 @@
     }
     
     id builder = self.registration[identifier];
-    UIResponder *page = nil;
+    UIView *page = nil;
     
     if ([builder isKindOfClass:[UINib class]]) {
         page = [[(UINib*)builder instantiateWithOwner:nil options:nil] firstObject];
@@ -177,6 +182,10 @@
     return self.pages[key];
 }
 
+- (NSInteger)indexForSelectedPage {
+    return _index;
+}
+
 - (void)setTransitionStyle:(MXPagerViewTransitionStyle)transitionStyle {
     _transitionStyle = transitionStyle;
     //the tab behavior disable the scroll
@@ -203,6 +212,10 @@
 
 - (void)setScrollEnabled:(BOOL)scrollEnabled {
     self.contentView.scrollEnabled = scrollEnabled;
+}
+
+- (NSArray<UIView *> *)loadedPages {
+    return [self.pages allValues];
 }
 
 #pragma mark Private Methods
