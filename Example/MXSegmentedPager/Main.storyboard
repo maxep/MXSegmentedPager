@@ -27,6 +27,60 @@
             </objects>
             <point key="canvasLocation" x="308" y="358"/>
         </scene>
+        <!--Storyboard View Controller-->
+        <scene sceneID="YKD-H8-z4l">
+            <objects>
+                <viewController id="Tsi-jy-cep" customClass="MXStoryboardViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m12-l2-q1v"/>
+                        <viewControllerLayoutGuide type="bottom" id="5dr-IG-PjX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XHb-5i-z3K">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="WSd-B9-XCE" kind="custom" identifier="number" customClass="MXPageSegue" id="yfJ-sr-oYx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vfO-lF-C8R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1124" y="1401"/>
+        </scene>
+        <!--Number View Controller-->
+        <scene sceneID="OJz-Zf-mOq">
+            <objects>
+                <viewController id="WSd-B9-XCE" customClass="MXNumberViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bPj-ne-KVF"/>
+                        <viewControllerLayoutGuide type="bottom" id="LAl-If-Uof"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nph-wr-RcU">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8eW-gp-g0p">
+                                <rect key="frame" x="269" y="289" width="62" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8eW-gp-g0p" firstAttribute="centerY" secondItem="nph-wr-RcU" secondAttribute="centerY" id="Dxd-EN-OTJ"/>
+                            <constraint firstItem="8eW-gp-g0p" firstAttribute="centerX" secondItem="nph-wr-RcU" secondAttribute="centerX" id="vAB-bF-az7"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="numberLabel" destination="8eW-gp-g0p" id="Nvh-x8-egI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QYd-g4-DQF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1869" y="1401"/>
+        </scene>
         <!--Parallax View Controller-->
         <scene sceneID="c4r-nS-dpp">
             <objects>

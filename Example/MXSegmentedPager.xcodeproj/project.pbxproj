@@ -21,6 +21,8 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		B10F7A080B4570658946BDC6 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9BB96F1D81164F56C1E5BB /* libPods-Tests.a */; };
+		D0269B7A1BB5AC4500C5D839 /* MXNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269B771BB5AC4500C5D839 /* MXNumberViewController.m */; settings = {ASSET_TAGS = (); }; };
+		D0269B7B1BB5AC4500C5D839 /* MXStoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269B791BB5AC4500C5D839 /* MXStoryboardViewController.m */; settings = {ASSET_TAGS = (); }; };
 		D02CC1BD1AB0EF7A00492C51 /* MXParallaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D02CC1BC1AB0EF7A00492C51 /* MXParallaxViewController.m */; };
 		D077BEF01AAA0728001F1396 /* MXSimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D077BEED1AAA0728001F1396 /* MXSimpleViewController.m */; };
 		D08B319A1B0030E400B74C30 /* MXExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B31991B0030E400B74C30 /* MXExampleViewController.m */; };
@@ -68,6 +70,10 @@
 		A0BF6BCCED469F777ABABE06 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B24E644BD5926805008B6BC5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B7583AB295328300927EBFB5 /* Pods-MXSegmentedPager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MXSegmentedPager.release.xcconfig"; path = "Pods/Target Support Files/Pods-MXSegmentedPager/Pods-MXSegmentedPager.release.xcconfig"; sourceTree = "<group>"; };
+		D0269B761BB5AC4500C5D839 /* MXNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MXNumberViewController.h; path = Storyboard/MXNumberViewController.h; sourceTree = "<group>"; };
+		D0269B771BB5AC4500C5D839 /* MXNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MXNumberViewController.m; path = Storyboard/MXNumberViewController.m; sourceTree = "<group>"; };
+		D0269B781BB5AC4500C5D839 /* MXStoryboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MXStoryboardViewController.h; path = Storyboard/MXStoryboardViewController.h; sourceTree = "<group>"; };
+		D0269B791BB5AC4500C5D839 /* MXStoryboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MXStoryboardViewController.m; path = Storyboard/MXStoryboardViewController.m; sourceTree = "<group>"; };
 		D02CC1BB1AB0EF7A00492C51 /* MXParallaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXParallaxViewController.h; sourceTree = "<group>"; };
 		D02CC1BC1AB0EF7A00492C51 /* MXParallaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXParallaxViewController.m; sourceTree = "<group>"; };
 		D077BEEC1AAA0728001F1396 /* MXSimpleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSimpleViewController.h; sourceTree = "<group>"; };
@@ -156,6 +162,7 @@
 				D09DA1651BB3F1F300E964BF /* Launch Screen.storyboard */,
 				D0CC031A1B7C8AC5009B0536 /* Simple */,
 				D0CC031B1B7C8AD8009B0536 /* Parallax */,
+				D0269B751BB5AC3400C5D839 /* Storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 				D0DD86061AA35B720077F3CD /* LongText.txt */,
@@ -201,6 +208,17 @@
 				A0BF6BCCED469F777ABABE06 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		D0269B751BB5AC3400C5D839 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				D0269B761BB5AC4500C5D839 /* MXNumberViewController.h */,
+				D0269B771BB5AC4500C5D839 /* MXNumberViewController.m */,
+				D0269B781BB5AC4500C5D839 /* MXStoryboardViewController.h */,
+				D0269B791BB5AC4500C5D839 /* MXStoryboardViewController.m */,
+			);
+			name = Storyboard;
 			sourceTree = "<group>";
 		};
 		D0CC031A1B7C8AC5009B0536 /* Simple */ = {
@@ -405,8 +423,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0269B7A1BB5AC4500C5D839 /* MXNumberViewController.m in Sources */,
 				6003F59E195388D20070C39A /* MXAppDelegate.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				D0269B7B1BB5AC4500C5D839 /* MXStoryboardViewController.m in Sources */,
 				D0B4CEED1B0B805C004EE3AB /* MXCustomView.m in Sources */,
 				D0CC03231B7C8D13009B0536 /* MXRefreshHeaderView.m in Sources */,
 				D02CC1BD1AB0EF7A00492C51 /* MXParallaxViewController.m in Sources */,
