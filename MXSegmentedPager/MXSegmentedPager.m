@@ -40,40 +40,86 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 
 
 @interface MXSegmentedPager () <MXPagerViewDelegate, MXPagerViewDataSource>
-
-@property (nonatomic, strong) HMSegmentedControl* segmentedControl;
-@property (nonatomic, strong) MXPagerView* pager;
-@property (nonatomic, assign) NSInteger count;
-
-@property (nonatomic, strong) MXScrollView *contentView;
+@property (nonatomic, strong) MXScrollView          *contentView;
+@property (nonatomic, strong) HMSegmentedControl    *segmentedControl;
+@property (nonatomic, strong) MXPagerView           *pager;
 @end
 
 @implementation MXSegmentedPager {
-    BOOL _moveSegment;
+    CGFloat     _controlHeight;
+    NSInteger   _count;
+    BOOL        _moveSegment;
 }
 
 - (void)layoutSubviews {
+    if (_count <= 0) {
+        [self reloadData];
+    }
+    
+    //Layout content view
+    self.contentView.frame = (CGRect) {
+        .origin = CGPointMake(0, 0),
+        .size   = self.bounds.size
+    };
+    
+    //Layout control
+    CGPoint position;
+    CGFloat height = _controlHeight;
+    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
+        position = CGPointMake(self.segmentedControlEdgeInsets.left,
+                               self.segmentedControlEdgeInsets.top);
+    }
+    else {
+        position = CGPointMake(self.segmentedControlEdgeInsets.left,
+                               self.frame.size.height - height - self.segmentedControlEdgeInsets.bottom);
+    }
+    
+    CGRect subFrame = (CGRect) {
+        .origin         = position,
+        .size.width     = self.frame.size.width - self.segmentedControlEdgeInsets.left - self.segmentedControlEdgeInsets.right,
+        .size.height    = height
+    };
+    self.segmentedControl.frame = subFrame;
+    
+    //Layout pager
+    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
+        position = CGPointMake(0, height + self.segmentedControlEdgeInsets.top + self.segmentedControlEdgeInsets.bottom);
+    }
+    else {
+        position = CGPointZero;
+    }
+    
+    height  = self.contentView.frame.size.height - height;
+    height -= self.contentView.minimumHeigth;
+    height -= self.segmentedControlEdgeInsets.top;
+    height -= self.segmentedControlEdgeInsets.bottom;
+    
+    subFrame = (CGRect) {
+        .origin         = position,
+        .size.width     = self.frame.size.width,
+        .size.height    = height
+    };
+    self.pager.frame = subFrame;
+    
+    self.contentView.contentSize = CGSizeMake(self.contentView.frame.size.width, self.contentView.frame.size.height);
+    
     [super layoutSubviews];
-    [self reloadData];
-    [self layoutIfNeeded];
 }
 
 - (void)reloadData {
     
     //Gets the segmented control height
-    CGFloat height = 44.f;
+    _controlHeight = 44.f;
     if ([self.delegate respondsToSelector:@selector(heightForSegmentedControlInSegmentedPager:)]) {
-        height = [self.delegate heightForSegmentedControlInSegmentedPager:self];
+        _controlHeight = [self.delegate heightForSegmentedControlInSegmentedPager:self];
     }
-    [self layoutWithHeight:height];
-    
-    self.count = [self.dataSource numberOfPagesInSegmentedPager:self];
+    _count = [self.dataSource numberOfPagesInSegmentedPager:self];
     
     //Gets new data
     NSMutableArray* images  = [NSMutableArray array];
     NSMutableArray* titles  = [NSMutableArray array];
     
-    for (NSInteger index = 0; index < self.count; index++) {
+    for (NSInteger index = 0; index < _count; index++) {
         
         id title = [NSString stringWithFormat:@"Page %ld", (long)index];
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
@@ -92,8 +138,6 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
     
     self.segmentedControl.sectionImages = images;
     self.segmentedControl.sectionTitles = titles;
-    
-    [self.pager reloadData];
 }
 
 - (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated {
@@ -111,21 +155,6 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
         _contentView.segmentedPager = self;
         _contentView.scrollEnabled = NO;
         [self addSubview:_contentView];
-        
-        //Add constraints to the scroll-view
-        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
-        NSDictionary *binding  = @{@"v" : _contentView};
-        [self addConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"H:|-0-[v]-0-|"
-                              options:NSLayoutFormatDirectionLeadingToTrailing
-                              metrics:nil
-                              views:binding]];
-        
-        [self addConstraints:[NSLayoutConstraint
-                              constraintsWithVisualFormat:@"V:|-0-[v]-0-|"
-                              options:NSLayoutFormatDirectionLeadingToTrailing
-                              metrics:nil
-                              views:binding]];
     }
     return _contentView;
 }
@@ -160,12 +189,12 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 
 - (void)setSegmentedControlPosition:(MXSegmentedControlPosition)segmentedControlPosition {
     _segmentedControlPosition = segmentedControlPosition;
-    [self layoutWithHeight:self.segmentedControl.frame.size.height];
+    [self setNeedsLayout];
 }
 
 - (void)setSegmentedControlEdgeInsets:(UIEdgeInsets)segmentedControlEdgeInsets {
     _segmentedControlEdgeInsets = segmentedControlEdgeInsets;
-    [self reloadData];
+    [self setNeedsLayout];
 }
 
 #pragma mark HMSegmentedControl target
@@ -192,7 +221,7 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 #pragma mark <MXPagerViewDataSource>
 
 - (NSInteger)numberOfPagesInPagerView:(MXPagerView *)pagerView {
-    return self.count;
+    return _count;
 }
 
 - (UIView*) pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
@@ -218,47 +247,6 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
     }
 }
 
-- (void) layoutWithHeight:(CGFloat)height {
-    
-    CGPoint position;
-    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
-        position = CGPointMake(self.segmentedControlEdgeInsets.left,
-                               self.segmentedControlEdgeInsets.top);
-    }
-    else {
-        position = CGPointMake(self.segmentedControlEdgeInsets.left,
-                               self.frame.size.height - height - self.segmentedControlEdgeInsets.bottom);
-    }
-    
-    CGRect subFrame = (CGRect) {
-        .origin         = position,
-        .size.width     = self.frame.size.width - self.segmentedControlEdgeInsets.left - self.segmentedControlEdgeInsets.right,
-        .size.height    = height
-    };
-    self.segmentedControl.frame = subFrame;
-    
-    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
-        position = CGPointMake(0, height + self.segmentedControlEdgeInsets.top + self.segmentedControlEdgeInsets.bottom);
-    }
-    else {
-        position = CGPointZero;
-    }
-    
-    height = self.contentView.frame.size.height - height;
-    height -= self.contentView.minimumHeigth;
-    height -= self.segmentedControlEdgeInsets.top;
-    height -=self.segmentedControlEdgeInsets.bottom;
-    
-    subFrame = (CGRect) {
-        .origin         = position,
-        .size.width     = self.frame.size.width,
-        .size.height    = height
-    };
-    self.pager.frame = subFrame;
-    
-    self.contentView.contentSize = CGSizeMake(self.contentView.frame.size.width, self.contentView.frame.size.height);
-}
-
 @end
 
 @implementation MXSegmentedPager (ParallaxHeader)
@@ -267,8 +255,7 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
 
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
     [self.contentView setParallaxHeaderView:view mode:mode height:height];
-    
-    self.contentView.scrollEnabled = view;
+    self.contentView.scrollEnabled = !!view;
 }
 
 - (VGParallaxHeader *)parallaxHeader {
