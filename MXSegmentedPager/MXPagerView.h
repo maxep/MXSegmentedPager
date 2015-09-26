@@ -114,6 +114,11 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 @property (nonatomic, readonly) NSInteger indexForSelectedPage;
 
 /**
+ The gutter width. 0 by default.
+ */
+@property (nonatomic, assign) CGFloat gutterWidth;
+
+/**
  Returns the loaded pages.
  */
 @property (nonatomic, readonly, nullable) NSArray<__kindof UIView *> *loadedPages;
