@@ -24,6 +24,7 @@
 
 @interface MXSegmentedPagerController ()
 @property (nonatomic,weak) UIViewController *pageViewController;
+@property (nonatomic,assign) NSInteger pageIndex;
 @end
 
 @implementation MXSegmentedPagerController
@@ -72,6 +73,7 @@
     if (self.storyboard) {
         @try {
             NSString *identifier = [self segmentedPager:segmentedPager segueIdentifierForPageAtIndex:index];
+            self.pageIndex = index;
             [self performSegueWithIdentifier:identifier sender:nil];
             return self.pageViewController;
         }
@@ -91,6 +93,15 @@
 NSString * const MXSeguePageIdentifierFormat = @"mx_page_%ld";
 
 @implementation MXPageSegue
+
+@synthesize pageIndex = _pageIndex;
+
+- (instancetype)initWithIdentifier:(nullable NSString *)identifier source:(MXSegmentedPagerController *)source destination:(UIViewController *)destination {
+    if (self = [super initWithIdentifier:identifier source:source destination:destination]) {
+        _pageIndex = source.pageIndex;
+    }
+    return self;
+}
 
 - (void)perform {
     if ([self.sourceViewController isKindOfClass:[MXSegmentedPagerController class]]) {

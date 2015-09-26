@@ -21,11 +21,12 @@
                     <connections>
                         <segue destination="ewC-LR-FGs" kind="custom" identifier="mx_page_0" customClass="MXPageSegue" id="KIb-7p-mdU"/>
                         <segue destination="dur-4W-NuB" kind="custom" identifier="mx_page_1" customClass="MXPageSegue" id="Xgo-uR-iCH"/>
+                        <segue destination="Tsi-jy-cep" kind="custom" identifier="mx_page_2" customClass="MXPageSegue" id="3hd-Jq-Pne"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WSF-Ws-Gjh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="308" y="358"/>
+            <point key="canvasLocation" x="350" y="1024"/>
         </scene>
         <!--Storyboard View Controller-->
         <scene sceneID="YKD-H8-z4l">
@@ -46,7 +47,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vfO-lF-C8R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1124" y="1401"/>
+            <point key="canvasLocation" x="1148" y="1024"/>
         </scene>
         <!--Number View Controller-->
         <scene sceneID="OJz-Zf-mOq">
@@ -63,7 +64,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8eW-gp-g0p">
                                 <rect key="frame" x="269" y="289" width="62" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -79,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QYd-g4-DQF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1869" y="1401"/>
+            <point key="canvasLocation" x="1893" y="1024"/>
         </scene>
         <!--Parallax View Controller-->
         <scene sceneID="c4r-nS-dpp">
@@ -97,7 +98,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ypX-js-jYN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1124" y="723"/>
+            <point key="canvasLocation" x="1148" y="358"/>
         </scene>
         <!--Simple View Controller-->
         <scene sceneID="bnl-dw-f8E">
@@ -115,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hJi-ER-Ill" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1124" y="20"/>
+            <point key="canvasLocation" x="1148" y="-357"/>
         </scene>
     </scenes>
 </document>

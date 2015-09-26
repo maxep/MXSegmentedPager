@@ -9,14 +9,11 @@
 #import "MXStoryboardViewController.h"
 #import "MXNumberViewController.h"
 
-@implementation MXStoryboardViewController {
-    NSInteger _prepareIndex;
-}
+@implementation MXStoryboardViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
-    
     
     // Segmented Control customization
     self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -29,11 +26,12 @@
     self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
 }
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+#pragma mark Navigation
 
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(MXPageSegue *)segue sender:(id)sender {
     MXNumberViewController *numberViewController = segue.destinationViewController;
-    numberViewController.number = _prepareIndex;
+    numberViewController.number = segue.pageIndex;
 }
 
 #pragma mark <MXSegmentedPagerControllerDataSource>
@@ -43,7 +41,6 @@
 }
 
 - (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index {
-    _prepareIndex = index;
     return @"number";
 }
 

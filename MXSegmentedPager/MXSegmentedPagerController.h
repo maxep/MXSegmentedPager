@@ -71,4 +71,10 @@ extern NSString* const MXSeguePageIdentifierFormat;  // @"mx_page_%ld"
  The MXPageSegue class creates a segue object to get pages from storyboard.
  */
 @interface MXPageSegue : UIStoryboardSegue
+
+/**
+ Returns index representing page attached to segue.
+ */
+@property (nonatomic, readonly) NSInteger pageIndex;
+
 @end

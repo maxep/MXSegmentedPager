@@ -54,7 +54,7 @@
 #pragma mark <MXPageControllerDataSource>
 
 - (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index {
-    return (index < 1)? @"Simple": @"Parallax";
+    return @[@"Simple", @"Parallax", @"Storyboard"][index];
 }
 
 @end

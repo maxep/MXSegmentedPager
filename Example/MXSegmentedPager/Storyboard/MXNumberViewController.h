@@ -11,4 +11,5 @@
 @interface MXNumberViewController : UIViewController
 
 @property (nonatomic, assign) NSInteger number;
+
 @end

@@ -213,10 +213,10 @@
 		D0269B751BB5AC3400C5D839 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				D0269B761BB5AC4500C5D839 /* MXNumberViewController.h */,
-				D0269B771BB5AC4500C5D839 /* MXNumberViewController.m */,
 				D0269B781BB5AC4500C5D839 /* MXStoryboardViewController.h */,
 				D0269B791BB5AC4500C5D839 /* MXStoryboardViewController.m */,
+				D0269B761BB5AC4500C5D839 /* MXNumberViewController.h */,
+				D0269B771BB5AC4500C5D839 /* MXNumberViewController.m */,
 			);
 			name = Storyboard;
 			sourceTree = "<group>";
