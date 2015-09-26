@@ -24,18 +24,15 @@
 
 @interface MXSegmentedPagerController ()
 @property (nonatomic,weak) UIViewController *pageViewController;
-@property (nonatomic,assign) NSInteger pageIndex;
+@property (nonatomic) NSInteger pageIndex;
 @end
 
 @implementation MXSegmentedPagerController
 
+@synthesize segmentedPager = _segmentedPager;
+
 - (void)loadView {
     self.view = self.segmentedPager;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    self.segmentedPager = nil;
 }
 
 #pragma mark Properties

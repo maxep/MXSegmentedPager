@@ -59,7 +59,7 @@
     
     CGRect frame = self.bounds;
     //Layout content view
-    frame.origin = CGPointMake(0, 0);
+    frame.origin = CGPointZero;
     frame.size.width += self.gutterWidth;
     self.contentView.frame = frame;
     
@@ -69,15 +69,11 @@
     [self setContentIndex:_index animated:NO];
     
     //Layout loaded pages
+    frame.size = self.bounds.size;
     for (NSNumber *key in self.pages) {
-        NSInteger index = [key integerValue];
         UIView *page = self.pages[key];
-    
-        page.frame = (CGRect) {
-            .origin.x   = frame.size.width * index,
-            .origin.y   = 0,
-            .size       = self.bounds.size
-        };
+        frame.origin.x = self.contentView.bounds.size.width * [key integerValue];
+        page.frame = frame;
     }
     
     [super layoutSubviews];
@@ -137,6 +133,8 @@
     }
     
     id builder = self.registration[identifier];
+    NSAssert(builder, @"unable to dequeue a page with identifier %@ - must register a nib or a class for the identifier", identifier);
+    
     UIView *page = nil;
     
     if ([builder isKindOfClass:[UINib class]]) {
@@ -145,8 +143,6 @@
     else if ([builder isKindOfClass:[NSString class]]) {
         page = [[NSClassFromString(builder) alloc] init];
     }
-    
-    NSAssert(page, @"unable to dequeue a page with identifier %@ - must register a nib or a class for the identifier", identifier);
     
     page.reuseIdentifier = identifier;
     [self.reuseQueue addObject:page];
@@ -264,11 +260,10 @@
                 UIView *page = [self.dataSource pagerView:self viewForPageAtIndex:index];
                 [self.contentView addSubview:page];
                 [self.pages setObject:page forKey:key];
-                page.frame = (CGRect) {
-                    .origin.x   = self.contentView.bounds.size.width * index,
-                    .origin.y   = 0.f,
-                    .size       = self.bounds.size
-                };
+                //Layout page
+                CGRect frame = self.bounds;
+                frame.origin = CGPointMake(self.contentView.bounds.size.width * index, 0);
+                page.frame = frame;
             }
         }
     };

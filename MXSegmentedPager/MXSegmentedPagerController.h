@@ -36,7 +36,7 @@
  
  @return An object inheriting from UIViewController that the segmented-pager can use for the specified page.
  */
-- (UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index;
+- (nonnull __kindof UIViewController *)segmentedPager:(nonnull MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index;
 
 /**
  Asks the data source for a segue identifier to insert in a particular page of the segmented-pager.
@@ -46,7 +46,7 @@
  
  @return The segue identifier that the segmented-pager can use for the specified page.
  */
-- (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index;
+- (nonnull NSString *)segmentedPager:(nonnull MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index;
 
 @end
 
@@ -58,14 +58,14 @@
 /**
  Returns the segmengted-pager view managed by the controller object.
  */
-@property (nonatomic, strong) MXSegmentedPager *segmentedPager;
+@property (nonatomic, strong, readonly, nonnull) MXSegmentedPager *segmentedPager;
 
 @end
 
 /**
  Default string identifier format to be applied to segues on a storyboard
  */
-extern NSString* const MXSeguePageIdentifierFormat;  // @"mx_page_%ld"
+extern NSString* _Nonnull const MXSeguePageIdentifierFormat;  // @"mx_page_%ld"
 
 /**
  The MXPageSegue class creates a segue object to get pages from storyboard.

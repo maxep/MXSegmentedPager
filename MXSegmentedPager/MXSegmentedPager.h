@@ -56,7 +56,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
  @param view           The selected page view.
  */
-- (void) segmentedPager:(MXSegmentedPager*)segmentedPager didSelectView:(UIView*)view;
+- (void) segmentedPager:(nonnull MXSegmentedPager*)segmentedPager didSelectView:(nonnull UIView*)view;
 
 /**
  Tells the delegate that a specified title is about to be selected.
@@ -64,7 +64,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
  @param title          The selected page title.
  */
-- (void) segmentedPager:(MXSegmentedPager*)segmentedPager didSelectViewWithTitle:(NSString*)title;
+- (void) segmentedPager:(nonnull MXSegmentedPager*)segmentedPager didSelectViewWithTitle:(nonnull NSString*)title;
 
 /**
  Tells the delegate that a specified index is about to be selected.
@@ -72,7 +72,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
  @param index          The selected page index.
  */
-- (void) segmentedPager:(MXSegmentedPager*)segmentedPager didSelectViewWithIndex:(NSInteger)index;
+- (void) segmentedPager:(nonnull MXSegmentedPager*)segmentedPager didSelectViewWithIndex:(NSInteger)index;
 
 /**
  Asks the delegate to return the height of the segmented control in the segmented-pager.
@@ -81,7 +81,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  
  @return A nonnegative floating-point value that specifies the height (in points) that segmented-control should be.
  */
-- (CGFloat) heightForSegmentedControlInSegmentedPager:(MXSegmentedPager*)segmentedPager;
+- (CGFloat) heightForSegmentedControlInSegmentedPager:(nonnull MXSegmentedPager*)segmentedPager;
 
 @end
 
@@ -101,7 +101,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  
  @return The number of pages in segmented-pager.
  */
-- (NSInteger) numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager;
+- (NSInteger) numberOfPagesInSegmentedPager:(nonnull MXSegmentedPager *)segmentedPager;
 
 /**
  Asks the data source for a view to insert in a particular page of the segmented-pager.
@@ -111,7 +111,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  
  @return An object inheriting from UIView that the segmented-pager can use for the specified page.
  */
-- (UIView*) segmentedPager:(MXSegmentedPager*)segmentedPager viewForPageAtIndex:(NSInteger)index;
+- (nonnull __kindof UIView*) segmentedPager:(nonnull MXSegmentedPager*)segmentedPager viewForPageAtIndex:(NSInteger)index;
 
 @optional
 
@@ -123,7 +123,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  
  @return The NSString title of the page in segmented-pager.
  */
-- (NSString*) segmentedPager:(MXSegmentedPager*)segmentedPager titleForSectionAtIndex:(NSInteger)index;
+- (nonnull NSString*) segmentedPager:(nonnull MXSegmentedPager*)segmentedPager titleForSectionAtIndex:(NSInteger)index;
 
 /**
  Asks the data source for a title to assign to a particular page of the segmented-pager. The title will be used depending on the HMSegmentedControlType you have choosen.
@@ -133,7 +133,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  
  @return The NSAttributedString title of the page in segmented-pager.
  */
-- (NSAttributedString*) segmentedPager:(MXSegmentedPager*)segmentedPager attributedTitleForSectionAtIndex:(NSInteger)index;
+- (nonnull NSAttributedString*) segmentedPager:(nonnull MXSegmentedPager*)segmentedPager attributedTitleForSectionAtIndex:(NSInteger)index;
 
 /**
  Asks the data source for a image to assign to a particular page of the segmented-pager. The image will be used depending on the HMSegmentedControlType you have choosen.
@@ -143,7 +143,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  
  @return The image of the page in segmented-pager.
  */
-- (UIImage*) segmentedPager:(MXSegmentedPager*)segmentedPager imageForSectionAtIndex:(NSInteger)index;
+- (nonnull UIImage*) segmentedPager:(nonnull MXSegmentedPager*)segmentedPager imageForSectionAtIndex:(NSInteger)index;
 
 @end
 
@@ -155,32 +155,32 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 /**
  Delegate instance that adopt the MXSegmentedPagerDelegate.
  */
-@property (nonatomic, assign) id<MXSegmentedPagerDelegate> delegate;
+@property (nonatomic, weak) id<MXSegmentedPagerDelegate> delegate;
 
 /**
  Data source instance that adopt the MXSegmentedPagerDataSource.
  */
-@property (nonatomic, assign) id<MXSegmentedPagerDataSource> dataSource;
+@property (nonatomic, weak) id<MXSegmentedPagerDataSource> dataSource;
 
 /**
  The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
  */
-@property (nonatomic, readonly) HMSegmentedControl* segmentedControl;
+@property (nonatomic, readonly, nonnull) HMSegmentedControl* segmentedControl;
 
 /**
  The segmented control position option.
  */
-@property (nonatomic, assign) MXSegmentedControlPosition segmentedControlPosition;
+@property (nonatomic) MXSegmentedControlPosition segmentedControlPosition;
 
 /**
  The pager. The pager will be placed above or below the segmented control depending on the segmentedControlPosition property.
  */
-@property (nonatomic, readonly) MXPagerView* pager;
+@property (nonatomic, readonly, nonnull) MXPagerView* pager;
 
 /**
  The padding from the top, left, right, and bottom of the segmentedControl
  */
-@property (nonatomic, assign) UIEdgeInsets segmentedControlEdgeInsets;
+@property (nonatomic) UIEdgeInsets segmentedControlEdgeInsets;
 
 /**
  Reloads everything from scratch. redisplays pages.
@@ -205,17 +205,17 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 /**
  The parallax header. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
  */
-@property (nonatomic, strong, readonly) VGParallaxHeader *parallaxHeader;
+@property (nonatomic, strong, readonly, nonnull) VGParallaxHeader *parallaxHeader;
 
 /**
  The minimum header height, the header won't scroll below this value. By default, the minimum height is set to 0.
  */
-@property (nonatomic, assign) CGFloat minimumHeaderHeight;
+@property (nonatomic) CGFloat minimumHeaderHeight;
 
 /**
  The progress block called when scroll is progressing.
  */
-@property (nonatomic, strong) MXProgressBlock progressBlock;
+@property (nonatomic, strong, nullable) MXProgressBlock progressBlock;
 
 /**
  Sets the parallax header view.
@@ -224,7 +224,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  @param mode   The parallax header mode. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
  @param height The header height.
  */
-- (void)setParallaxHeaderView:(UIView *)view
+- (void)setParallaxHeaderView:(nonnull __kindof UIView *)view
                          mode:(VGParallaxHeaderMode)mode
                        height:(CGFloat)height;
 @end
@@ -243,6 +243,6 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  
  @return YES to allow segmented-pager and view to scroll together. The default implementation returns YES.
  */
-- (BOOL) segmentedPager:(MXSegmentedPager *)segmentedPager shouldScrollWithView:(UIView*)view;
+- (BOOL) segmentedPager:(nonnull MXSegmentedPager *)segmentedPager shouldScrollWithView:(nonnull __kindof UIView*)view;
 
 @end

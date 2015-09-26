@@ -56,13 +56,12 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
         [self reloadData];
     }
     
+    CGRect frame = self.bounds;
     //Layout content view
-    self.contentView.frame = (CGRect) {
-        .origin = CGPointZero,
-        .size   = self.bounds.size
-    };
+    frame.origin = CGPointZero;
+    self.contentView.frame = frame;
     
-    CGRect frame;
+    //Layout control
     frame.origin = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
     CGPointMake(self.segmentedControlEdgeInsets.left, self.segmentedControlEdgeInsets.top) :
     CGPointMake(self.segmentedControlEdgeInsets.left, self.bounds.size.height - _controlHeight - self.segmentedControlEdgeInsets.bottom);
