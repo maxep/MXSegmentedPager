@@ -58,48 +58,31 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
     
     //Layout content view
     self.contentView.frame = (CGRect) {
-        .origin = CGPointMake(0, 0),
+        .origin = CGPointZero,
         .size   = self.bounds.size
     };
     
-    //Layout control
-    CGPoint position;
-    CGFloat height = _controlHeight;
-    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
-        position = CGPointMake(self.segmentedControlEdgeInsets.left,
-                               self.segmentedControlEdgeInsets.top);
-    }
-    else {
-        position = CGPointMake(self.segmentedControlEdgeInsets.left,
-                               self.frame.size.height - height - self.segmentedControlEdgeInsets.bottom);
-    }
-    
-    CGRect subFrame = (CGRect) {
-        .origin         = position,
-        .size.width     = self.frame.size.width - self.segmentedControlEdgeInsets.left - self.segmentedControlEdgeInsets.right,
-        .size.height    = height
-    };
-    self.segmentedControl.frame = subFrame;
+    CGRect frame;
+    frame.origin = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
+    CGPointMake(self.segmentedControlEdgeInsets.left, self.segmentedControlEdgeInsets.top) :
+    CGPointMake(self.segmentedControlEdgeInsets.left, self.bounds.size.height - _controlHeight - self.segmentedControlEdgeInsets.bottom);
+    frame.size.width = self.frame.size.width - self.segmentedControlEdgeInsets.left - self.segmentedControlEdgeInsets.right;
+    frame.size.height = _controlHeight;
+
+    self.segmentedControl.frame = frame;
     
     //Layout pager
-    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
-        position = CGPointMake(0, height + self.segmentedControlEdgeInsets.top + self.segmentedControlEdgeInsets.bottom);
-    }
-    else {
-        position = CGPointZero;
-    }
+    frame.origin = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
+    CGPointMake(0, _controlHeight + self.segmentedControlEdgeInsets.top + self.segmentedControlEdgeInsets.bottom) : CGPointZero;
     
-    height  = self.contentView.frame.size.height - height;
+    frame.size.width = self.bounds.size.width;
+    CGFloat height = self.contentView.frame.size.height - _controlHeight;
     height -= self.contentView.minimumHeigth;
     height -= self.segmentedControlEdgeInsets.top;
     height -= self.segmentedControlEdgeInsets.bottom;
+    frame.size.height = height;
     
-    subFrame = (CGRect) {
-        .origin         = position,
-        .size.width     = self.frame.size.width,
-        .size.height    = height
-    };
-    self.pager.frame = subFrame;
+    self.pager.frame = frame;
     
     self.contentView.contentSize = CGSizeMake(self.contentView.frame.size.width, self.contentView.frame.size.height);
     

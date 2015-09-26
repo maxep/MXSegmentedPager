@@ -23,10 +23,6 @@
 #import <objc/runtime.h>
 #import "MXPagerView.h"
 
-@interface UIView (ReuseIdentifier)
-@property (nonatomic, copy) NSString *reuseIdentifier;
-@end
-
 @implementation UIView (ReuseIdentifier)
 
 - (NSString *)reuseIdentifier {
@@ -35,6 +31,10 @@
 
 - (void)setReuseIdentifier:(NSString *)reuseIdentifier {
     objc_setAssociatedObject(self, @selector(reuseIdentifier), reuseIdentifier, OBJC_ASSOCIATION_COPY);
+}
+
+- (void)prepareForReuse {
+    
 }
 
 @end
@@ -150,6 +150,7 @@
     
     page.reuseIdentifier = identifier;
     [self.reuseQueue addObject:page];
+    [page prepareForReuse];
     
     return page;
 }
@@ -207,6 +208,11 @@
         _reuseQueue = [NSMutableArray array];
     }
     return _reuseQueue;
+}
+
+- (void)setGutterWidth:(CGFloat)gutterWidth {
+    _gutterWidth = gutterWidth;
+    [self setNeedsLayout];
 }
 
 - (BOOL)isScrollEnabled {

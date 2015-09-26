@@ -106,7 +106,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 /**
  The current selected page view.
  */
-@property (nonatomic, readonly, nullable) UIView *selectedPage;
+@property (nonatomic, readonly, nullable) __kindof UIView *selectedPage;
 
 /**
  Returns index representing page of selection.
@@ -190,4 +190,20 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  */
 - (nullable __kindof UIView *)dequeueReusablePageWithIdentifier:(nonnull NSString *)identifier;
 
+@end
+
+/**
+ UIView category for reusable page.
+ */
+@interface UIView (ReuseIdentifier)
+
+/**
+ Reusable page identifier.
+ */
+@property (nonatomic, copy, readonly, nullable) NSString *reuseIdentifier;
+
+/**
+ if the page is reusable (has a reuse identifier), this is called just before the page is returned from the pager view method dequeueReusablePageWithIdentifier:.
+ */
+- (void) prepareForReuse;
 @end
