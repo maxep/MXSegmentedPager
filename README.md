@@ -6,13 +6,21 @@
 [![Platform](https://img.shields.io/cocoapods/p/MXSegmentedPager.svg?style=flat)](http://cocoadocs.org/docsets/MXSegmentedPager)
 [![Dependency Status](https://www.versioneye.com/objective-c/mxsegmentedpager/1.0/badge.svg)](https://www.versioneye.com/objective-c/mxsegmentedpager)
 
-The standard MXSegmentedPager class is a simple paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl). The ParallaxHeader category is an extension that allow you to add a [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) to your segmented pager.
+MXSegmentedPager is a pager view using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl) as control. The integration of [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) allows you to add an parallax header on top while keeping a reliable scrolling effect.
 
 
 |           Simple view         |           Parallax view         |
 |-------------------------------|---------------------------------|
 |![Demo](Example/SimpleView.gif)|![Demo](Example/ParallaxView.gif)|
 
+## Highlight
++ [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl) is a very customizable control.
++ [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) supports any kind of view with different modes.
++ Reliable vertical scroll with any view hierarchy.
++ Lazily load pages.
++ Supports reusable page registration.
++ Can load view-controller from storyboard using a custom segue.
++ Fully documented.
 
 ## Usage
 

@@ -9,10 +9,10 @@
 
 Pod::Spec.new do |s|
   s.name             = "MXSegmentedPager"
-  s.version          = "1.2.1"
+  s.version          = "2.0.0"
   s.summary          = "Segmented pager view with Parallax header."
   s.description      = <<-DESC
-                       The standard MXSegmentedPager class is a simple paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl). The ParallaxHeader category is an extension that allow you to add a [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) to your segmented pager.
+                       MXSegmentedPager is a pager view using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl) as control. The integration of [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) allows you to add an parallax header on top while keeping a reliable scrolling effect.
                        DESC
 
   s.homepage         = "https://github.com/maxep/MXSegmentedPager"
