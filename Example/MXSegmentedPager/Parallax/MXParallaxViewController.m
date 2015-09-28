@@ -180,7 +180,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSInteger index = (indexPath.row % 2) + 1;
-    [self.segmentedPager scrollToPageAtIndex:index animated:YES];
+    [self.segmentedPager.pager showPageAtIndex:index animated:YES];
 }
 
 #pragma -mark <UITableViewDataSource>

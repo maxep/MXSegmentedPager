@@ -187,14 +187,6 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  */
 - (void) reloadData;
 
-/**
- Scrolls through the pager until a page identified by index is at a particular location on the screen.
- 
- @param index       An index that identifies a page.
- @param animated    YES if you want to animate the change in position; NO if it should be immediate.
- */
-- (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated;
-
 @end
 
 /**

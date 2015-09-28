@@ -23,24 +23,15 @@
 #import <objc/runtime.h>
 #import "MXPagerView.h"
 
-@implementation UIView (ReuseIdentifier)
+@interface UIView ()
+@property (nonatomic, copy) NSString *reuseIdentifier;
+@end
 
-- (NSString *)reuseIdentifier {
-    return objc_getAssociatedObject(self, @selector(reuseIdentifier));
-}
-
-- (void)setReuseIdentifier:(NSString *)reuseIdentifier {
-    objc_setAssociatedObject(self, @selector(reuseIdentifier), reuseIdentifier, OBJC_ASSOCIATION_COPY);
-}
-
-- (void)prepareForReuse {
-    
-}
-
+@interface MXContentView : UIScrollView <UIGestureRecognizerDelegate>
 @end
 
 @interface MXPagerView () <UIScrollViewDelegate>
-@property (nonatomic, strong) UIScrollView          *contentView;
+@property (nonatomic, strong) MXContentView         *contentView;
 @property (nonatomic, strong) NSMutableDictionary   *pages;
 
 @property (nonatomic, strong) NSMutableDictionary   *registration;
@@ -94,10 +85,11 @@
     
     //Loads the current selected page
     [self loadPageAtIndex:_index];
+    
+    [self layoutIfNeeded];
 }
 
 - (void) showPageAtIndex:(NSInteger)index animated:(BOOL)animated {
-    
     
     //The tab behavior disable animation
     animated = (self.transitionStyle == MXPagerViewTransitionStyleTab)? NO : animated;
@@ -124,7 +116,7 @@
     [self.registration setValue:NSStringFromClass(pageClass) forKey:identifier];
 }
 
-- (__kindof UIView *)dequeueReusablePageWithIdentifier:(NSString *)identifier {
+- (UIView *)dequeueReusablePageWithIdentifier:(NSString *)identifier {
     
     for (UIView *page in self.reuseQueue) {
         if (!page.superview && [page.reuseIdentifier isEqualToString:identifier]) {
@@ -153,9 +145,9 @@
 
 #pragma mark Properties
 
-- (UIScrollView *)contentView {
+- (MXContentView *)contentView {
     if (!_contentView) {
-        _contentView = [[UIScrollView alloc] init];
+        _contentView = [[MXContentView alloc] init];
         _contentView.delegate = self;
         _contentView.scrollsToTop = NO;
         _contentView.pagingEnabled = YES;
@@ -326,6 +318,59 @@
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     [self scrollViewDidEndDecelerating:scrollView];
+}
+
+@end
+
+@implementation MXContentView
+
+#pragma mark <UIGestureRecognizerDelegate>
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        MXPanGestureDirection direction = [(UIPanGestureRecognizer*)gestureRecognizer directionInView:self];
+        
+        //Lock vertical pan gesture.
+        if (direction == MXPanGestureDirectionUp || direction == MXPanGestureDirectionDown) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+@end
+
+@implementation UIView (ReuseIdentifier)
+
+- (NSString *)reuseIdentifier {
+    return objc_getAssociatedObject(self, @selector(reuseIdentifier));
+}
+
+- (void)setReuseIdentifier:(NSString *)reuseIdentifier {
+    objc_setAssociatedObject(self, @selector(reuseIdentifier), reuseIdentifier, OBJC_ASSOCIATION_COPY);
+}
+
+- (void)prepareForReuse {
+    
+}
+
+@end
+
+@implementation UIPanGestureRecognizer (Direction)
+
+- (MXPanGestureDirection) directionInView:(UIView *)view {
+    CGPoint velocity = [self velocityInView:view];
+    CGFloat absX = fabs(velocity.x);
+    CGFloat absY = fabs(velocity.y);
+    
+    if (absX > absY) {
+        return (velocity.x > 0)? MXPanGestureDirectionRight : MXPanGestureDirectionLeft;
+    }
+    else if (absX < absY) {
+        return (velocity.y > 0)? MXPanGestureDirectionDown : MXPanGestureDirectionUp;
+    }
+    return MXPanGestureDirectionNone;
 }
 
 @end

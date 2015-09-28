@@ -23,13 +23,7 @@
 #import <objc/runtime.h>
 #import "MXSegmentedPager.h"
 
-typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
-    MXPanGestureDirectionNone  = 1 << 0,
-    MXPanGestureDirectionRight = 1 << 1,
-    MXPanGestureDirectionLeft  = 1 << 2,
-    MXPanGestureDirectionUp    = 1 << 3,
-    MXPanGestureDirectionDown  = 1 << 4
-};
+
 
 @interface MXScrollView : UIScrollView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, assign) CGFloat minimumHeigth;
@@ -120,11 +114,9 @@ typedef NS_ENUM(NSInteger, MXPanGestureDirection) {
     
     self.segmentedControl.sectionImages = images;
     self.segmentedControl.sectionTitles = titles;
-}
-
-- (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated {
-    [self.segmentedControl setSelectedSegmentIndex:index animated:animated];
-    [self.pager showPageAtIndex:index animated:animated];
+    
+    [self.pager reloadData];
+    [self layoutIfNeeded];
 }
 
 #pragma mark Properties
@@ -336,8 +328,9 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
     
     if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        MXPanGestureDirection direction = [self getDirectionOfPanGestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer];
+        MXPanGestureDirection direction = [(UIPanGestureRecognizer*)gestureRecognizer directionInView:self];
         
+        //Lock horizontal pan gesture.
         if (direction == MXPanGestureDirectionLeft || direction == MXPanGestureDirectionRight) {
             return NO;
         }
@@ -348,7 +341,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     
     UIView<MXPageProtocol> *page = (id) self.segmentedPager.pager.selectedPage;
-    BOOL shouldScroll = self.scrollEnabled;
+    BOOL shouldScroll = YES;
     
     if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
         shouldScroll = [page segmentedPager:self.segmentedPager shouldScrollWithView:otherGestureRecognizer.view];
@@ -358,21 +351,6 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
         [self addObservedView:otherGestureRecognizer.view];
     }
     return shouldScroll;
-}
-
-- (MXPanGestureDirection) getDirectionOfPanGestureRecognizer:(UIPanGestureRecognizer*) panGestureRecognizer {
-    
-    CGPoint velocity = [panGestureRecognizer velocityInView:self];
-    CGFloat absX = fabs(velocity.x);
-    CGFloat absY = fabs(velocity.y);
-    
-    if (absX > absY) {
-        return (velocity.x > 0)? MXPanGestureDirectionRight : MXPanGestureDirectionLeft;
-    }
-    else if (absX < absY) {
-        return (velocity.y > 0)? MXPanGestureDirectionDown : MXPanGestureDirectionUp;
-    }
-    return MXPanGestureDirectionNone;
 }
 
 #pragma mark KVO

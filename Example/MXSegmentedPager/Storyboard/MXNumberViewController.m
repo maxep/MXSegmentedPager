@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.numberLabel.text = [NSString stringWithFormat:@"Page %li", self.number];
+    self.numberLabel.text = [NSString stringWithFormat:@"Page %li", (long)self.number];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -27,7 +27,7 @@
 
 - (void)setNumber:(NSInteger)number {
     _number = number;
-    self.numberLabel.text = [NSString stringWithFormat:@"Page %li", self.number];
+    self.numberLabel.text = [NSString stringWithFormat:@"Page %li", (long)self.number];
 }
 
 @end

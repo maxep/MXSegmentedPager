@@ -8,12 +8,17 @@
 
 #import "MXStoryboardViewController.h"
 #import "MXNumberViewController.h"
+#import "MXRefreshHeaderView.h"
 
 @implementation MXStoryboardViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
+    
+    // Parallax Header
+    [self.segmentedPager setParallaxHeaderView:[MXRefreshHeaderView instantiateFromNib] mode:VGParallaxHeaderModeFill height:150.f];
+    self.segmentedPager.minimumHeaderHeight = 20.f;
     
     // Segmented Control customization
     self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
