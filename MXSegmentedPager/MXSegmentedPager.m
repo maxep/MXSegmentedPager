@@ -23,8 +23,6 @@
 #import <objc/runtime.h>
 #import "MXSegmentedPager.h"
 
-
-
 @interface MXScrollView : UIScrollView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, assign) CGFloat minimumHeigth;
 @property (nonatomic, strong) MXSegmentedPager *segmentedPager;
@@ -234,6 +232,10 @@
 
 - (VGParallaxHeader *)parallaxHeader {
     return self.contentView.parallaxHeader;
+}
+
+- (void)updateParallaxHeaderViewHeight:(CGFloat)height {
+    [self.contentView updateParallaxHeaderViewHeight:height];
 }
 
 #pragma mark Properties

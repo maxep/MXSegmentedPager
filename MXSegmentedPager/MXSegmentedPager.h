@@ -21,8 +21,9 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "HMSegmentedControl.h"
+#import <HMSegmentedControl/HMSegmentedControl.h>
 #import "UIScrollView+VGParallaxHeader.h"
+
 #import "MXPagerView.h"
 
 /**
@@ -219,6 +220,14 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 - (void)setParallaxHeaderView:(nonnull __kindof UIView *)view
                          mode:(VGParallaxHeaderMode)mode
                        height:(CGFloat)height;
+
+/**
+ Updates the header height.
+ 
+ @param height The header height.
+ */
+- (void)updateParallaxHeaderViewHeight:(CGFloat)height;
+
 @end
 
 /**
