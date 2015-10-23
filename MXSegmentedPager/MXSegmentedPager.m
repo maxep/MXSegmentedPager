@@ -75,7 +75,7 @@
     
     self.pager.frame = frame;
     
-    self.contentView.contentSize = CGSizeMake(self.contentView.frame.size.width, self.contentView.frame.size.height);
+    self.contentView.contentSize = self.contentView.frame.size;
     
     [super layoutSubviews];
 }
@@ -256,6 +256,13 @@
     self.contentView.progressBlock = progressBlock;
 }
 
+- (BOOL)bounces {
+    return self.contentView.bounces;
+}
+
+- (void)setBounces:(BOOL)bounces {
+    self.contentView.bounces = bounces;
+}
 @end
 
 @implementation MXScrollView {
@@ -386,28 +393,31 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
         
         CGPoint new = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
         CGPoint old = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
+        CGFloat diff = old.y - new.y;
         
-        if (old.y == new.y) return;
+        if (diff == 0 || !_isObserving) return;
         
-        if (_isObserving && object == self) {
-            //Adjust self scroll offset
-            if ((old.y - new.y) > 0 && _lock) {
+        if (object == self) {
+            //Adjust self scroll offset when scroll down
+            if (diff > 0 && _lock) {
+//                old.y = self.minimumHeigth;
                 [self scrollView:self setContentOffset:old];
             }
         }
-        else if (_isObserving && [object isKindOfClass:[UIScrollView class]]) {
-            
+        else {
             //Adjust the observed scrollview's content offset
             UIScrollView *scrollView = object;
-            _lock = !(scrollView.contentOffset.y <= -scrollView.contentInset.top);
+            _lock = (scrollView.contentOffset.y > -scrollView.contentInset.top);
             
             //Manage scroll up
-            if (self.contentOffset.y < -self.minimumHeigth && _lock && (old.y - new.y) < 0) {
+            if (self.contentOffset.y < -self.minimumHeigth && _lock && diff < 0) {
                 [self scrollView:scrollView setContentOffset:old];
             }
             //Disable bouncing when scroll down
             if (!_lock) {
-                [self scrollView:scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top)];
+                if ((self.contentOffset.y > -self.contentInset.top) || self.bounces) {
+                    [self scrollView:scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top)];
+                }
             }
         }
     }

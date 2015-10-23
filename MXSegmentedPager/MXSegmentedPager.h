@@ -206,6 +206,11 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 @property (nonatomic) CGFloat minimumHeaderHeight;
 
 /**
+ Allows bounces. Default YES.
+ */
+@property (nonatomic) BOOL bounces;
+
+/**
  The progress block called when scroll is progressing.
  */
 @property (nonatomic, strong, nullable) MXProgressBlock progressBlock;
