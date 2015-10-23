@@ -273,6 +273,8 @@
 static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
 static NSString* const kContentOffsetKeyPath = @"contentOffset";
 
+@synthesize bounces = _bounces;
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -283,6 +285,7 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
         self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         self.contentMode = UIViewContentModeTopRight;
         self.minimumHeigth = 0;
+        self.bounces = YES;
     }
     return self;
 }
@@ -400,8 +403,10 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
         if (object == self) {
             //Adjust self scroll offset when scroll down
             if (diff > 0 && _lock) {
-//                old.y = self.minimumHeigth;
                 [self scrollView:self setContentOffset:old];
+            }
+            else if (((self.contentOffset.y < -self.contentInset.top) && !self.bounces)) {
+                [self scrollView:self setContentOffset:CGPointMake(self.contentOffset.x, -self.contentInset.top)];
             }
         }
         else {
@@ -414,10 +419,8 @@ static NSString* const kContentOffsetKeyPath = @"contentOffset";
                 [self scrollView:scrollView setContentOffset:old];
             }
             //Disable bouncing when scroll down
-            if (!_lock) {
-                if ((self.contentOffset.y > -self.contentInset.top) || self.bounces) {
+            if (!_lock && ((self.contentOffset.y > -self.contentInset.top) || self.bounces)) {
                     [self scrollView:scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top)];
-                }
             }
         }
     }
