@@ -21,13 +21,13 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		B10F7A080B4570658946BDC6 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9BB96F1D81164F56C1E5BB /* libPods-Tests.a */; };
-		D0269B7A1BB5AC4500C5D839 /* MXNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269B771BB5AC4500C5D839 /* MXNumberViewController.m */; settings = {ASSET_TAGS = (); }; };
-		D0269B7B1BB5AC4500C5D839 /* MXStoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269B791BB5AC4500C5D839 /* MXStoryboardViewController.m */; settings = {ASSET_TAGS = (); }; };
+		D0269B7A1BB5AC4500C5D839 /* MXNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269B771BB5AC4500C5D839 /* MXNumberViewController.m */; };
+		D0269B7B1BB5AC4500C5D839 /* MXStoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269B791BB5AC4500C5D839 /* MXStoryboardViewController.m */; };
 		D02CC1BD1AB0EF7A00492C51 /* MXParallaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D02CC1BC1AB0EF7A00492C51 /* MXParallaxViewController.m */; };
 		D077BEF01AAA0728001F1396 /* MXSimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D077BEED1AAA0728001F1396 /* MXSimpleViewController.m */; };
 		D08B319A1B0030E400B74C30 /* MXExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B31991B0030E400B74C30 /* MXExampleViewController.m */; };
-		D09DA1641BB3EDE100E964BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09DA1631BB3EDE100E964BF /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
-		D09DA1661BB3F1F300E964BF /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09DA1651BB3F1F300E964BF /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
+		D09DA1641BB3EDE100E964BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09DA1631BB3EDE100E964BF /* Main.storyboard */; };
+		D09DA1661BB3F1F300E964BF /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09DA1651BB3F1F300E964BF /* Launch Screen.storyboard */; };
 		D0B4CEED1B0B805C004EE3AB /* MXCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B4CEEC1B0B805C004EE3AB /* MXCustomView.m */; };
 		D0CC03231B7C8D13009B0536 /* MXRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CC03211B7C8D13009B0536 /* MXRefreshHeaderView.m */; };
 		D0CC03241B7C8D13009B0536 /* MXRefreshHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0CC03221B7C8D13009B0536 /* MXRefreshHeaderView.xib */; };
@@ -267,6 +267,7 @@
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				8B3F9A29D7DEF78F69E06406 /* Copy Pods Resources */,
+				C436EE41E93F0F5F8319056D /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -286,6 +287,7 @@
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
 				84A9B763B156D50E8AF7ED94 /* Copy Pods Resources */,
+				A06FF75E4A12313C5F752FF9 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -414,6 +416,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSegmentedPager/Pods-MXSegmentedPager-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A06FF75E4A12313C5F752FF9 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tests/Pods-Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C436EE41E93F0F5F8319056D /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSegmentedPager/Pods-MXSegmentedPager-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
