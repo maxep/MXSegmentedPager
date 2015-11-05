@@ -151,14 +151,8 @@ static void *VGParallaxHeaderObserverContext = &VGParallaxHeaderObserverContext;
 
 - (void)setParallaxHeader:(VGParallaxHeader *)parallaxHeader
 {
-    // Remove All Subviews
-    if([self.subviews count] > 0) {
-        [self.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            if([obj isMemberOfClass:[VGParallaxHeader class]]) {
-                [obj removeFromSuperview];
-            }
-        }];
-    }
+    //Remove the current parallax header
+    [self removeParallaxHeader];
     
     parallaxHeader.insideTableView = [self isKindOfClass:[UITableView class]];
     
@@ -178,6 +172,25 @@ static void *VGParallaxHeaderObserverContext = &VGParallaxHeaderObserverContext;
 - (VGParallaxHeader *)parallaxHeader
 {
     return objc_getAssociatedObject(self, &UIScrollViewVGParallaxHeader);
+}
+
+- (void) removeParallaxHeader {
+    if (self.parallaxHeader) {
+        [self.parallaxHeader removeFromSuperview];
+        
+        if (self.parallaxHeader.isInsideTableView) {
+            [(UITableView*)self setTableHeaderView:nil];
+        }
+        else {
+            UIEdgeInsets selfContentInset = self.contentInset;
+            selfContentInset.top -= self.parallaxHeader.originalHeight;
+            
+            self.contentInset = selfContentInset;
+            self.contentOffset = CGPointMake(0, -selfContentInset.top);
+        }
+        
+        objc_setAssociatedObject(self, &UIScrollViewVGParallaxHeader, nil, OBJC_ASSOCIATION_ASSIGN);
+    }
 }
 
 @end

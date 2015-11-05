@@ -60,4 +60,6 @@ typedef NS_ENUM(NSInteger, VGParallaxHeaderShadowBehaviour) {
 
 - (void)shouldPositionParallaxHeader;
 
+- (void)removeParallaxHeader;
+
 @end
