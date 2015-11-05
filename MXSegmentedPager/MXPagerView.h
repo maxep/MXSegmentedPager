@@ -23,38 +23,6 @@
 #import <UIKit/UIKit.h>
 
 /**
- UIPanGestureRecognizer direction enumeration.
- */
-typedef NS_ENUM(NSInteger, MXPanGestureDirection){
-    /** No direction. */
-    MXPanGestureDirectionNone  = 1 << 0,
-    /** Right direction. */
-    MXPanGestureDirectionRight = 1 << 1,
-    /** Left direction. */
-    MXPanGestureDirectionLeft  = 1 << 2,
-    /** Up direction. */
-    MXPanGestureDirectionUp    = 1 << 3,
-    /** Down direction. */
-    MXPanGestureDirectionDown  = 1 << 4
-};
-
-/**
- UIPanGestureRecognizer category with direction getter.
- */
-@interface UIPanGestureRecognizer (Direction)
-
-/**
- Gets the pan gesture direction of the specified view.
- 
- @param view The view
- 
- @return The pan gesture direction.
- */
-- (MXPanGestureDirection) directionInView:(nullable __kindof UIView *)view;
-
-@end
-
-/**
  The pager transition styles.
  */
 typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {

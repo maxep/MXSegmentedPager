@@ -21,17 +21,10 @@
 // THE SOFTWARE.
 
 #import <objc/runtime.h>
+#import <MXParallaxHeader/MXScrollView.h>
 #import "MXSegmentedPager.h"
 
-@interface MXScrollView : UIScrollView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
-@property (nonatomic, assign) CGFloat minimumHeigth;
-@property (nonatomic, strong) MXSegmentedPager *segmentedPager;
-@property (nonatomic, strong) MXProgressBlock progressBlock;
-@property (nonatomic, strong) NSMutableArray *observedViews;
-@end
-
-
-@interface MXSegmentedPager () <MXPagerViewDelegate, MXPagerViewDataSource>
+@interface MXSegmentedPager () <MXScrollViewDelegate, MXPagerViewDelegate, MXPagerViewDataSource>
 @property (nonatomic, strong) MXScrollView          *contentView;
 @property (nonatomic, strong) HMSegmentedControl    *segmentedControl;
 @property (nonatomic, strong) MXPagerView           *pager;
@@ -68,7 +61,7 @@
     
     frame.size.width = self.bounds.size.width;
     CGFloat height = self.contentView.frame.size.height - _controlHeight;
-    height -= self.contentView.minimumHeigth;
+    height -= self.contentView.parallaxHeader.minimumHeight;
     height -= self.segmentedControlEdgeInsets.top;
     height -= self.segmentedControlEdgeInsets.bottom;
     frame.size.height = height;
@@ -76,6 +69,7 @@
     self.pager.frame = frame;
     
     self.contentView.contentSize = self.contentView.frame.size;
+    self.contentView.scrollEnabled = !!self.contentView.parallaxHeader.view;
     
     [super layoutSubviews];
 }
@@ -124,8 +118,7 @@
         
         // Create scroll-view
         _contentView = [[MXScrollView alloc] init];
-        _contentView.segmentedPager = self;
-        _contentView.scrollEnabled = NO;
+        _contentView.delegate = self;
         [self addSubview:_contentView];
     }
     return _contentView;
@@ -167,6 +160,17 @@
 - (void)setSegmentedControlEdgeInsets:(UIEdgeInsets)segmentedControlEdgeInsets {
     _segmentedControlEdgeInsets = segmentedControlEdgeInsets;
     [self setNeedsLayout];
+}
+
+#pragma mark <MXScrollViewDelegate>
+
+- (BOOL)scrollView:(MXScrollView *)scrollView shouldScrollWithSubView:(UIView *)subView {
+    UIView<MXPageProtocol> *page = (id) self.pager.selectedPage;
+    
+    if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
+        return [page segmentedPager:self shouldScrollWithView:subView];
+    }
+    return YES;
 }
 
 #pragma mark HMSegmentedControl target
@@ -223,237 +227,20 @@
 
 @implementation MXSegmentedPager (ParallaxHeader)
 
-#pragma mark VGParallaxHeader
+#pragma mark MXParallaxHeader
 
-- (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
-    [self.contentView setParallaxHeaderView:view mode:mode height:height];
-    self.contentView.scrollEnabled = !!view;
-}
-
-- (VGParallaxHeader *)parallaxHeader {
+- (MXParallaxHeader *)parallaxHeader {
     return self.contentView.parallaxHeader;
 }
 
-- (void)updateParallaxHeaderViewHeight:(CGFloat)height {
-    [self.contentView updateParallaxHeaderViewHeight:height];
-}
-
 #pragma mark Properties
 
-- (CGFloat)minimumHeaderHeight {
-    return self.contentView.minimumHeigth;
-}
-
-- (void)setMinimumHeaderHeight:(CGFloat)minimumHeaderHeight {
-    self.contentView.minimumHeigth = minimumHeaderHeight;
-}
-
 - (MXProgressBlock)progressBlock {
-    return self.contentView.progressBlock;
+    return nil;
 }
 
 - (void)setProgressBlock:(MXProgressBlock)progressBlock {
-    self.contentView.progressBlock = progressBlock;
-}
 
-- (BOOL)bounces {
-    return self.contentView.bounces;
-}
-
-- (void)setBounces:(BOOL)bounces {
-    self.contentView.bounces = bounces;
-}
-@end
-
-@implementation MXScrollView {
-    BOOL _isObserving;
-    BOOL _lock;
-}
-
-static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
-static NSString* const kContentOffsetKeyPath = @"contentOffset";
-
-@synthesize bounces = _bounces;
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.delegate = self;
-        self.showsVerticalScrollIndicator = NO;
-        self.directionalLockEnabled = YES;
-        self.bounces = YES;
-        self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        self.contentMode = UIViewContentModeTopRight;
-        self.minimumHeigth = 0;
-        self.bounces = YES;
-    }
-    return self;
-}
-
-#pragma mark Properties
-
-- (NSMutableArray *)observedViews {
-    if (!_observedViews) {
-        _observedViews = [NSMutableArray array];
-    }
-    return _observedViews;
-}
-
-- (void)setScrollEnabled:(BOOL)scrollEnabled {
-    [super setScrollEnabled:scrollEnabled];
-    
-    if (scrollEnabled) {
-        [self addObserver:self forKeyPath:kContentOffsetKeyPath
-                  options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
-                  context:kMXScrollViewKVOContext];
-    }
-    else {
-        @try {
-            [self removeObserver:self forKeyPath:kContentOffsetKeyPath];
-        }
-        @catch (NSException *exception) {}
-    }
-}
-
-#pragma mark <UIScrollViewDelegate>
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    if ((self.contentOffset.y >= -self.minimumHeigth)) {
-        self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
-    }
-    
-    [scrollView shouldPositionParallaxHeader];
-    
-    if (self.progressBlock) {
-        self.progressBlock(scrollView.parallaxHeader.progress);
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    _lock = NO;
-    [self removeObservedViews];
-}
-
-#pragma mark <UIGestureRecognizerDelegate>
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-    
-    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        MXPanGestureDirection direction = [(UIPanGestureRecognizer*)gestureRecognizer directionInView:self];
-        
-        //Lock horizontal pan gesture.
-        if (direction == MXPanGestureDirectionLeft || direction == MXPanGestureDirectionRight) {
-            return NO;
-        }
-    }
-    return YES;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
-    UIView<MXPageProtocol> *page = (id) self.segmentedPager.pager.selectedPage;
-    BOOL shouldScroll = YES;
-    
-    if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
-        shouldScroll = [page segmentedPager:self.segmentedPager shouldScrollWithView:otherGestureRecognizer.view];
-    }
-    
-    if (shouldScroll) {
-        [self addObservedView:otherGestureRecognizer.view];
-    }
-    return shouldScroll;
-}
-
-#pragma mark KVO
-
-- (void) addObserverToView:(UIView *)view {
-    _isObserving = NO;
-    if ([view isKindOfClass:[UIScrollView class]]) {
-        [view addObserver:self
-               forKeyPath:kContentOffsetKeyPath
-                  options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
-                  context:kMXScrollViewKVOContext];
-    }
-    _isObserving = YES;
-}
-
-- (void) removeObserverFromView:(UIView *)view {
-    @try {
-        if ([view isKindOfClass:[UIScrollView class]]) {
-            [view removeObserver:self
-                      forKeyPath:kContentOffsetKeyPath
-                         context:kMXScrollViewKVOContext];
-        }
-    }
-    @catch (NSException *exception) {}
-}
-
-//This is where the magic happens...
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-    if (context == kMXScrollViewKVOContext && [keyPath isEqualToString:kContentOffsetKeyPath]) {
-        
-        CGPoint new = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
-        CGPoint old = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
-        CGFloat diff = old.y - new.y;
-        
-        if (diff == 0 || !_isObserving) return;
-        
-        if (object == self) {
-            //Adjust self scroll offset when scroll down
-            if (diff > 0 && _lock) {
-                [self scrollView:self setContentOffset:old];
-            }
-            else if (((self.contentOffset.y < -self.contentInset.top) && !self.bounces)) {
-                [self scrollView:self setContentOffset:CGPointMake(self.contentOffset.x, -self.contentInset.top)];
-            }
-        }
-        else {
-            //Adjust the observed scrollview's content offset
-            UIScrollView *scrollView = object;
-            _lock = (scrollView.contentOffset.y > -scrollView.contentInset.top);
-            
-            //Manage scroll up
-            if (self.contentOffset.y < -self.minimumHeigth && _lock && diff < 0) {
-                [self scrollView:scrollView setContentOffset:old];
-            }
-            //Disable bouncing when scroll down
-            if (!_lock && ((self.contentOffset.y > -self.contentInset.top) || self.bounces)) {
-                    [self scrollView:scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top)];
-            }
-        }
-    }
-    else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
-#pragma mark Scrolling views handlers
-
-- (void) addObservedView:(UIView *)view {
-    if (![self.observedViews containsObject:view]) {
-        [self.observedViews addObject:view];
-        [self addObserverToView:view];
-    }
-}
-
-- (void) removeObservedViews {
-    for (UIView *view in self.observedViews) {
-        [self removeObserverFromView:view];
-    }
-    [self.observedViews removeAllObjects];
-}
-
-- (void) scrollView:(UIScrollView*)scrollView setContentOffset:(CGPoint)offset {
-    _isObserving = NO;
-    scrollView.contentOffset = offset;
-    _isObserving = YES;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
-

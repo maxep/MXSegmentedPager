@@ -22,6 +22,7 @@
 
 #import <objc/runtime.h>
 #import "MXPagerView.h"
+#import <MXParallaxHeader/UIPanGestureRecognizer+Direction.h>
 
 @interface UIView ()
 @property (nonatomic, copy) NSString *reuseIdentifier;

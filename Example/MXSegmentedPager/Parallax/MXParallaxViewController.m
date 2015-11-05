@@ -45,8 +45,10 @@
     [self.view addSubview:self.segmentedPager];
     
     // Parallax Header
-    [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:150.f];
-    self.segmentedPager.minimumHeaderHeight = 20.f;
+    self.segmentedPager.parallaxHeader.view = [MXRefreshHeaderView instantiateFromNib];
+    self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderModeFill;
+    self.segmentedPager.parallaxHeader.height = 150;
+    self.segmentedPager.parallaxHeader.minimumHeight = 20;
     
     // Segmented Control customization
     self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;

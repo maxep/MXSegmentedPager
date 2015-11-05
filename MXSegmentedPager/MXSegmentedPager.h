@@ -22,7 +22,7 @@
 
 #import <UIKit/UIKit.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
-#import "UIScrollView+VGParallaxHeader.h"
+#import <MXParallaxHeader/MXParallaxHeader.h>
 
 #import "MXPagerView.h"
 
@@ -198,40 +198,13 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 /**
  The parallax header. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
  */
-@property (nonatomic, strong, readonly, nonnull) VGParallaxHeader *parallaxHeader;
-
-/**
- The minimum header height, the header won't scroll below this value. By default, the minimum height is set to 0.
- */
-@property (nonatomic) CGFloat minimumHeaderHeight;
-
-/**
- Allows bounces. Default YES.
- */
-@property (nonatomic) BOOL bounces;
+@property (nonatomic, strong, readonly, nonnull) MXParallaxHeader *parallaxHeader;
 
 /**
  The progress block called when scroll is progressing.
  */
 @property (nonatomic, strong, nullable) MXProgressBlock progressBlock;
 
-/**
- Sets the parallax header view.
- 
- @param view   The parallax header view.
- @param mode   The parallax header mode. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
- @param height The header height.
- */
-- (void)setParallaxHeaderView:(nonnull __kindof UIView *)view
-                         mode:(VGParallaxHeaderMode)mode
-                       height:(CGFloat)height;
-
-/**
- Updates the header height.
- 
- @param height The header height.
- */
-- (void)updateParallaxHeaderViewHeight:(CGFloat)height;
 
 @end
 

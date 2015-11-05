@@ -27,12 +27,6 @@ Pod::Spec.new do |s|
   s.source_files = 'MXSegmentedPager/*.{m,h}'
   s.public_header_files = ["MXSegmentedPager/*.h"]
   s.dependency 'HMSegmentedControl', '~> 1.5.2'
-#  s.dependency 'VGParallaxHeader', '~> 0.0.6'
-  s.default_subspecs = 'VGParallaxHeader'
+  s.dependency 'MXParallaxHeader', '~> 0.1.0'
   
-  s.subspec 'VGParallaxHeader' do |vg|
-    vg.frameworks    = 'QuartzCore'
-    vg.source_files  = 'VGParallaxHeader/*.{m,h}'
-    vg.dependency 'PureLayout', '~> 3.0.1'
-  end
 end
