@@ -267,7 +267,6 @@
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				8B3F9A29D7DEF78F69E06406 /* Copy Pods Resources */,
-				C436EE41E93F0F5F8319056D /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -287,7 +286,6 @@
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
 				84A9B763B156D50E8AF7ED94 /* Copy Pods Resources */,
-				A06FF75E4A12313C5F752FF9 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -416,36 +414,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSegmentedPager/Pods-MXSegmentedPager-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A06FF75E4A12313C5F752FF9 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tests/Pods-Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C436EE41E93F0F5F8319056D /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSegmentedPager/Pods-MXSegmentedPager-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

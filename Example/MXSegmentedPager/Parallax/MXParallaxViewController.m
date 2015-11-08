@@ -45,7 +45,7 @@
     [self.view addSubview:self.segmentedPager];
     
     // Parallax Header
-    self.segmentedPager.parallaxHeader.view = [MXRefreshHeaderView instantiateFromNib];
+    self.segmentedPager.parallaxHeader.view = self.cover;
     self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderModeFill;
     self.segmentedPager.parallaxHeader.height = 150;
     self.segmentedPager.parallaxHeader.minimumHeight = 20;
@@ -61,7 +61,7 @@
     self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
     
     // Refresh Progress
-    self.segmentedPager.progressBlock = self.progressBlock;
+    self.segmentedPager.parallaxHeader.progressBlock = self.progressBlock;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -80,13 +80,13 @@
         // Use the refresh control only on WebView
         if (self.segmentedPager.pager.selectedPage == self.webView) {
             
-            // progress > 2 means 'pulled down'
-            if (progress > 2) {
+            // progress > 1 means 'pulled down'
+            if (progress > 1) {
                 self.cover.indeterminate = YES;
                 [self.webView reload];
             }
             else {
-                self.cover.progress = progress - 1;
+                self.cover.progress = progress;
             }
         }
     };

@@ -200,12 +200,6 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  */
 @property (nonatomic, strong, readonly, nonnull) MXParallaxHeader *parallaxHeader;
 
-/**
- The progress block called when scroll is progressing.
- */
-@property (nonatomic, strong, nullable) MXProgressBlock progressBlock;
-
-
 @end
 
 /**

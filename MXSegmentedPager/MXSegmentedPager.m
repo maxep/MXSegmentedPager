@@ -233,14 +233,4 @@
     return self.contentView.parallaxHeader;
 }
 
-#pragma mark Properties
-
-- (MXProgressBlock)progressBlock {
-    return nil;
-}
-
-- (void)setProgressBlock:(MXProgressBlock)progressBlock {
-
-}
-
 @end
