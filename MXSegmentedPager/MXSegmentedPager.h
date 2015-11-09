@@ -22,9 +22,8 @@
 
 #import <UIKit/UIKit.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
+#import <MXPagerView/MXPagerView.h>
 #import <MXParallaxHeader/MXParallaxHeader.h>
-
-#import "MXPagerView.h"
 
 /**
  The segmented control position options relative to the segmented-pager.
