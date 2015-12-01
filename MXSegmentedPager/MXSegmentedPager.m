@@ -28,6 +28,8 @@
 @property (nonatomic, strong) MXScrollView          *contentView;
 @property (nonatomic, strong) HMSegmentedControl    *segmentedControl;
 @property (nonatomic, strong) MXPagerView           *pager;
+
+@property (nonatomic, strong) MXProgressBlock progressBlock;
 @end
 
 @implementation MXSegmentedPager {
@@ -164,6 +166,12 @@
 
 #pragma mark <MXScrollViewDelegate>
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.progressBlock) {
+        self.progressBlock(self.contentView.parallaxHeader.progress);
+    }
+}
+
 - (BOOL)scrollView:(MXScrollView *)scrollView shouldScrollWithSubView:(UIView *)subView {
     UIView<MXPageProtocol> *page = (id) self.pager.selectedPage;
     
@@ -243,48 +251,6 @@
 
 @end
 
-#pragma mark VGParallaxHeader Deprecation
-
-@implementation MXParallaxHeader (VGParallaxHeader)
-
-- (VGParallaxHeaderStickyViewPosition)stickyViewPosition {
-    return VGParallaxHeaderStickyViewPositionTop;
-}
-
-- (void)setStickyViewPosition:(VGParallaxHeaderStickyViewPosition)stickyViewPosition {
-    
-}
-
-- (NSLayoutConstraint *)stickyViewHeightConstraint {
-    return nil;
-}
-
-- (void)setStickyViewHeightConstraint:(NSLayoutConstraint *)stickyViewHeightConstraint {
-    
-}
-
-- (UIView *)stickyView {
-    return nil;
-}
-
-- (void)setStickyView:(UIView *)stickyView {
-    
-}
-
-- (BOOL)isInsideTableView {
-    return NO;
-}
-
-- (CGFloat)progress {
-    return 0.9f;
-}
-
-- (void)setStickyView:(__kindof UIView *)stickyView withHeight:(CGFloat)height {
-    
-}
-
-@end
-
 @implementation MXSegmentedPager (VGParallaxHeader)
 
 - (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
@@ -292,10 +258,6 @@
     self.parallaxHeader.mode    = (MXParallaxHeaderMode)mode;
     self.parallaxHeader.height  = height;
 }
-
-//- (VGParallaxHeader *)parallaxHeader {
-//    return self.contentView.parallaxHeader;
-//}
 
 - (void)updateParallaxHeaderViewHeight:(CGFloat)height {
     self.parallaxHeader.height = height;
@@ -311,12 +273,91 @@
     self.parallaxHeader.minimumHeight = minimumHeaderHeight;
 }
 
-- (MXProgressBlock)progressBlock {
-    return self.parallaxHeader.progressBlock;
+@end
+
+#pragma mark VGParallaxHeader Backward compatibility
+
+@implementation MXParallaxHeader (VGParallaxHeader)
+
+- (VGParallaxHeaderStickyViewPosition)stickyViewPosition {
+    return [objc_getAssociatedObject(self, @selector(stickyViewPosition)) integerValue];
 }
 
-- (void)setProgressBlock:(MXProgressBlock)progressBlock {
-    self.parallaxHeader.progressBlock = progressBlock;
+- (void)setStickyViewPosition:(VGParallaxHeaderStickyViewPosition)stickyViewPosition {
+    objc_setAssociatedObject(self, @selector(stickyViewPosition), [NSNumber numberWithInteger:stickyViewPosition], OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [self updateStickyViewConstraints];
 }
+
+- (NSLayoutConstraint *)stickyViewHeightConstraint {
+    NSLayoutConstraint *stickyViewHeightConstraint = objc_getAssociatedObject(self, @selector(stickyViewHeightConstraint));
+    if (!stickyViewHeightConstraint && self.stickyView) {
+        stickyViewHeightConstraint = [NSLayoutConstraint constraintWithItem:self.stickyView
+                                                                  attribute:NSLayoutAttributeHeight
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:nil
+                                                                  attribute:NSLayoutAttributeNotAnAttribute
+                                                                 multiplier:1
+                                                                   constant:0];
+        
+        objc_setAssociatedObject(self, @selector(stickyViewHeightConstraint), stickyViewHeightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return stickyViewHeightConstraint;
+}
+
+- (void)setStickyViewHeightConstraint:(NSLayoutConstraint *)stickyViewHeightConstraint {
+    if (self.stickyViewHeightConstraint != stickyViewHeightConstraint && self.stickyView.superview == self.contentView) {
+        [self.contentView removeConstraint:self.stickyViewHeightConstraint];
+        [self.contentView addConstraint:stickyViewHeightConstraint];
+        objc_setAssociatedObject(self, @selector(stickyViewHeightConstraint), stickyViewHeightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+
+- (UIView *)stickyView {
+    return objc_getAssociatedObject(self, @selector(stickyView));
+}
+
+- (void)setStickyView:(UIView *)stickyView {
+    if (self.stickyView != stickyView) {
+        [self.stickyView removeFromSuperview];
+        objc_setAssociatedObject(self, @selector(stickyView), stickyView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [self updateStickyViewConstraints];
+    }
+}
+
+- (void)setStickyView:(__kindof UIView *)stickyView withHeight:(CGFloat)height {
+    self.stickyView = stickyView;
+    self.stickyViewHeightConstraint.constant = height;
+}
+
+- (BOOL)isInsideTableView {
+    return NO;
+}
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+- (void)updateStickyViewConstraints {
+    if (self.stickyView) {
+        [self.stickyView removeFromSuperview];
+        [self.contentView addSubview:self.stickyView];
+        
+        self.stickyView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[v]|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:@{@"v" : self.stickyView}]];
+        
+        NSLayoutAttribute attribute = (self.stickyViewPosition == VGParallaxHeaderStickyViewPositionTop)? NSLayoutAttributeTop : NSLayoutAttributeBottom;
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.stickyView
+                                                                     attribute:attribute
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.contentView
+                                                                     attribute:attribute
+                                                                    multiplier:1
+                                                                      constant:0]];
+        
+        [self.contentView addConstraint:self.stickyViewHeightConstraint];
+    }
+}
+#pragma GCC diagnostic pop
 
 @end
