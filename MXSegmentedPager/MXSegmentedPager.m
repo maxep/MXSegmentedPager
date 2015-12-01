@@ -227,10 +227,96 @@
 
 @implementation MXSegmentedPager (ParallaxHeader)
 
+- (BOOL)bounces {
+    return self.contentView.bounces;
+}
+
+- (void)setBounces:(BOOL)bounces {
+    self.contentView.bounces = bounces;
+}
+
 #pragma mark MXParallaxHeader
 
 - (MXParallaxHeader *)parallaxHeader {
     return self.contentView.parallaxHeader;
+}
+
+@end
+
+#pragma mark VGParallaxHeader Deprecation
+
+@implementation MXParallaxHeader (VGParallaxHeader)
+
+- (VGParallaxHeaderStickyViewPosition)stickyViewPosition {
+    return VGParallaxHeaderStickyViewPositionTop;
+}
+
+- (void)setStickyViewPosition:(VGParallaxHeaderStickyViewPosition)stickyViewPosition {
+    
+}
+
+- (NSLayoutConstraint *)stickyViewHeightConstraint {
+    return nil;
+}
+
+- (void)setStickyViewHeightConstraint:(NSLayoutConstraint *)stickyViewHeightConstraint {
+    
+}
+
+- (UIView *)stickyView {
+    return nil;
+}
+
+- (void)setStickyView:(UIView *)stickyView {
+    
+}
+
+- (BOOL)isInsideTableView {
+    return NO;
+}
+
+- (CGFloat)progress {
+    return 0.9f;
+}
+
+- (void)setStickyView:(__kindof UIView *)stickyView withHeight:(CGFloat)height {
+    
+}
+
+@end
+
+@implementation MXSegmentedPager (VGParallaxHeader)
+
+- (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
+    self.parallaxHeader.view    = view;
+    self.parallaxHeader.mode    = (MXParallaxHeaderMode)mode;
+    self.parallaxHeader.height  = height;
+}
+
+//- (VGParallaxHeader *)parallaxHeader {
+//    return self.contentView.parallaxHeader;
+//}
+
+- (void)updateParallaxHeaderViewHeight:(CGFloat)height {
+    self.parallaxHeader.height = height;
+}
+
+#pragma mark Properties
+
+- (CGFloat)minimumHeaderHeight {
+    return self.parallaxHeader.minimumHeight;
+}
+
+- (void)setMinimumHeaderHeight:(CGFloat)minimumHeaderHeight {
+    self.parallaxHeader.minimumHeight = minimumHeaderHeight;
+}
+
+- (MXProgressBlock)progressBlock {
+    return self.parallaxHeader.progressBlock;
+}
+
+- (void)setProgressBlock:(MXProgressBlock)progressBlock {
+    self.parallaxHeader.progressBlock = progressBlock;
 }
 
 @end

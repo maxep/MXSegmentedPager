@@ -199,6 +199,11 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  */
 @property (nonatomic, strong, readonly, nonnull) MXParallaxHeader *parallaxHeader;
 
+/**
+ Allows bounces. Default YES.
+ */
+@property (nonatomic) BOOL bounces;
+
 @end
 
 /**
@@ -216,5 +221,70 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  @return YES to allow segmented-pager and view to scroll together. The default implementation returns YES.
  */
 - (BOOL) segmentedPager:(nonnull MXSegmentedPager *)segmentedPager shouldScrollWithView:(nonnull __kindof UIView*)view;
+
+@end
+
+#pragma mark VGParallaxHeader Deprecation
+
+typedef NS_ENUM(NSInteger, VGParallaxHeaderMode) {
+    VGParallaxHeaderModeCenter = MXParallaxHeaderModeCenter,
+    VGParallaxHeaderModeFill = MXParallaxHeaderModeFill,
+    VGParallaxHeaderModeTop = MXParallaxHeaderModeTop,
+    VGParallaxHeaderModeTopFill = MXParallaxHeaderModeBottom,
+} DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+
+typedef NS_ENUM(NSInteger, VGParallaxHeaderStickyViewPosition) {
+    VGParallaxHeaderStickyViewPositionBottom = 0,
+    VGParallaxHeaderStickyViewPositionTop,
+} DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+
+@interface MXParallaxHeader (VGParallaxHeader)
+@property (nonatomic, assign, readonly) VGParallaxHeaderMode mode DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+
+@property (nonatomic, assign, readwrite) VGParallaxHeaderStickyViewPosition stickyViewPosition DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+@property (nonatomic, assign, nullable, readwrite) NSLayoutConstraint *stickyViewHeightConstraint DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+@property (nonatomic, strong,nullable, readwrite) UIView *stickyView DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+
+@property (nonatomic, assign, readonly, getter=isInsideTableView) BOOL insideTableView DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+//@property (nonatomic, assign, readonly) CGFloat progress DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+
+- (void)setStickyView:(nullable __kindof UIView *)stickyView
+           withHeight:(CGFloat)height DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");;
+@end
+
+@interface MXSegmentedPager (VGParallaxHeader)
+
+/**
+ The parallax header. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
+ */
+//@property (nonatomic, strong, readonly, nonnull) VGParallaxHeader *parallaxHeader;
+
+/**
+ The minimum header height, the header won't scroll below this value. By default, the minimum height is set to 0.
+ */
+@property (nonatomic) CGFloat minimumHeaderHeight DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+
+/**
+ The progress block called when scroll is progressing.
+ */
+@property (nonatomic, strong, nullable) MXProgressBlock progressBlock DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+
+/**
+ Sets the parallax header view.
+ 
+ @param view   The parallax header view.
+ @param mode   The parallax header mode. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
+ @param height The header height.
+ */
+- (void)setParallaxHeaderView:(nonnull __kindof UIView *)view
+                         mode:(VGParallaxHeaderMode)mode
+                       height:(CGFloat)height DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
+
+/**
+ Updates the header height.
+ 
+ @param height The header height.
+ */
+- (void)updateParallaxHeaderViewHeight:(CGFloat)height DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader usage is deprecated, use MXParallaxHeader instead");
 
 @end
