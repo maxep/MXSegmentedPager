@@ -22,12 +22,14 @@
 
 #import "MXSegmentedPagerController.h"
 
-@interface MXSegmentedPagerController ()
-@property (nonatomic,weak) UIViewController *pageViewController;
-@property (nonatomic) NSInteger pageIndex;
+@interface MXSegmentedPagerController () <MXPageSegueDelegate>
+
 @end
 
-@implementation MXSegmentedPagerController
+@implementation MXSegmentedPagerController {
+    UIViewController *_pageViewController;
+    NSInteger _pageIndex;
+}
 
 @synthesize segmentedPager = _segmentedPager;
 
@@ -70,9 +72,9 @@
     if (self.storyboard) {
         @try {
             NSString *identifier = [self segmentedPager:segmentedPager segueIdentifierForPageAtIndex:index];
-            self.pageIndex = index;
+            _pageIndex = index;
             [self performSegueWithIdentifier:identifier sender:nil];
-            return self.pageViewController;
+            return _pageViewController;
         }
         @catch(NSException *exception) {}
     }
@@ -83,28 +85,14 @@
     return [NSString stringWithFormat:MXSeguePageIdentifierFormat, (long)index];
 }
 
-@end
+#pragma mark <MXPageSegueDelegate>
 
-#pragma mark MXSegmentedPagerControllerPageSegue class
-
-NSString * const MXSeguePageIdentifierFormat = @"mx_page_%ld";
-
-@implementation MXPageSegue
-
-@synthesize pageIndex = _pageIndex;
-
-- (instancetype)initWithIdentifier:(nullable NSString *)identifier source:(MXSegmentedPagerController *)source destination:(UIViewController *)destination {
-    if (self = [super initWithIdentifier:identifier source:source destination:destination]) {
-        _pageIndex = source.pageIndex;
-    }
-    return self;
+- (NSInteger)pageIndex {
+    return _pageIndex;
 }
 
-- (void)perform {
-    if ([self.sourceViewController isKindOfClass:[MXSegmentedPagerController class]]) {
-        MXSegmentedPagerController *spc = self.sourceViewController;
-        spc.pageViewController = self.destinationViewController;
-    }
+- (void)setPageViewController:(UIViewController *)pageViewController {
+    _pageViewController = pageViewController;
 }
 
 @end

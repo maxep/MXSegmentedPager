@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D04700631BBD669F00C7426B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D04700621BBD669F00C7426B /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
+		D04700631BBD669F00C7426B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D04700621BBD669F00C7426B /* LaunchScreen.storyboard */; };
 		D04700641BBD6A9A00C7426B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A424661BBD33390024BCC6 /* Main.storyboard */; };
 		D0A424631BBD33390024BCC6 /* MXAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424621BBD33390024BCC6 /* MXAppDelegate.swift */; };
 		D0A424651BBD33390024BCC6 /* MXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424641BBD33390024BCC6 /* MXViewController.swift */; };
 		D0A4246A1BBD33390024BCC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A424691BBD33390024BCC6 /* Assets.xcassets */; };
-		D0A424751BBD34830024BCC6 /* MXTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424741BBD34830024BCC6 /* MXTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		D0A424771BBD38040024BCC6 /* MXWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424761BBD38040024BCC6 /* MXWebViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		D0A424791BBD3B7B0024BCC6 /* MXTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424781BBD3B7B0024BCC6 /* MXTextViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		D0A4247B1BBD3EC20024BCC6 /* MXHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4247A1BBD3EC20024BCC6 /* MXHeaderView.swift */; settings = {ASSET_TAGS = (); }; };
-		D0A4247F1BBD41650024BCC6 /* MXHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A4247E1BBD41650024BCC6 /* MXHeaderView.xib */; settings = {ASSET_TAGS = (); }; };
-		D0A424811BBD41C70024BCC6 /* LongText.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0A424801BBD41C70024BCC6 /* LongText.txt */; settings = {ASSET_TAGS = (); }; };
-		ED3E8B7193012556BAF65DF2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3CF37E8A1A04E7046E68B /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D0A424751BBD34830024BCC6 /* MXTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424741BBD34830024BCC6 /* MXTableViewController.swift */; };
+		D0A424771BBD38040024BCC6 /* MXWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424761BBD38040024BCC6 /* MXWebViewController.swift */; };
+		D0A424791BBD3B7B0024BCC6 /* MXTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424781BBD3B7B0024BCC6 /* MXTextViewController.swift */; };
+		D0A4247B1BBD3EC20024BCC6 /* MXHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4247A1BBD3EC20024BCC6 /* MXHeaderView.swift */; };
+		D0A4247F1BBD41650024BCC6 /* MXHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A4247E1BBD41650024BCC6 /* MXHeaderView.xib */; };
+		D0A424811BBD41C70024BCC6 /* LongText.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0A424801BBD41C70024BCC6 /* LongText.txt */; };
+		ED3E8B7193012556BAF65DF2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3CF37E8A1A04E7046E68B /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */

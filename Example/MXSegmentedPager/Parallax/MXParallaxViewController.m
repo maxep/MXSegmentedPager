@@ -45,8 +45,10 @@
     [self.view addSubview:self.segmentedPager];
     
     // Parallax Header
-    [self.segmentedPager setParallaxHeaderView:self.cover mode:VGParallaxHeaderModeFill height:150.f];
-    self.segmentedPager.minimumHeaderHeight = 20.f;
+    self.segmentedPager.parallaxHeader.view = self.cover;
+    self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderModeFill;
+    self.segmentedPager.parallaxHeader.height = 150;
+    self.segmentedPager.parallaxHeader.minimumHeight = 20;
     
     // Segmented Control customization
     self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -60,6 +62,17 @@
     
     // Refresh Progress
     self.segmentedPager.progressBlock = self.progressBlock;
+    
+/*
+    //VGParallaxHeader backward compatibility
+    UILabel *stickyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    stickyLabel.backgroundColor = [UIColor colorWithRed:1 green:0.749 blue:0.976 alpha:1];
+    stickyLabel.textAlignment = NSTextAlignmentCenter;
+    stickyLabel.text = @"Say hello to Sticky View :)";
+    
+    self.segmentedPager.parallaxHeader.stickyViewPosition = VGParallaxHeaderStickyViewPositionBottom;
+    [self.segmentedPager.parallaxHeader setStickyView:stickyLabel withHeight:40];
+ */
 }
 
 - (void)viewWillLayoutSubviews {
@@ -78,13 +91,13 @@
         // Use the refresh control only on WebView
         if (self.segmentedPager.pager.selectedPage == self.webView) {
             
-            // progress > 2 means 'pulled down'
-            if (progress > 2) {
+            // progress > 1 means 'pulled down'
+            if (progress > 1) {
                 self.cover.indeterminate = YES;
                 [self.webView reload];
             }
             else {
-                self.cover.progress = progress - 1;
+                self.cover.progress = progress;
             }
         }
     };
@@ -189,7 +202,7 @@
     return 50;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];

@@ -21,20 +21,15 @@
 // THE SOFTWARE.
 
 #import <objc/runtime.h>
+#import <MXParallaxHeader/MXScrollView.h>
 #import "MXSegmentedPager.h"
 
-@interface MXScrollView : UIScrollView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
-@property (nonatomic, assign) CGFloat minimumHeigth;
-@property (nonatomic, strong) MXSegmentedPager *segmentedPager;
-@property (nonatomic, strong) MXProgressBlock progressBlock;
-@property (nonatomic, strong) NSMutableArray *observedViews;
-@end
-
-
-@interface MXSegmentedPager () <MXPagerViewDelegate, MXPagerViewDataSource>
+@interface MXSegmentedPager () <MXScrollViewDelegate, MXPagerViewDelegate, MXPagerViewDataSource>
 @property (nonatomic, strong) MXScrollView          *contentView;
 @property (nonatomic, strong) HMSegmentedControl    *segmentedControl;
 @property (nonatomic, strong) MXPagerView           *pager;
+
+@property (nonatomic, strong) MXProgressBlock progressBlock;
 @end
 
 @implementation MXSegmentedPager {
@@ -68,7 +63,7 @@
     
     frame.size.width = self.bounds.size.width;
     CGFloat height = self.contentView.frame.size.height - _controlHeight;
-    height -= self.contentView.minimumHeigth;
+    height -= self.contentView.parallaxHeader.minimumHeight;
     height -= self.segmentedControlEdgeInsets.top;
     height -= self.segmentedControlEdgeInsets.bottom;
     frame.size.height = height;
@@ -76,6 +71,7 @@
     self.pager.frame = frame;
     
     self.contentView.contentSize = self.contentView.frame.size;
+    self.contentView.scrollEnabled = !!self.contentView.parallaxHeader.view;
     
     [super layoutSubviews];
 }
@@ -124,8 +120,7 @@
         
         // Create scroll-view
         _contentView = [[MXScrollView alloc] init];
-        _contentView.segmentedPager = self;
-        _contentView.scrollEnabled = NO;
+        _contentView.delegate = self;
         [self addSubview:_contentView];
     }
     return _contentView;
@@ -167,6 +162,23 @@
 - (void)setSegmentedControlEdgeInsets:(UIEdgeInsets)segmentedControlEdgeInsets {
     _segmentedControlEdgeInsets = segmentedControlEdgeInsets;
     [self setNeedsLayout];
+}
+
+#pragma mark <MXScrollViewDelegate>
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.progressBlock) {
+        self.progressBlock(self.contentView.parallaxHeader.progress);
+    }
+}
+
+- (BOOL)scrollView:(MXScrollView *)scrollView shouldScrollWithSubView:(UIView *)subView {
+    UIView<MXPageProtocol> *page = (id) self.pager.selectedPage;
+    
+    if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
+        return [page segmentedPager:self shouldScrollWithView:subView];
+    }
+    return YES;
 }
 
 #pragma mark HMSegmentedControl target
@@ -223,39 +235,6 @@
 
 @implementation MXSegmentedPager (ParallaxHeader)
 
-#pragma mark VGParallaxHeader
-
-- (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
-    [self.contentView setParallaxHeaderView:view mode:mode height:height];
-    self.contentView.scrollEnabled = !!view;
-}
-
-- (VGParallaxHeader *)parallaxHeader {
-    return self.contentView.parallaxHeader;
-}
-
-- (void)updateParallaxHeaderViewHeight:(CGFloat)height {
-    [self.contentView updateParallaxHeaderViewHeight:height];
-}
-
-#pragma mark Properties
-
-- (CGFloat)minimumHeaderHeight {
-    return self.contentView.minimumHeigth;
-}
-
-- (void)setMinimumHeaderHeight:(CGFloat)minimumHeaderHeight {
-    self.contentView.minimumHeigth = minimumHeaderHeight;
-}
-
-- (MXProgressBlock)progressBlock {
-    return self.contentView.progressBlock;
-}
-
-- (void)setProgressBlock:(MXProgressBlock)progressBlock {
-    self.contentView.progressBlock = progressBlock;
-}
-
 - (BOOL)bounces {
     return self.contentView.bounces;
 }
@@ -263,197 +242,122 @@
 - (void)setBounces:(BOOL)bounces {
     self.contentView.bounces = bounces;
 }
-@end
 
-@implementation MXScrollView {
-    BOOL _isObserving;
-    BOOL _lock;
+#pragma mark MXParallaxHeader
+
+- (MXParallaxHeader *)parallaxHeader {
+    return self.contentView.parallaxHeader;
 }
 
-static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
-static NSString* const kContentOffsetKeyPath = @"contentOffset";
+@end
 
-@synthesize bounces = _bounces;
+@implementation MXSegmentedPager (VGParallaxHeader)
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.delegate = self;
-        self.showsVerticalScrollIndicator = NO;
-        self.directionalLockEnabled = YES;
-        self.bounces = YES;
-        self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        self.contentMode = UIViewContentModeTopRight;
-        self.minimumHeigth = 0;
-        self.bounces = YES;
-    }
-    return self;
+- (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
+    self.parallaxHeader.view    = view;
+    self.parallaxHeader.mode    = (MXParallaxHeaderMode)mode;
+    self.parallaxHeader.height  = height;
+}
+
+- (void)updateParallaxHeaderViewHeight:(CGFloat)height {
+    self.parallaxHeader.height = height;
 }
 
 #pragma mark Properties
 
-- (NSMutableArray *)observedViews {
-    if (!_observedViews) {
-        _observedViews = [NSMutableArray array];
-    }
-    return _observedViews;
+- (CGFloat)minimumHeaderHeight {
+    return self.parallaxHeader.minimumHeight;
 }
 
-- (void)setScrollEnabled:(BOOL)scrollEnabled {
-    [super setScrollEnabled:scrollEnabled];
-    
-    if (scrollEnabled) {
-        [self addObserver:self forKeyPath:kContentOffsetKeyPath
-                  options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
-                  context:kMXScrollViewKVOContext];
-    }
-    else {
-        @try {
-            [self removeObserver:self forKeyPath:kContentOffsetKeyPath];
-        }
-        @catch (NSException *exception) {}
-    }
-}
-
-#pragma mark <UIScrollViewDelegate>
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    if ((self.contentOffset.y >= -self.minimumHeigth)) {
-        self.contentOffset = CGPointMake(self.contentOffset.x, -self.minimumHeigth);
-    }
-    
-    [scrollView shouldPositionParallaxHeader];
-    
-    if (self.progressBlock) {
-        self.progressBlock(scrollView.parallaxHeader.progress);
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    _lock = NO;
-    [self removeObservedViews];
-}
-
-#pragma mark <UIGestureRecognizerDelegate>
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-    
-    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        MXPanGestureDirection direction = [(UIPanGestureRecognizer*)gestureRecognizer directionInView:self];
-        
-        //Lock horizontal pan gesture.
-        if (direction == MXPanGestureDirectionLeft || direction == MXPanGestureDirectionRight) {
-            return NO;
-        }
-    }
-    return YES;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
-    UIView<MXPageProtocol> *page = (id) self.segmentedPager.pager.selectedPage;
-    BOOL shouldScroll = YES;
-    
-    if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
-        shouldScroll = [page segmentedPager:self.segmentedPager shouldScrollWithView:otherGestureRecognizer.view];
-    }
-    
-    if (shouldScroll) {
-        [self addObservedView:otherGestureRecognizer.view];
-    }
-    return shouldScroll;
-}
-
-#pragma mark KVO
-
-- (void) addObserverToView:(UIView *)view {
-    _isObserving = NO;
-    if ([view isKindOfClass:[UIScrollView class]]) {
-        [view addObserver:self
-               forKeyPath:kContentOffsetKeyPath
-                  options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
-                  context:kMXScrollViewKVOContext];
-    }
-    _isObserving = YES;
-}
-
-- (void) removeObserverFromView:(UIView *)view {
-    @try {
-        if ([view isKindOfClass:[UIScrollView class]]) {
-            [view removeObserver:self
-                      forKeyPath:kContentOffsetKeyPath
-                         context:kMXScrollViewKVOContext];
-        }
-    }
-    @catch (NSException *exception) {}
-}
-
-//This is where the magic happens...
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-    if (context == kMXScrollViewKVOContext && [keyPath isEqualToString:kContentOffsetKeyPath]) {
-        
-        CGPoint new = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue];
-        CGPoint old = [[change objectForKey:NSKeyValueChangeOldKey] CGPointValue];
-        CGFloat diff = old.y - new.y;
-        
-        if (diff == 0 || !_isObserving) return;
-        
-        if (object == self) {
-            //Adjust self scroll offset when scroll down
-            if (diff > 0 && _lock) {
-                [self scrollView:self setContentOffset:old];
-            }
-            else if (((self.contentOffset.y < -self.contentInset.top) && !self.bounces)) {
-                [self scrollView:self setContentOffset:CGPointMake(self.contentOffset.x, -self.contentInset.top)];
-            }
-        }
-        else {
-            //Adjust the observed scrollview's content offset
-            UIScrollView *scrollView = object;
-            _lock = (scrollView.contentOffset.y > -scrollView.contentInset.top);
-            
-            //Manage scroll up
-            if (self.contentOffset.y < -self.minimumHeigth && _lock && diff < 0) {
-                [self scrollView:scrollView setContentOffset:old];
-            }
-            //Disable bouncing when scroll down
-            if (!_lock && ((self.contentOffset.y > -self.contentInset.top) || self.bounces)) {
-                    [self scrollView:scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top)];
-            }
-        }
-    }
-    else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
-#pragma mark Scrolling views handlers
-
-- (void) addObservedView:(UIView *)view {
-    if (![self.observedViews containsObject:view]) {
-        [self.observedViews addObject:view];
-        [self addObserverToView:view];
-    }
-}
-
-- (void) removeObservedViews {
-    for (UIView *view in self.observedViews) {
-        [self removeObserverFromView:view];
-    }
-    [self.observedViews removeAllObjects];
-}
-
-- (void) scrollView:(UIScrollView*)scrollView setContentOffset:(CGPoint)offset {
-    _isObserving = NO;
-    scrollView.contentOffset = offset;
-    _isObserving = YES;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+- (void)setMinimumHeaderHeight:(CGFloat)minimumHeaderHeight {
+    self.parallaxHeader.minimumHeight = minimumHeaderHeight;
 }
 
 @end
 
+#pragma mark VGParallaxHeader Backward compatibility
+
+@implementation MXParallaxHeader (VGParallaxHeader)
+
+- (VGParallaxHeaderStickyViewPosition)stickyViewPosition {
+    return [objc_getAssociatedObject(self, @selector(stickyViewPosition)) integerValue];
+}
+
+- (void)setStickyViewPosition:(VGParallaxHeaderStickyViewPosition)stickyViewPosition {
+    objc_setAssociatedObject(self, @selector(stickyViewPosition), [NSNumber numberWithInteger:stickyViewPosition], OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [self updateStickyViewConstraints];
+}
+
+- (NSLayoutConstraint *)stickyViewHeightConstraint {
+    NSLayoutConstraint *stickyViewHeightConstraint = objc_getAssociatedObject(self, @selector(stickyViewHeightConstraint));
+    if (!stickyViewHeightConstraint && self.stickyView) {
+        stickyViewHeightConstraint = [NSLayoutConstraint constraintWithItem:self.stickyView
+                                                                  attribute:NSLayoutAttributeHeight
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:nil
+                                                                  attribute:NSLayoutAttributeNotAnAttribute
+                                                                 multiplier:1
+                                                                   constant:0];
+        
+        objc_setAssociatedObject(self, @selector(stickyViewHeightConstraint), stickyViewHeightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return stickyViewHeightConstraint;
+}
+
+- (void)setStickyViewHeightConstraint:(NSLayoutConstraint *)stickyViewHeightConstraint {
+    if (self.stickyViewHeightConstraint != stickyViewHeightConstraint && self.stickyView.superview == self.contentView) {
+        [self.contentView removeConstraint:self.stickyViewHeightConstraint];
+        [self.contentView addConstraint:stickyViewHeightConstraint];
+        objc_setAssociatedObject(self, @selector(stickyViewHeightConstraint), stickyViewHeightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+
+- (UIView *)stickyView {
+    return objc_getAssociatedObject(self, @selector(stickyView));
+}
+
+- (void)setStickyView:(UIView *)stickyView {
+    if (self.stickyView != stickyView) {
+        [self.stickyView removeFromSuperview];
+        objc_setAssociatedObject(self, @selector(stickyView), stickyView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [self updateStickyViewConstraints];
+    }
+}
+
+- (void)setStickyView:(__kindof UIView *)stickyView withHeight:(CGFloat)height {
+    self.stickyView = stickyView;
+    self.stickyViewHeightConstraint.constant = height;
+}
+
+- (BOOL)isInsideTableView {
+    return NO;
+}
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+- (void)updateStickyViewConstraints {
+    if (self.stickyView) {
+        [self.stickyView removeFromSuperview];
+        [self.contentView addSubview:self.stickyView];
+        
+        self.stickyView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[v]|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:@{@"v" : self.stickyView}]];
+        
+        NSLayoutAttribute attribute = (self.stickyViewPosition == VGParallaxHeaderStickyViewPositionTop)? NSLayoutAttributeTop : NSLayoutAttributeBottom;
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.stickyView
+                                                                     attribute:attribute
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.contentView
+                                                                     attribute:attribute
+                                                                    multiplier:1
+                                                                      constant:0]];
+        
+        [self.contentView addConstraint:self.stickyViewHeightConstraint];
+    }
+}
+#pragma GCC diagnostic pop
+
+@end

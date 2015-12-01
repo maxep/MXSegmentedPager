@@ -15,9 +15,11 @@ class MXViewController: MXSegmentedPagerController {
         super.viewDidLoad()
         self.segmentedPager.backgroundColor = UIColor.whiteColor()
         
-        // Parallax Header
-        self.segmentedPager.setParallaxHeaderView(MXHeaderView.instanceFromNib(), mode: VGParallaxHeaderMode.Fill, height: 150)
-        self.segmentedPager.minimumHeaderHeight = 20
+        // Parallax Header       
+        self.segmentedPager.parallaxHeader.view = MXHeaderView.instanceFromNib();
+        self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.Fill;
+        self.segmentedPager.parallaxHeader.height = 150;
+        self.segmentedPager.parallaxHeader.minimumHeight = 20;
         
         // Segmented Control customization
         self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
