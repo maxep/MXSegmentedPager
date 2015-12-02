@@ -13,11 +13,11 @@
 		D0A424651BBD33390024BCC6 /* MXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424641BBD33390024BCC6 /* MXViewController.swift */; };
 		D0A4246A1BBD33390024BCC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A424691BBD33390024BCC6 /* Assets.xcassets */; };
 		D0A424751BBD34830024BCC6 /* MXTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424741BBD34830024BCC6 /* MXTableViewController.swift */; };
-		D0A424771BBD38040024BCC6 /* MXWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424761BBD38040024BCC6 /* MXWebViewController.swift */; };
-		D0A424791BBD3B7B0024BCC6 /* MXTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424781BBD3B7B0024BCC6 /* MXTextViewController.swift */; };
 		D0A4247B1BBD3EC20024BCC6 /* MXHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A4247A1BBD3EC20024BCC6 /* MXHeaderView.swift */; };
 		D0A4247F1BBD41650024BCC6 /* MXHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A4247E1BBD41650024BCC6 /* MXHeaderView.xib */; };
 		D0A424811BBD41C70024BCC6 /* LongText.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0A424801BBD41C70024BCC6 /* LongText.txt */; };
+		D0C37C171C0EF93A006E93DD /* MXTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424781BBD3B7B0024BCC6 /* MXTextViewController.swift */; };
+		D0C37C181C0EF965006E93DD /* MXWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424761BBD38040024BCC6 /* MXWebViewController.swift */; };
 		ED3E8B7193012556BAF65DF2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3CF37E8A1A04E7046E68B /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +37,9 @@
 		D0A4247A1BBD3EC20024BCC6 /* MXHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXHeaderView.swift; sourceTree = "<group>"; };
 		D0A4247E1BBD41650024BCC6 /* MXHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MXHeaderView.xib; path = Base.lproj/MXHeaderView.xib; sourceTree = "<group>"; };
 		D0A424801BBD41C70024BCC6 /* LongText.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongText.txt; sourceTree = "<group>"; };
+		D0C37C111C0EF8DE006E93DD /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		D0C37C121C0EF8DE006E93DD /* MXSegmentedPager.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MXSegmentedPager.podspec; path = ../MXSegmentedPager.podspec; sourceTree = "<group>"; };
+		D0C37C131C0EF8DE006E93DD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		E1BB643A32A7B175F8C7A3CD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +75,7 @@
 		D0A424561BBD33390024BCC6 = {
 			isa = PBXGroup;
 			children = (
+				D0C37C101C0EF8C1006E93DD /* Podspec Metadata */,
 				D0A424611BBD33390024BCC6 /* MXSegmentedPager-Swift */,
 				D0A424601BBD33390024BCC6 /* Products */,
 				55A72B5A55BE03B48E80C02D /* Pods */,
@@ -104,6 +108,16 @@
 				D0A4246E1BBD33390024BCC6 /* Info.plist */,
 			);
 			path = "MXSegmentedPager-Swift";
+			sourceTree = "<group>";
+		};
+		D0C37C101C0EF8C1006E93DD /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				D0C37C111C0EF8DE006E93DD /* LICENSE */,
+				D0C37C121C0EF8DE006E93DD /* MXSegmentedPager.podspec */,
+				D0C37C131C0EF8DE006E93DD /* README.md */,
+			);
+			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,11 +244,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0C37C181C0EF965006E93DD /* MXWebViewController.swift in Sources */,
 				D0A424651BBD33390024BCC6 /* MXViewController.swift in Sources */,
+				D0C37C171C0EF93A006E93DD /* MXTextViewController.swift in Sources */,
 				D0A424751BBD34830024BCC6 /* MXTableViewController.swift in Sources */,
 				D0A4247B1BBD3EC20024BCC6 /* MXHeaderView.swift in Sources */,
-				D0A424791BBD3B7B0024BCC6 /* MXTextViewController.swift in Sources */,
-				D0A424771BBD38040024BCC6 /* MXWebViewController.swift in Sources */,
 				D0A424631BBD33390024BCC6 /* MXAppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

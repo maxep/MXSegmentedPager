@@ -2,4 +2,3 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 pod 'MXSegmentedPager', :path => '../'
-pod 'M13ProgressSuite', '~> 1.2.7'
