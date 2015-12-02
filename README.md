@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/MXSegmentedPager.svg?style=flat)](http://cocoadocs.org/docsets/MXSegmentedPager)
 [![Dependency Status](https://www.versioneye.com/objective-c/mxsegmentedpager/1.0/badge.svg)](https://www.versioneye.com/objective-c/mxsegmentedpager)
 
-MXSegmentedPager is a pager view using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl) as control. The integration of [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) allows you to add an parallax header on top while keeping a reliable scrolling effect.
+MXSegmentedPager combines [MXPagerView](https://github.com/maxep/MXPagerView) with [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl) to control the page selection. The integration of [MXParallaxHeader](https://github.com/maxep/MXParallaxHeader) allows you to add an parallax header on top while keeping a reliable scrolling effect.
 
 
 |           Simple view         |           Parallax view         |
@@ -15,10 +15,9 @@ MXSegmentedPager is a pager view using [HMSegmentedControl](https://github.com/H
 
 ## Highlight
 + [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl) is a very customizable control.
-+ [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) supports any kind of view with different modes.
++ [MXParallaxHeader](https://github.com/maxep/MXParallaxHeader) supports any kind of view with different modes.
++ [MXPagerView](https://github.com/maxep/MXPagerView) lazily loads pages and supports reusable page registration.
 + Reliable vertical scroll with any view hierarchy.
-+ Lazily load pages.
-+ Supports reusable page registration.
 + Can load view-controller from storyboard using a custom segue.
 + Fully documented.
 
@@ -34,6 +33,46 @@ Or clone the repo and run `pod install` from the Example directory first.
 + See MXParallaxViewController to implement a pager with a parallax header.
 + See MXExampleViewController for a MXSegmentedPagerController subclass example.
 
++ MXSegmentedPager calls data source methods to load pages. 
+
+```objective-c
+#pragma mark <MXSegmentedPagerDataSource>
+
+// Asks the data source to return the number of pages in the segmented pager.
+- (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
+    return 10;
+}
+
+// Asks the data source for a title realted to a particular page of the segmented pager.
+- (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index {
+    return [NSString stringWithFormat:@"Page %li", (long) index];
+}
+
+// Asks the data source for a view to insert in a particular page of the pager.
+- (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
+    
+    UILabel *label = [UILabel new];
+    label.text = [NSString stringWithFormat:@"Page #%i", index];
+    label.textAlignment = NSTextAlignmentCenter;;
+
+    return label;
+}
+```
+
++ Adding a parallax header to a MXSegmentedPager is straightforward, e.g:
+
+```objective-c
+UIImageView *headerView = [UIImageView new];
+headerView.image = [UIImage imageNamed:@"success-baby"];
+headerView.contentMode = UIViewContentModeScaleAspectFill;
+   
+MXSegmentedPager *segmentedPager = [MXSegmentedPager new]; 
+segmentedPager.parallaxHeader.view = headerView;
+segmentedPager.parallaxHeader.height = 150;
+segmentedPager.parallaxHeader.mode = MXParallaxHeaderModeFill;
+segmentedPager.parallaxHeader.minimumHeight = 20;
+```
+
 ## Installation
 
 MXSegmentedPager is available through [CocoaPods](https://cocoapods.org/pods/MXSegmentedPager). To install
@@ -41,7 +80,7 @@ it, simply add the following line to your Podfile:
 
 ```
 pod 'MXSegmentedPager'
-````
+```
 
 ## Documentation
 
