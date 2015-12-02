@@ -167,6 +167,11 @@
 #pragma mark <MXScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didScrollWithParallaxHeader:)]) {
+        [self.delegate segmentedPager:self didScrollWithParallaxHeader:scrollView.parallaxHeader];
+    }
+    
     if (self.progressBlock) {
         self.progressBlock(self.contentView.parallaxHeader.progress);
     }

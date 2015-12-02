@@ -32,8 +32,6 @@
 @property (nonatomic, strong) UIWebView         * webView;
 @property (nonatomic, strong) UITextView        * textView;
 @property (nonatomic, strong) MXCustomView      * customView;
-
-@property (nonatomic, readonly) MXProgressBlock   progressBlock;
 @end
 
 @implementation MXParallaxViewController
@@ -60,9 +58,6 @@
     
     self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
     
-    // Refresh Progress
-    self.segmentedPager.progressBlock = self.progressBlock;
-    
 /*
     //VGParallaxHeader backward compatibility
     UILabel *stickyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -81,26 +76,6 @@
         .size   = self.view.frame.size
     };
     [super viewWillLayoutSubviews];
-}
-
-#pragma mark Private Methods
-
-- (MXProgressBlock) progressBlock {
-    return ^(CGFloat progress) {
-        
-        // Use the refresh control only on WebView
-        if (self.segmentedPager.pager.selectedPage == self.webView) {
-            
-            // progress > 1 means 'pulled down'
-            if (progress > 1) {
-                self.cover.indeterminate = YES;
-                [self.webView reload];
-            }
-            else {
-                self.cover.progress = progress;
-            }
-        }
-    };
 }
 
 #pragma mark Properties
@@ -164,7 +139,7 @@
     return _customView;
 }
 
-#pragma -mark <MXSegmentedPagerDelegate>
+#pragma mark <MXSegmentedPagerDelegate>
 
 - (CGFloat)heightForSegmentedControlInSegmentedPager:(MXSegmentedPager *)segmentedPager {
     return 30.f;
@@ -174,7 +149,23 @@
     NSLog(@"%@ page selected.", title);
 }
 
-#pragma -mark <MXSegmentedPagerDataSource>
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didScrollWithParallaxHeader:(MXParallaxHeader *)parallaxHeader {
+    
+    // Use the refresh control only on WebView
+    if (segmentedPager.pager.selectedPage == self.webView) {
+        
+        // progress > 1 means 'pulled down'
+        if (parallaxHeader.progress > 1) {
+            self.cover.indeterminate = YES;
+            [self.webView reload];
+        }
+        else {
+            self.cover.progress = parallaxHeader.progress;
+        }
+    }
+}
+
+#pragma mark <MXSegmentedPagerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
     return 4;
@@ -188,7 +179,7 @@
     return [@[self.tableView, self.webView, self.textView, self.customView] objectAtIndex:index];
 }
 
-#pragma -mark <UITableViewDelegate>
+#pragma mark <UITableViewDelegate>
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -196,7 +187,7 @@
     [self.segmentedPager.pager showPageAtIndex:index animated:YES];
 }
 
-#pragma -mark <UITableViewDataSource>
+#pragma mark <UITableViewDataSource>
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 50;

@@ -85,6 +85,14 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  */
 - (CGFloat) heightForSegmentedControlInSegmentedPager:(MXSegmentedPager*)segmentedPager;
 
+/**
+ Tells the delegate that the segmented pagr has scrolled with the parallax header.
+ 
+ @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
+ @param parallaxHeader The parallax-header that has scrolled.
+ */
+- (void) segmentedPager:(MXSegmentedPager*)segmentedPager didScrollWithParallaxHeader:(MXParallaxHeader *)parallaxHeader;
+
 @end
 
 /**
@@ -209,7 +217,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 /**
  The progress block called when scroll is progressing.
  */
-@property (nonatomic, strong, nullable) MXProgressBlock progressBlock;
+@property (nonatomic, strong, nullable) MXProgressBlock progressBlock DEPRECATED_MSG_ATTRIBUTE("Use the delegate method 'segmentedPager:didScrollWithParallaxHeader:' instead.");
 
 @end
 
