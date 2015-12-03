@@ -238,6 +238,8 @@
 
 @end
 
+#pragma mark MXParallaxHeader
+
 @implementation MXSegmentedPager (ParallaxHeader)
 
 - (BOOL)bounces {
@@ -248,13 +250,13 @@
     self.contentView.bounces = bounces;
 }
 
-#pragma mark MXParallaxHeader
-
 - (MXParallaxHeader *)parallaxHeader {
     return self.contentView.parallaxHeader;
 }
 
 @end
+
+#pragma mark VGParallaxHeader Backward compatibility
 
 @implementation MXSegmentedPager (VGParallaxHeader)
 
@@ -279,8 +281,6 @@
 }
 
 @end
-
-#pragma mark VGParallaxHeader Backward compatibility
 
 @implementation MXParallaxHeader (VGParallaxHeader)
 

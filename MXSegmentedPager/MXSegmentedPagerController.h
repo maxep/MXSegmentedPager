@@ -24,6 +24,8 @@
 #import <MXPagerView/MXPagerViewController.h>
 #import "MXSegmentedPager.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  The MXSegmentedPager's data source object may adopt the MXSegmentedPagerControllerDataSource protocol in order to use the MXSegmentedPagerController with child UIViewController.
  */
@@ -37,7 +39,7 @@
  
  @return An object inheriting from UIViewController that the segmented-pager can use for the specified page.
  */
-- (nonnull __kindof UIViewController *)segmentedPager:(nonnull MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index;
+- (__kindof UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index;
 
 /**
  Asks the data source for a segue identifier to insert in a particular page of the segmented-pager.
@@ -47,7 +49,7 @@
  
  @return The segue identifier that the segmented-pager can use for the specified page.
  */
-- (nonnull NSString *)segmentedPager:(nonnull MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index;
+- (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index;
 
 @end
 
@@ -59,7 +61,8 @@
 /**
  Returns the segmengted-pager view managed by the controller object.
  */
-@property (nonatomic, strong, readonly, nonnull) MXSegmentedPager *segmentedPager;
+@property (nonatomic, strong, readonly) MXSegmentedPager *segmentedPager;
 
 @end
 
+NS_ASSUME_NONNULL_END

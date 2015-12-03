@@ -51,8 +51,17 @@
 #pragma mark <MXSegmentedPagerControllerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
-    NSArray *segues = [self valueForKey:@"storyboardSegueTemplates"] ;
-    return segues.count;
+    NSInteger count = 0;
+    
+    //Hack to get number of MXPageSegue
+    NSArray *templates = [self valueForKey:@"storyboardSegueTemplates"];
+    for (id template in templates) {
+        NSString *segueClasseName = [template valueForKey:@"_segueClassName"];
+        if ([segueClasseName isEqualToString:NSStringFromClass(MXPageSegue.class)]) {
+            count++;
+        }
+    }
+    return count;
 }
 
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
