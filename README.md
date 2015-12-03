@@ -23,16 +23,6 @@ MXSegmentedPager combines [MXPagerView](https://github.com/maxep/MXPagerView) wi
 
 ## Usage
 
-If you want to try it, simply run:
-```
-pod try MXSegmentedPager
-```
-Or clone the repo and run `pod install` from the Example directory first. 
-
-+ See MXSimpleViewController for a standard implementation.
-+ See MXParallaxViewController to implement a pager with a parallax header.
-+ See MXExampleViewController for a MXSegmentedPagerController subclass example.
-
 + MXSegmentedPager calls data source methods to load pages. 
 
 ```objective-c
@@ -72,6 +62,20 @@ segmentedPager.parallaxHeader.height = 150;
 segmentedPager.parallaxHeader.mode = MXParallaxHeaderModeFill;
 segmentedPager.parallaxHeader.minimumHeight = 20;
 ```
+
+## Examples
+
+If you want to try it, simply run:
+```
+pod try MXSegmentedPager
+```
+Or clone the repo and run `pod install` from the Example directory first. 
+
++ See MXSimpleViewController for a standard implementation.
++ See MXParallaxViewController to implement a pager with a parallax header.
++ See MXExampleViewController for a MXSegmentedPagerController subclass example.
+
+This repo also provides a **Swift** example project, see [Example-Swift](Example-Swift).
 
 ## Installation
 
