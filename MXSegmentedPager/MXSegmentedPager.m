@@ -108,9 +108,9 @@
     
     self.segmentedControl.sectionImages = images;
     self.segmentedControl.sectionTitles = titles;
+    [self.segmentedControl setNeedsDisplay];
     
     [self.pager reloadData];
-    [self layoutIfNeeded];
 }
 
 #pragma mark Properties
