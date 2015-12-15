@@ -124,7 +124,7 @@
 
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
     if (index < 3) {
-        return [@[self.tableView, self.webView, self.textView] objectAtIndex:index];
+        return @[self.tableView, self.webView, self.textView][index];
     }
     
     //Dequeue reusable page

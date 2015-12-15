@@ -172,11 +172,11 @@
 }
 
 - (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index {
-    return [@[@"Table", @"Web", @"Text", @"Custom"] objectAtIndex:index];
+    return @[@"Table", @"Web", @"Text", @"Custom"][index];
 }
 
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
-    return [@[self.tableView, self.webView, self.textView, self.customView] objectAtIndex:index];
+    return @[self.tableView, self.webView, self.textView, self.customView][index];
 }
 
 #pragma mark <UITableViewDelegate>

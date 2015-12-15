@@ -38,5 +38,8 @@ class MXViewController: MXSegmentedPagerController {
     override func segmentedPager(segmentedPager: MXSegmentedPager, titleForSectionAtIndex index: Int) -> String {
         return ["Table", "Web", "Text"][index];
     }
+    
+    override func segmentedPager(segmentedPager: MXSegmentedPager, didScrollWithParallaxHeader parallaxHeader: MXParallaxHeader) {
+        NSLog("progress %@", parallaxHeader.progress)
+    }
 }
-
