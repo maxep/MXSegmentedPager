@@ -22,6 +22,8 @@
 
 #import "MXSegmentedPagerController.h"
 
+NSString * const MXSeguePageIdentifierFormat = @"mx_page_%ld";
+
 @interface MXSegmentedPagerController () <MXPageSegueDelegate>
 
 @end
