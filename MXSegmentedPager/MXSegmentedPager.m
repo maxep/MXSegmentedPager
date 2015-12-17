@@ -78,12 +78,15 @@
 
 - (void)reloadData {
     
+    //Gets number of pages
+    _count = [self.dataSource numberOfPagesInSegmentedPager:self];
+    NSAssert(_count > 0, @"Number of pages in MXSegmentedPager must be greater than 0");
+    
     //Gets the segmented control height
     _controlHeight = 44.f;
     if ([self.delegate respondsToSelector:@selector(heightForSegmentedControlInSegmentedPager:)]) {
         _controlHeight = [self.delegate heightForSegmentedControlInSegmentedPager:self];
     }
-    _count = [self.dataSource numberOfPagesInSegmentedPager:self];
     
     //Gets new data
     NSMutableArray* images  = [NSMutableArray array];

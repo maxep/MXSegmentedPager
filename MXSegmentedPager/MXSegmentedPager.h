@@ -200,12 +200,12 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 @end
 
 /**
- MXSegmentedPager with parallax header. This category uses [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) to set up a parallax header on top of a segmented-pager.
+ MXSegmentedPager with parallax header. This category uses [MXParallaxHeader](http://cocoadocs.org/docsets/MXParallaxHeader) to set up a parallax header on top of a segmented-pager.
  */
 @interface MXSegmentedPager (ParallaxHeader)
 
 /**
- The parallax header. cf. [VGParallaxHeader](http://cocoadocs.org/docsets/VGParallaxHeader/0.0.6/) for more details.
+ The parallax header. cf. [MXParallaxHeader](http://cocoadocs.org/docsets/MXParallaxHeader) for more details.
  */
 @property (nonatomic, strong, readonly) MXParallaxHeader *parallaxHeader;
 
