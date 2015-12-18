@@ -155,6 +155,16 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  */
 - (UIImage*) segmentedPager:(MXSegmentedPager*)segmentedPager imageForSectionAtIndex:(NSInteger)index;
 
+/**
+ Asks the data source for a selected image to assign to a particular page of the segmented-pager. The image will be used depending on the HMSegmentedControlType you have choosen.
+ 
+ @param segmentedPager A segmented-pager object requesting the title.
+ @param index          An index number identifying a page in segmented-pager.
+ 
+ @return The selected image of the page in segmented-pager.
+ */
+- (UIImage*) segmentedPager:(MXSegmentedPager*)segmentedPager selectedImageForSectionAtIndex:(NSInteger)index;
+
 @end
 
 /**
