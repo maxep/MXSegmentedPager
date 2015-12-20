@@ -50,8 +50,8 @@
     
     //Layout control
     frame.origin = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
-    CGPointMake(self.segmentedControlEdgeInsets.left, self.segmentedControlEdgeInsets.top) :
-    CGPointMake(self.segmentedControlEdgeInsets.left, self.bounds.size.height - _controlHeight - self.segmentedControlEdgeInsets.bottom);
+    CGPointMake(self.segmentedControlEdgeInsets.left, self.contentView.contentOffset.y + self.segmentedControlEdgeInsets.top) :
+    CGPointMake(self.segmentedControlEdgeInsets.left, self.contentView.contentOffset.y + self.bounds.size.height - _controlHeight - self.segmentedControlEdgeInsets.bottom);
     frame.size.width = self.frame.size.width - self.segmentedControlEdgeInsets.left - self.segmentedControlEdgeInsets.right;
     frame.size.height = _controlHeight;
 
@@ -59,7 +59,8 @@
     
     //Layout pager
     frame.origin = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
-    CGPointMake(0, _controlHeight + self.segmentedControlEdgeInsets.top + self.segmentedControlEdgeInsets.bottom) : CGPointZero;
+    CGPointMake(0, self.contentView.contentOffset.y + _controlHeight + self.segmentedControlEdgeInsets.top + self.segmentedControlEdgeInsets.bottom) :
+    CGPointMake(0, self.contentView.contentOffset.y);
     
     frame.size.width = self.bounds.size.width;
     CGFloat height = self.contentView.frame.size.height - _controlHeight;
