@@ -90,6 +90,7 @@
     
     //Gets new data
     NSMutableArray* images  = [NSMutableArray array];
+    NSMutableArray* selectedImages  = [NSMutableArray array];
     NSMutableArray* titles  = [NSMutableArray array];
     
     for (NSInteger index = 0; index < _count; index++) {
@@ -107,9 +108,15 @@
             UIImage* image = [self.dataSource segmentedPager:self imageForSectionAtIndex:index];
             [images addObject:image];
         }
+        
+        if ([self.dataSource respondsToSelector:@selector(segmentedPager:selectedImageForSectionAtIndex:)]) {
+            UIImage* image = [self.dataSource segmentedPager:self selectedImageForSectionAtIndex:index];
+            [selectedImages addObject:image];
+        }
     }
     
     self.segmentedControl.sectionImages = images;
+    self.segmentedControl.sectionSelectedImages = selectedImages;
     self.segmentedControl.sectionTitles = titles;
     [self.segmentedControl setNeedsDisplay];
     
