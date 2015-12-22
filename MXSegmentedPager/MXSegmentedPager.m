@@ -38,44 +38,6 @@
     BOOL        _moveSegment;
 }
 
-- (void)layoutSubviews {
-    if (_count <= 0) {
-        [self reloadData];
-    }
-    
-    CGRect frame = self.bounds;
-    //Layout content view
-    frame.origin = CGPointZero;
-    self.contentView.frame = frame;
-    
-    //Layout control
-    frame.origin = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
-    CGPointMake(self.segmentedControlEdgeInsets.left, self.segmentedControlEdgeInsets.top) :
-    CGPointMake(self.segmentedControlEdgeInsets.left, self.bounds.size.height - _controlHeight - self.segmentedControlEdgeInsets.bottom);
-    frame.size.width = self.frame.size.width - self.segmentedControlEdgeInsets.left - self.segmentedControlEdgeInsets.right;
-    frame.size.height = _controlHeight;
-
-    self.segmentedControl.frame = frame;
-    
-    //Layout pager
-    frame.origin = (self.segmentedControlPosition == MXSegmentedControlPositionTop)?
-    CGPointMake(0, _controlHeight + self.segmentedControlEdgeInsets.top + self.segmentedControlEdgeInsets.bottom) : CGPointZero;
-    
-    frame.size.width = self.bounds.size.width;
-    CGFloat height = self.contentView.frame.size.height - _controlHeight;
-    height -= self.contentView.parallaxHeader.minimumHeight;
-    height -= self.segmentedControlEdgeInsets.top;
-    height -= self.segmentedControlEdgeInsets.bottom;
-    frame.size.height = height;
-    
-    self.pager.frame = frame;
-    
-    self.contentView.contentSize = self.contentView.frame.size;
-    self.contentView.scrollEnabled = !!self.contentView.parallaxHeader.view;
-    
-    [super layoutSubviews];
-}
-
 - (void)reloadData {
     
     //Gets number of pages
@@ -123,6 +85,70 @@
     [self.pager reloadData];
 }
 
+#pragma mark Layout
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    if (_count <= 0) {
+        [self reloadData];
+    }
+    
+    [self layoutContentView];
+    [self layoutSegmentedControl];
+    [self layoutPager];
+}
+
+- (void) layoutContentView {
+    CGRect frame = self.bounds;
+    
+    frame.origin = CGPointZero;
+    self.contentView.frame = frame;
+    self.contentView.contentSize = self.contentView.frame.size;
+    self.contentView.scrollEnabled = !!self.contentView.parallaxHeader.view;
+    self.contentView.contentInset = UIEdgeInsetsMake(self.contentView.parallaxHeader.height, 0, 0, 0);
+}
+
+- (void) layoutSegmentedControl {
+    CGRect frame = self.bounds;
+    
+    frame.origin.x = self.segmentedControlEdgeInsets.left;
+    
+    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
+        frame.origin.y = self.segmentedControlEdgeInsets.top;
+    }
+    else {
+        frame.origin.y  = frame.size.height;
+        frame.origin.y -= _controlHeight;
+        frame.origin.y -= self.segmentedControlEdgeInsets.bottom;
+    }
+
+    frame.size.width -= self.segmentedControlEdgeInsets.left;
+    frame.size.width -= self.segmentedControlEdgeInsets.right;
+    frame.size.height = _controlHeight;
+    
+    self.segmentedControl.frame = frame;
+}
+
+- (void) layoutPager {
+    CGRect frame = self.bounds;
+    
+    frame.origin = CGPointZero;
+    
+    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
+        frame.origin.y  = _controlHeight;
+        frame.origin.y += self.segmentedControlEdgeInsets.top;
+        frame.origin.y += self.segmentedControlEdgeInsets.bottom;
+    }
+    
+    frame.size.height -= _controlHeight;
+    frame.size.height -= self.segmentedControlEdgeInsets.top;
+    frame.size.height -= self.segmentedControlEdgeInsets.bottom;
+    frame.size.height -= self.contentView.parallaxHeader.minimumHeight;
+    
+    self.pager.frame = frame;
+}
+
 #pragma mark Properties
 
 - (MXScrollView *)contentView {
@@ -144,8 +170,6 @@
                     forControlEvents:UIControlEventValueChanged];
         [self.contentView addSubview:_segmentedControl];
         _moveSegment = YES;
-        
-        self.segmentedControlEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     }
     return _segmentedControl;
 }
