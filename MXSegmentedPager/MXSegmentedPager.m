@@ -51,30 +51,31 @@
     }
     
     //Gets new data
-    NSMutableArray* images  = [NSMutableArray array];
-    NSMutableArray* selectedImages  = [NSMutableArray array];
-    NSMutableArray* titles  = [NSMutableArray array];
+    NSMutableArray *images          = [NSMutableArray arrayWithCapacity:_count];
+    NSMutableArray *selectedImages  = [NSMutableArray arrayWithCapacity:_count];
+    NSMutableArray *titles          = [NSMutableArray arrayWithCapacity:_count];
     
     for (NSInteger index = 0; index < _count; index++) {
         
-        id title = [NSString stringWithFormat:@"Page %ld", (long)index];
+        titles[index] = [NSString stringWithFormat:@"Page %ld", (long)index];
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
-            title = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
+            titles[index] = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
         }
-        else if ([self.dataSource respondsToSelector:@selector(segmentedPager:attributedTitleForSectionAtIndex:)]) {
-            title = [self.dataSource segmentedPager:self attributedTitleForSectionAtIndex:index];
-        }
-        [titles addObject:title];
         
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:imageForSectionAtIndex:)]) {
-            UIImage* image = [self.dataSource segmentedPager:self imageForSectionAtIndex:index];
-            [images addObject:image];
+            images[index] = [self.dataSource segmentedPager:self imageForSectionAtIndex:index];
         }
         
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:selectedImageForSectionAtIndex:)]) {
-            UIImage* image = [self.dataSource segmentedPager:self selectedImageForSectionAtIndex:index];
-            [selectedImages addObject:image];
+            selectedImages[index] = [self.dataSource segmentedPager:self selectedImageForSectionAtIndex:index];
         }
+    }
+    
+    if ([self.dataSource respondsToSelector:@selector(segmentedPager:attributedTitleForSectionAtIndex:)]) {
+        __weak typeof(self) segmentedPager = self;
+        self.segmentedControl.titleFormatter = ^NSAttributedString *(HMSegmentedControl *segmentedControl, NSString *title, NSUInteger index, BOOL selected) {
+            return [segmentedPager.dataSource segmentedPager:segmentedPager attributedTitleForSectionAtIndex:index];
+        };
     }
     
     self.segmentedControl.sectionImages = images;
@@ -168,6 +169,7 @@
         [_segmentedControl addTarget:self
                               action:@selector(pageControlValueChanged:)
                     forControlEvents:UIControlEventValueChanged];
+        
         [self.contentView addSubview:_segmentedControl];
         _moveSegment = YES;
     }

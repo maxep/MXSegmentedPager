@@ -54,6 +54,6 @@ class MXViewController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(segmentedPager: MXSegmentedPager, didScrollWithParallaxHeader parallaxHeader: MXParallaxHeader) {
-        NSLog("progress %li", parallaxHeader.progress)
+        NSLog("progress %f", parallaxHeader.progress)
     }
 }
