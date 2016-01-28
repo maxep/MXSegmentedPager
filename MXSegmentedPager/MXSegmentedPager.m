@@ -86,6 +86,10 @@
     [self.pager reloadData];
 }
 
+- (void)scrollToTop {
+    [_contentView setContentOffset:CGPointMake(0, -self.contentView.parallaxHeader.height) animated:YES];
+}
+
 #pragma mark Layout
 
 - (void)layoutSubviews {
