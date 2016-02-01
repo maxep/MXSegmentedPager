@@ -210,7 +210,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 /**
  Scrolls the main contentView back to the top position
  */
-- (void) scrollToTop;
+- (void) scrollToTopAnimated:(BOOL)animated;
 
 @end
 
