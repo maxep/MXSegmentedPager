@@ -233,6 +233,14 @@
     return YES;
 }
 
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:shouldScrollToTop:)]) {
+        return [self.delegate segmentedPager:self shouldScrollToTop:scrollView];
+    } else {
+        return YES;
+    }
+}
+
 #pragma mark HMSegmentedControl target
 
 - (void)pageControlValueChanged:(HMSegmentedControl*)segmentedControl {

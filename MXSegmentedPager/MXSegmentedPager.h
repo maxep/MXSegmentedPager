@@ -101,6 +101,14 @@ typedef void (^MXProgressBlock) (CGFloat progress);
  */
 - (void) segmentedPager:(MXSegmentedPager *)segmentedPager didEndDraggingWithParallaxHeader:(MXParallaxHeader *)parallaxHeader;
 
+/**
+ Forwards the delegate method `shouldScrollToTop` to the delegate. Defaults to `YES` when not implemented
+
+ @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
+ @param scrollView A scrollview forwarding the corresponding delegate method
+ */
+- (BOOL) segmentedPager:(MXSegmentedPager *)segmentedPager shouldScrollToTop:(UIScrollView *)scrollView;
+
 @end
 
 /**
