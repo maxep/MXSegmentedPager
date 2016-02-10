@@ -1,6 +1,6 @@
 // MXSegmentedPager.h
 //
-// Copyright (c) 2015 Maxime Epain
+// Copyright (c) 2016 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -78,6 +78,7 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 
 /**
  Asks the delegate to return the height of the segmented control in the segmented-pager.
+ If the delegate doesn’t implement this method, 44 is assumed.
  
  @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
  
@@ -88,18 +89,28 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 /**
  Tells the delegate that the segmented pager has scrolled with the parallax header.
  
- @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
+ @param segmentedPager A segmented-pager object in which the scrolling occurred.
  @param parallaxHeader The parallax-header that has scrolled.
  */
 - (void) segmentedPager:(MXSegmentedPager*)segmentedPager didScrollWithParallaxHeader:(MXParallaxHeader *)parallaxHeader;
 
 /**
- Tells the delegate the segmented pager has completed dragging with the parallax header.
+ Tells the delegate when dragging ended with the parallax header.
  
- @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
+ @param segmentedPager A segmented-pager object that finished scrolling the content view.
  @param parallaxHeader The parallax-header that has scrolled.
  */
 - (void) segmentedPager:(MXSegmentedPager *)segmentedPager didEndDraggingWithParallaxHeader:(MXParallaxHeader *)parallaxHeader;
+
+/**
+ Asks the delegate if the segmented-pager should scroll to the top.
+ If the delegate doesn’t implement this method, YES is assumed.
+ 
+ @param segmentedPager The segmented-pager object requesting this information.
+ 
+ @return YES to permit scrolling to the top of the content, NO to disallow it.
+ */
+- (BOOL) segmentedPagerShouldScrollToTop:(MXSegmentedPager *)segmentedPager;
 
 @end
 

@@ -1,6 +1,6 @@
 // MXSegmentedPager.m
 //
-// Copyright (c) 2015 Maxime Epain
+// Copyright (c) 2016 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -87,9 +87,9 @@
 }
 
 - (void)scrollToTopAnimated:(BOOL)animated {
-    [_contentView setContentOffset:CGPointMake(0, -self.contentView.parallaxHeader.height) animated:animated];
+    [_contentView setContentOffset:CGPointMake(0, -self.contentView.parallaxHeader.height)
+                          animated:animated];
 }
-
 
 #pragma mark Layout
 
@@ -229,6 +229,13 @@
     
     if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
         return [page segmentedPager:self shouldScrollWithView:subView];
+    }
+    return YES;
+}
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+    if ([self.delegate respondsToSelector:@selector(segmentedPagerShouldScrollToTop:)]) {
+        return [self.delegate segmentedPagerShouldScrollToTop:self];
     }
     return YES;
 }
