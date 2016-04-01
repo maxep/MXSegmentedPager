@@ -310,7 +310,7 @@
 
 @end
 
-@implementation MXParallaxHeader (StyckyHeader)
+@implementation MXParallaxHeader (StickyHeader)
 
 - (MXParallaxHeaderStickyViewPosition)stickyViewPosition {
     return [objc_getAssociatedObject(self, @selector(stickyViewPosition)) integerValue];

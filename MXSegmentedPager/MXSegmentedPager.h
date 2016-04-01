@@ -278,7 +278,7 @@ typedef NS_ENUM(NSInteger, MXParallaxHeaderStickyViewPosition) {
     MXParallaxHeaderStickyViewPositionTop,
 };
 
-@interface MXParallaxHeader (StyckyHeader)
+@interface MXParallaxHeader (StickyHeader)
 @property (nonatomic, assign, readwrite) MXParallaxHeaderStickyViewPosition stickyViewPosition;
 @property (nonatomic, strong, nullable, readwrite) NSLayoutConstraint *stickyViewHeightConstraint;
 @property (nonatomic, strong, nullable, readwrite) UIView *stickyView;
