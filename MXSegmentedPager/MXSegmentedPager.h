@@ -273,6 +273,19 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 
 @end
 
+typedef NS_ENUM(NSInteger, MXParallaxHeaderStickyViewPosition) {
+    MXParallaxHeaderStickyViewPositionBottom = 0,
+    MXParallaxHeaderStickyViewPositionTop,
+};
+
+@interface MXParallaxHeader (StickyHeader)
+@property (nonatomic, assign, readwrite) MXParallaxHeaderStickyViewPosition stickyViewPosition;
+@property (nonatomic, strong, nullable, readwrite) NSLayoutConstraint *stickyViewHeightConstraint;
+@property (nonatomic, strong, nullable, readwrite) UIView *stickyView;
+@property (nonatomic, assign, readonly, getter=isInsideTableView) BOOL insideTableView;
+- (void)setStickyView:(nullable __kindof UIView *)stickyView withHeight:(CGFloat)height;
+@end
+
 #pragma mark VGParallaxHeader Backward compatibility
 
 #define VGPARALLAXHEADER_DEPRECATION DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader has been deleted from MXSegmentedPager, use MXParallaxHeader instead.")
@@ -287,15 +300,7 @@ typedef NS_ENUM(NSInteger, VGParallaxHeaderMode) {
 typedef NS_ENUM(NSInteger, VGParallaxHeaderStickyViewPosition) {
     VGParallaxHeaderStickyViewPositionBottom = 0,
     VGParallaxHeaderStickyViewPositionTop,
-} VGPARALLAXHEADER_DEPRECATION;
-
-@interface MXParallaxHeader (VGParallaxHeader)
-@property (nonatomic, assign, readwrite) VGParallaxHeaderStickyViewPosition stickyViewPosition VGPARALLAXHEADER_DEPRECATION;
-@property (nonatomic, strong, nullable, readwrite) NSLayoutConstraint *stickyViewHeightConstraint VGPARALLAXHEADER_DEPRECATION;
-@property (nonatomic, strong, nullable, readwrite) UIView *stickyView VGPARALLAXHEADER_DEPRECATION;
-@property (nonatomic, assign, readonly, getter=isInsideTableView) BOOL insideTableView VGPARALLAXHEADER_DEPRECATION;
-- (void)setStickyView:(nullable __kindof UIView *)stickyView withHeight:(CGFloat)height VGPARALLAXHEADER_DEPRECATION;
-@end
+} DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader has been deleted from MXSegmentedPager, use MXParallaxHeaderStickyViewPosition instead.");
 
 @interface MXSegmentedPager (VGParallaxHeader)
 @property (nonatomic) CGFloat minimumHeaderHeight VGPARALLAXHEADER_DEPRECATION;

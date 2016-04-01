@@ -310,39 +310,13 @@
 
 @end
 
-#pragma mark VGParallaxHeader Backward compatibility
+@implementation MXParallaxHeader (StickyHeader)
 
-@implementation MXSegmentedPager (VGParallaxHeader)
-
-- (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
-    self.parallaxHeader.view    = view;
-    self.parallaxHeader.mode    = (MXParallaxHeaderMode)mode;
-    self.parallaxHeader.height  = height;
-}
-
-- (void)updateParallaxHeaderViewHeight:(CGFloat)height {
-    self.parallaxHeader.height = height;
-}
-
-#pragma mark Properties
-
-- (CGFloat)minimumHeaderHeight {
-    return self.parallaxHeader.minimumHeight;
-}
-
-- (void)setMinimumHeaderHeight:(CGFloat)minimumHeaderHeight {
-    self.parallaxHeader.minimumHeight = minimumHeaderHeight;
-}
-
-@end
-
-@implementation MXParallaxHeader (VGParallaxHeader)
-
-- (VGParallaxHeaderStickyViewPosition)stickyViewPosition {
+- (MXParallaxHeaderStickyViewPosition)stickyViewPosition {
     return [objc_getAssociatedObject(self, @selector(stickyViewPosition)) integerValue];
 }
 
-- (void)setStickyViewPosition:(VGParallaxHeaderStickyViewPosition)stickyViewPosition {
+- (void)setStickyViewPosition:(MXParallaxHeaderStickyViewPosition)stickyViewPosition {
     objc_setAssociatedObject(self, @selector(stickyViewPosition), [NSNumber numberWithInteger:stickyViewPosition], OBJC_ASSOCIATION_COPY_NONATOMIC);
     [self updateStickyViewConstraints];
 }
@@ -392,8 +366,6 @@
     return NO;
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 - (void)updateStickyViewConstraints {
     if (self.stickyView) {
         [self.stickyView removeFromSuperview];
@@ -405,7 +377,7 @@
                                                                                  metrics:nil
                                                                                    views:@{@"v" : self.stickyView}]];
         
-        NSLayoutAttribute attribute = (self.stickyViewPosition == VGParallaxHeaderStickyViewPositionTop)? NSLayoutAttributeTop : NSLayoutAttributeBottom;
+        NSLayoutAttribute attribute = (self.stickyViewPosition == MXParallaxHeaderStickyViewPositionTop)? NSLayoutAttributeTop : NSLayoutAttributeBottom;
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.stickyView
                                                                      attribute:attribute
                                                                      relatedBy:NSLayoutRelationEqual
@@ -417,6 +389,31 @@
         [self.contentView addConstraint:self.stickyViewHeightConstraint];
     }
 }
-#pragma GCC diagnostic pop
+
+@end
+
+#pragma mark VGParallaxHeader Backward compatibility
+
+@implementation MXSegmentedPager (VGParallaxHeader)
+
+- (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
+    self.parallaxHeader.view    = view;
+    self.parallaxHeader.mode    = (MXParallaxHeaderMode)mode;
+    self.parallaxHeader.height  = height;
+}
+
+- (void)updateParallaxHeaderViewHeight:(CGFloat)height {
+    self.parallaxHeader.height = height;
+}
+
+#pragma mark Properties
+
+- (CGFloat)minimumHeaderHeight {
+    return self.parallaxHeader.minimumHeight;
+}
+
+- (void)setMinimumHeaderHeight:(CGFloat)minimumHeaderHeight {
+    self.parallaxHeader.minimumHeight = minimumHeaderHeight;
+}
 
 @end
