@@ -1,6 +1,6 @@
 // MXSegmentedPagerController.h
 //
-// Copyright (c) 2015 Maxime Epain
+// Copyright (c) 2016 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,15 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import <MXPagerView/MXPagerViewController.h>
 #import "MXSegmentedPager.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  The MXSegmentedPager's data source object may adopt the MXSegmentedPagerControllerDataSource protocol in order to use the MXSegmentedPagerController with child UIViewController.
  */
 @protocol MXSegmentedPagerControllerDataSource <MXSegmentedPagerDataSource>
-
-@optional
 
 /**
  Asks the data source for a view controller to insert in a particular page of the segmented-pager.
@@ -38,7 +39,17 @@
  
  @return An object inheriting from UIViewController that the segmented-pager can use for the specified page.
  */
-- (UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index;
+- (__kindof UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index;
+
+/**
+ Asks the data source for a segue identifier to insert in a particular page of the segmented-pager.
+ 
+ @param segmentedPager A segmented-pager object requesting the view.
+ @param index          An index number identifying a page in segmented-pager.
+ 
+ @return The segue identifier that the segmented-pager can use for the specified page.
+ */
+- (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index;
 
 @end
 
@@ -50,6 +61,8 @@
 /**
  Returns the segmengted-pager view managed by the controller object.
  */
-@property (nonatomic, strong) MXSegmentedPager *segmentedPager;
+@property (nonatomic, strong, readonly) MXSegmentedPager *segmentedPager;
 
 @end
+
+NS_ASSUME_NONNULL_END

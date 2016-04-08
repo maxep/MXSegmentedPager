@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MXViewController" customModule="MXSegmentedPager_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="l4v-Ls-4Ga" kind="custom" identifier="mx_page_0" customClass="MXPageSegue" id="thh-Tu-bFw"/>
+                        <segue destination="X9u-4R-kMx" kind="custom" identifier="mx_page_1" customClass="MXPageSegue" id="E3q-vK-r61"/>
+                        <segue destination="fPn-nM-wbd" kind="custom" identifier="mx_page_2" customClass="MXPageSegue" id="QxO-RL-N7n"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="414" y="355"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="uPh-KL-A3P">
+            <objects>
+                <tableViewController id="l4v-Ls-4Ga" customClass="MXTableViewController" customModule="MXSegmentedPager_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="E1F-eK-wW3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="xy8-Kz-YmY" style="IBUITableViewCellStyleDefault" id="it1-PB-9DT">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="it1-PB-9DT" id="0eW-Ek-tIH">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xy8-Kz-YmY">
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="l4v-Ls-4Ga" id="dQr-E7-8ia"/>
+                            <outlet property="delegate" destination="l4v-Ls-4Ga" id="ibE-AN-das"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R1a-5Q-aGc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1364" y="-1009"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="946-L9-vyE">
+            <objects>
+                <viewController id="X9u-4R-kMx" customClass="MXWebViewController" customModule="MXSegmentedPager_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BXh-yd-IWv"/>
+                        <viewControllerLayoutGuide type="bottom" id="DX3-QN-gAz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LEY-g5-Tb0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ham-IO-iPo">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Ham-IO-iPo" secondAttribute="trailing" id="Za5-cE-CTX"/>
+                            <constraint firstItem="Ham-IO-iPo" firstAttribute="top" secondItem="LEY-g5-Tb0" secondAttribute="top" id="pEv-JU-51t"/>
+                            <constraint firstItem="Ham-IO-iPo" firstAttribute="bottom" secondItem="DX3-QN-gAz" secondAttribute="top" id="pV3-D3-TyR"/>
+                            <constraint firstItem="Ham-IO-iPo" firstAttribute="leading" secondItem="LEY-g5-Tb0" secondAttribute="leading" id="xX3-CZ-cqo"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="Ham-IO-iPo" id="enN-bh-MwT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wp9-4Z-AfG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1364" y="-325"/>
+        </scene>
+        <!--Text View Controller-->
+        <scene sceneID="Pcu-Fr-2pE">
+            <objects>
+                <viewController id="fPn-nM-wbd" customClass="MXTextViewController" customModule="MXSegmentedPager_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wiA-aa-dF4"/>
+                        <viewControllerLayoutGuide type="bottom" id="QiU-RV-hSa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Eg2-t2-37B">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RpS-sn-Qqw">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RpS-sn-Qqw" firstAttribute="bottom" secondItem="QiU-RV-hSa" secondAttribute="top" id="R02-jL-PUB"/>
+                            <constraint firstItem="RpS-sn-Qqw" firstAttribute="leading" secondItem="Eg2-t2-37B" secondAttribute="leading" id="j1I-mF-QEc"/>
+                            <constraint firstAttribute="trailing" secondItem="RpS-sn-Qqw" secondAttribute="trailing" id="krq-kS-ezJ"/>
+                            <constraint firstItem="RpS-sn-Qqw" firstAttribute="top" secondItem="Eg2-t2-37B" secondAttribute="top" id="xwe-he-qC3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="RpS-sn-Qqw" id="Jzu-pS-gXq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0pF-dM-hSn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1364" y="355"/>
+        </scene>
+    </scenes>
+</document>

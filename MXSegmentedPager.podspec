@@ -9,10 +9,11 @@
 
 Pod::Spec.new do |s|
   s.name             = "MXSegmentedPager"
-  s.version          = "1.2.1"
+  s.version          = "3.0.4"
   s.summary          = "Segmented pager view with Parallax header."
   s.description      = <<-DESC
-                       The standard MXSegmentedPager class is a simple paging control using [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl). The ParallaxHeader category is an extension that allow you to add a [VGParallaxHeader](https://github.com/stoprocent/VGParallaxHeader) to your segmented pager.
+                       MXSegmentedPager combines [MXPagerView](https://github.com/maxep/MXPagerView) with [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl) to control the page selection.
+                       The integration of [MXParallaxHeader](https://github.com/maxep/MXParallaxHeader) allows you to add an parallax header on top while keeping a reliable scrolling effect.
                        DESC
 
   s.homepage         = "https://github.com/maxep/MXSegmentedPager"
@@ -24,7 +25,10 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.requires_arc = true
 
-s.source_files = 'MXSegmentedPager/*.{m,h}'
+  s.source_files = 'MXSegmentedPager/*.{m,h}'
+  s.public_header_files = ["MXSegmentedPager/*.h"]
   s.dependency 'HMSegmentedControl', '~> 1.5.2'
-  s.dependency 'VGParallaxHeader', '~> 0.0.6'
+  s.dependency 'MXPagerView', '~> 0.1.2'
+  s.dependency 'MXParallaxHeader', '~> 0.4.3'
+  
 end

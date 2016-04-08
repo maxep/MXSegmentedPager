@@ -1,6 +1,6 @@
 // MXSegmentedPager.h
 //
-// Copyright (c) 2015 Maxime Epain
+// Copyright (c) 2016 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,11 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "HMSegmentedControl.h"
-#import "MXPagerView.h"
+#import <HMSegmentedControl/HMSegmentedControl.h>
+#import <MXPagerView/MXPagerView.h>
+#import <MXParallaxHeader/MXParallaxHeader.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  The segmented control position options relative to the segmented-pager.
@@ -33,6 +36,13 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
     /** Bottom position. */
     MXSegmentedControlPositionBottom
 };
+
+/**
+ MXProgressBlock type definition.
+ 
+ @param progress The scroll progress.
+ */
+typedef void (^MXProgressBlock) (CGFloat progress);
 
 @class MXSegmentedPager;
 
@@ -68,12 +78,39 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 
 /**
  Asks the delegate to return the height of the segmented control in the segmented-pager.
+ If the delegate doesn’t implement this method, 44 is assumed.
  
  @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
  
  @return A nonnegative floating-point value that specifies the height (in points) that segmented-control should be.
  */
 - (CGFloat) heightForSegmentedControlInSegmentedPager:(MXSegmentedPager*)segmentedPager;
+
+/**
+ Tells the delegate that the segmented pager has scrolled with the parallax header.
+ 
+ @param segmentedPager A segmented-pager object in which the scrolling occurred.
+ @param parallaxHeader The parallax-header that has scrolled.
+ */
+- (void) segmentedPager:(MXSegmentedPager*)segmentedPager didScrollWithParallaxHeader:(MXParallaxHeader *)parallaxHeader;
+
+/**
+ Tells the delegate when dragging ended with the parallax header.
+ 
+ @param segmentedPager A segmented-pager object that finished scrolling the content view.
+ @param parallaxHeader The parallax-header that has scrolled.
+ */
+- (void) segmentedPager:(MXSegmentedPager *)segmentedPager didEndDraggingWithParallaxHeader:(MXParallaxHeader *)parallaxHeader;
+
+/**
+ Asks the delegate if the segmented-pager should scroll to the top.
+ If the delegate doesn’t implement this method, YES is assumed.
+ 
+ @param segmentedPager The segmented-pager object requesting this information.
+ 
+ @return YES to permit scrolling to the top of the content, NO to disallow it.
+ */
+- (BOOL) segmentedPagerShouldScrollToTop:(MXSegmentedPager *)segmentedPager;
 
 @end
 
@@ -103,12 +140,12 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  
  @return An object inheriting from UIView that the segmented-pager can use for the specified page.
  */
-- (UIView*) segmentedPager:(MXSegmentedPager*)segmentedPager viewForPageAtIndex:(NSInteger)index;
+- (__kindof UIView*) segmentedPager:(MXSegmentedPager*)segmentedPager viewForPageAtIndex:(NSInteger)index;
 
 @optional
 
 /**
- Asks the data source for a title to assign to a particular page of the segmented-pager.
+ Asks the data source for a title to assign to a particular page of the segmented-pager. The title will be used depending on the HMSegmentedControlType you have choosen.
  
  @param segmentedPager A segmented-pager object requesting the title.
  @param index          An index number identifying a page in segmented-pager.
@@ -118,7 +155,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 - (NSString*) segmentedPager:(MXSegmentedPager*)segmentedPager titleForSectionAtIndex:(NSInteger)index;
 
 /**
- Asks the data source for a title to assign to a particular page of the segmented-pager.
+ Asks the data source for a title to assign to a particular page of the segmented-pager. The title will be used depending on the HMSegmentedControlType you have choosen.
  
  @param segmentedPager A segmented-pager object requesting the title.
  @param index          An index number identifying a page in segmented-pager.
@@ -128,7 +165,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 - (NSAttributedString*) segmentedPager:(MXSegmentedPager*)segmentedPager attributedTitleForSectionAtIndex:(NSInteger)index;
 
 /**
- Asks the data source for a image to assign to a particular page of the segmented-pager. The title will be override by the image.
+ Asks the data source for a image to assign to a particular page of the segmented-pager. The image will be used depending on the HMSegmentedControlType you have choosen.
  
  @param segmentedPager A segmented-pager object requesting the title.
  @param index          An index number identifying a page in segmented-pager.
@@ -136,6 +173,16 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  @return The image of the page in segmented-pager.
  */
 - (UIImage*) segmentedPager:(MXSegmentedPager*)segmentedPager imageForSectionAtIndex:(NSInteger)index;
+
+/**
+ Asks the data source for a selected image to assign to a particular page of the segmented-pager. The image will be used depending on the HMSegmentedControlType you have choosen.
+ 
+ @param segmentedPager A segmented-pager object requesting the title.
+ @param index          An index number identifying a page in segmented-pager.
+ 
+ @return The selected image of the page in segmented-pager.
+ */
+- (UIImage*) segmentedPager:(MXSegmentedPager*)segmentedPager selectedImageForSectionAtIndex:(NSInteger)index;
 
 @end
 
@@ -147,32 +194,32 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 /**
  Delegate instance that adopt the MXSegmentedPagerDelegate.
  */
-@property (nonatomic, assign) id<MXSegmentedPagerDelegate> delegate;
+@property (nonatomic, weak) id<MXSegmentedPagerDelegate> delegate;
 
 /**
  Data source instance that adopt the MXSegmentedPagerDataSource.
  */
-@property (nonatomic, assign) id<MXSegmentedPagerDataSource> dataSource;
+@property (nonatomic, weak) id<MXSegmentedPagerDataSource> dataSource;
 
 /**
- The segmented control. @see [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
+ The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
  */
 @property (nonatomic, readonly) HMSegmentedControl* segmentedControl;
 
 /**
  The segmented control position option.
  */
-@property (nonatomic, assign) MXSegmentedControlPosition segmentedControlPosition;
+@property (nonatomic) MXSegmentedControlPosition segmentedControlPosition;
 
 /**
- The pager. The pager will be placed below the segmented control.
+ The pager. The pager will be placed above or below the segmented control depending on the segmentedControlPosition property.
  */
 @property (nonatomic, readonly) MXPagerView* pager;
 
 /**
  The padding from the top, left, right, and bottom of the segmentedControl
  */
-@property (nonatomic, assign) UIEdgeInsets segmentedControlEdgeInsets;
+@property (nonatomic) UIEdgeInsets segmentedControlEdgeInsets;
 
 /**
  Reloads everything from scratch. redisplays pages.
@@ -180,11 +227,82 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 - (void) reloadData;
 
 /**
- Scrolls through the container view until a page identified by index is at a particular location on the screen.
- 
- @param index       An index that identifies a page.
- @param animated    YES if you want to animate the change in position; NO if it should be immediate.
+ Scrolls the main contentView back to the top position
  */
-- (void) scrollToPageAtIndex:(NSInteger)index animated:(BOOL)animated;
+- (void) scrollToTopAnimated:(BOOL)animated;
 
 @end
+
+/**
+ MXSegmentedPager with parallax header. This category uses [MXParallaxHeader](http://cocoadocs.org/docsets/MXParallaxHeader) to set up a parallax header on top of a segmented-pager.
+ */
+@interface MXSegmentedPager (ParallaxHeader)
+
+/**
+ The parallax header. cf. [MXParallaxHeader](http://cocoadocs.org/docsets/MXParallaxHeader) for more details.
+ */
+@property (nonatomic, strong, readonly) MXParallaxHeader *parallaxHeader;
+
+/**
+ Allows bounces. Default YES.
+ */
+@property (nonatomic) BOOL bounces;
+
+/**
+ The progress block called when scroll is progressing.
+ */
+@property (nonatomic, strong, nullable) MXProgressBlock progressBlock DEPRECATED_MSG_ATTRIBUTE("Use the delegate method 'segmentedPager:didScrollWithParallaxHeader:' instead.");
+
+@end
+
+/**
+ While using MXSegmentedPager with Parallax header, your pages can adopt the MXPageDelegate protocol to control subview's scrolling effect.
+ */
+@protocol MXPageProtocol <NSObject>
+
+@optional
+/**
+ Asks the page if the segmented-pager should scroll with the view.
+ 
+ @param segmentedPager The segmented-pager. This is the object sending the message.
+ @param view           An instance of a sub view.
+ 
+ @return YES to allow segmented-pager and view to scroll together. The default implementation returns YES.
+ */
+- (BOOL) segmentedPager:(MXSegmentedPager *)segmentedPager shouldScrollWithView:(__kindof UIView*)view;
+
+@end
+
+#pragma mark VGParallaxHeader Backward compatibility
+
+#define VGPARALLAXHEADER_DEPRECATION DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader has been deleted from MXSegmentedPager, use MXParallaxHeader instead.")
+
+typedef NS_ENUM(NSInteger, VGParallaxHeaderMode) {
+    VGParallaxHeaderModeCenter = MXParallaxHeaderModeCenter,
+    VGParallaxHeaderModeFill = MXParallaxHeaderModeFill,
+    VGParallaxHeaderModeTop = MXParallaxHeaderModeTop,
+    VGParallaxHeaderModeTopFill = MXParallaxHeaderModeBottom,
+} VGPARALLAXHEADER_DEPRECATION;
+
+typedef NS_ENUM(NSInteger, VGParallaxHeaderStickyViewPosition) {
+    VGParallaxHeaderStickyViewPositionBottom = 0,
+    VGParallaxHeaderStickyViewPositionTop,
+} VGPARALLAXHEADER_DEPRECATION;
+
+@interface MXParallaxHeader (VGParallaxHeader)
+@property (nonatomic, assign, readwrite) VGParallaxHeaderStickyViewPosition stickyViewPosition VGPARALLAXHEADER_DEPRECATION;
+@property (nonatomic, strong, nullable, readwrite) NSLayoutConstraint *stickyViewHeightConstraint VGPARALLAXHEADER_DEPRECATION;
+@property (nonatomic, strong, nullable, readwrite) UIView *stickyView VGPARALLAXHEADER_DEPRECATION;
+@property (nonatomic, assign, readonly, getter=isInsideTableView) BOOL insideTableView VGPARALLAXHEADER_DEPRECATION;
+- (void)setStickyView:(nullable __kindof UIView *)stickyView withHeight:(CGFloat)height VGPARALLAXHEADER_DEPRECATION;
+@end
+
+@interface MXSegmentedPager (VGParallaxHeader)
+@property (nonatomic) CGFloat minimumHeaderHeight VGPARALLAXHEADER_DEPRECATION;
+- (void)setParallaxHeaderView:(__kindof UIView *)view
+                         mode:(VGParallaxHeaderMode)mode
+                       height:(CGFloat)height VGPARALLAXHEADER_DEPRECATION;
+- (void)updateParallaxHeaderViewHeight:(CGFloat)height VGPARALLAXHEADER_DEPRECATION;
+@end
+
+NS_ASSUME_NONNULL_END
