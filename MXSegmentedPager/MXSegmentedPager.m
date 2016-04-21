@@ -212,6 +212,9 @@
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didScrollWithParallaxHeader:)]) {
         [self.delegate segmentedPager:self didScrollWithParallaxHeader:scrollView.parallaxHeader];
     }
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didScrollWithParallaxHeader:andContentOffset:)]) {
+        [self.delegate segmentedPager:self didScrollWithParallaxHeader:scrollView.parallaxHeader andContentOffset:scrollView.contentOffset];
+    }
     
     if (self.progressBlock) {
         self.progressBlock(self.contentView.parallaxHeader.progress);

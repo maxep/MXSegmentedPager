@@ -165,6 +165,10 @@
     }
 }
 
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didScrollWithContentOffset:(CGPoint)contentOffset {
+    NSLog(@"offset: %@", NSStringFromCGPoint(contentOffset));
+}
+
 #pragma mark <MXSegmentedPagerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {

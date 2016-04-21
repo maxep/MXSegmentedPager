@@ -95,6 +95,14 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 - (void) segmentedPager:(MXSegmentedPager*)segmentedPager didScrollWithParallaxHeader:(MXParallaxHeader *)parallaxHeader;
 
 /**
+ Tells the delegate that the segmented pager has scrolled with the specify offset.
+ 
+ @param segmentedPager A segmented-pager object in which the scrolling occurred.
+ @param contentOffset The CGPoint of current offset.
+ */
+- (void) segmentedPager:(MXSegmentedPager*)segmentedPager didScrollWithParallaxHeader:(MXParallaxHeader *)parallaxHeader andContentOffset:(CGPoint)contentOffset;
+
+/**
  Tells the delegate when dragging ended with the parallax header.
  
  @param segmentedPager A segmented-pager object that finished scrolling the content view.

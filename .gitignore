@@ -29,6 +29,7 @@ DerivedData
 # Note: if you ignore the Pods directory, make sure to uncomment
 # `pod install` in .travis.yml
 #
-# Pods/
+Pods/
+Example/Pods/
 Example/MXSegmentedPager.xcworkspace
 Example-Swift/MXSegmentedPager-Swift.xcworkspace
