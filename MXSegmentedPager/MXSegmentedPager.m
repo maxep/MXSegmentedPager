@@ -105,7 +105,7 @@
     [self layoutPager];
 }
 
-- (void) layoutContentView {
+- (void)layoutContentView {
     CGRect frame = self.bounds;
     
     frame.origin = CGPointZero;
@@ -115,7 +115,7 @@
     self.contentView.contentInset = UIEdgeInsetsMake(self.contentView.parallaxHeader.height, 0, 0, 0);
 }
 
-- (void) layoutSegmentedControl {
+- (void)layoutSegmentedControl {
     CGRect frame = self.bounds;
     
     frame.origin.x = self.segmentedControlEdgeInsets.left;
@@ -136,7 +136,7 @@
     self.segmentedControl.frame = frame;
 }
 
-- (void) layoutPager {
+- (void)layoutPager {
     CGRect frame = self.bounds;
     
     frame.origin = CGPointZero;
@@ -191,7 +191,7 @@
     return _pager;
 }
 
-- (UIView*) selectedPage {
+- (UIView*)selectedPage {
     return self.pager.selectedPage;
 }
 
@@ -267,13 +267,13 @@
     return _count;
 }
 
-- (UIView*) pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
+- (UIView*)pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
     return [self.dataSource segmentedPager:self viewForPageAtIndex:index];
 }
 
 #pragma mark Private methods
 
-- (void) changedToIndex:(NSInteger)index {
+- (void)changedToIndex:(NSInteger)index {
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithIndex:)]) {
         [self.delegate segmentedPager:self didSelectViewWithIndex:index];
     }
