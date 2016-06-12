@@ -1,12 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'MXSegmentedPager', :exclusive => true do
+target 'MXSegmentedPager' do
   pod 'MXSegmentedPager', :path => '../'
   
-  pod 'M13ProgressSuite', '~> 1.2.7'
-  
-end
-
-target 'Tests', :exclusive => true do
-  pod 'MXSegmentedPager', :path => '../'
 end

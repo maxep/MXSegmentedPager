@@ -21,10 +21,9 @@
 // THE SOFTWARE.
 
 #import "MXRefreshHeaderView.h"
-#import "M13ProgressViewPie.h"
+#import "MXParallaxHeader.h"
 
-@interface MXRefreshHeaderView ()
-@property (weak, nonatomic) IBOutlet M13ProgressViewPie *progressPie;
+@interface MXRefreshHeaderView () <MXParallaxHeader>
 
 @end
 
@@ -35,37 +34,10 @@
     return [views firstObject];
 }
 
-- (void)drawRect:(CGRect)rect {
-    self.progressPie.primaryColor   = [UIColor orangeColor];
-    self.progressPie.secondaryColor = [UIColor orangeColor];
-}
+#pragma mark <MXParallaxHeader>
 
-#pragma mark Properties
-
-- (CGFloat)progress {
-    return self.progressPie.progress;
-}
-
-- (void)setProgress:(CGFloat)progress {
-    if (!self.indeterminate) {
-        // Show/Hide Progress
-        self.progressPie.alpha = progress;
-        
-        [self.progressPie setProgress:progress animated:NO];
-    }
-}
-
-- (BOOL)indeterminate {
-    return self.progressPie.indeterminate;
-}
-
-- (void)setIndeterminate:(BOOL)indeterminate {
-    if (indeterminate) {
-        self.progress = 0;
-    }
-
-    self.progressPie.alpha = (indeterminate)? 1 : self.progress;
-    self.progressPie.indeterminate = indeterminate;
+- (void)parallaxHeaderDidScroll:(MXParallaxHeader *)parallaxHeader {
+    // You can track the header progress here
 }
 
 @end

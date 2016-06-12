@@ -24,10 +24,6 @@
 
 @interface MXRefreshHeaderView : UIView
 
-@property (nonatomic) CGFloat progress;
-
-@property (nonatomic) BOOL indeterminate;
-
 + (instancetype)instantiateFromNib;
 
 @end
