@@ -273,36 +273,4 @@ typedef void (^MXProgressBlock) (CGFloat progress);
 
 @end
 
-#pragma mark VGParallaxHeader Backward compatibility
-
-#define VGPARALLAXHEADER_DEPRECATION DEPRECATED_MSG_ATTRIBUTE("VGParallaxHeader has been deleted from MXSegmentedPager, use MXParallaxHeader instead.")
-
-typedef NS_ENUM(NSInteger, VGParallaxHeaderMode) {
-    VGParallaxHeaderModeCenter = MXParallaxHeaderModeCenter,
-    VGParallaxHeaderModeFill = MXParallaxHeaderModeFill,
-    VGParallaxHeaderModeTop = MXParallaxHeaderModeTop,
-    VGParallaxHeaderModeTopFill = MXParallaxHeaderModeBottom,
-} VGPARALLAXHEADER_DEPRECATION;
-
-typedef NS_ENUM(NSInteger, VGParallaxHeaderStickyViewPosition) {
-    VGParallaxHeaderStickyViewPositionBottom = 0,
-    VGParallaxHeaderStickyViewPositionTop,
-} VGPARALLAXHEADER_DEPRECATION;
-
-@interface MXParallaxHeader (VGParallaxHeader)
-@property (nonatomic, assign, readwrite) VGParallaxHeaderStickyViewPosition stickyViewPosition VGPARALLAXHEADER_DEPRECATION;
-@property (nonatomic, strong, nullable, readwrite) NSLayoutConstraint *stickyViewHeightConstraint VGPARALLAXHEADER_DEPRECATION;
-@property (nonatomic, strong, nullable, readwrite) UIView *stickyView VGPARALLAXHEADER_DEPRECATION;
-@property (nonatomic, assign, readonly, getter=isInsideTableView) BOOL insideTableView VGPARALLAXHEADER_DEPRECATION;
-- (void)setStickyView:(nullable __kindof UIView *)stickyView withHeight:(CGFloat)height VGPARALLAXHEADER_DEPRECATION;
-@end
-
-@interface MXSegmentedPager (VGParallaxHeader)
-@property (nonatomic) CGFloat minimumHeaderHeight VGPARALLAXHEADER_DEPRECATION;
-- (void)setParallaxHeaderView:(__kindof UIView *)view
-                         mode:(VGParallaxHeaderMode)mode
-                       height:(CGFloat)height VGPARALLAXHEADER_DEPRECATION;
-- (void)updateParallaxHeaderViewHeight:(CGFloat)height VGPARALLAXHEADER_DEPRECATION;
-@end
-
 NS_ASSUME_NONNULL_END
