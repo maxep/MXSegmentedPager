@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0730"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C346EE2A9CE9F7E4E6E9C94563D40954"
-               BuildableName = "Pods_MXSegmentedPager_Swift.framework"
-               BlueprintName = "Pods-MXSegmentedPager-Swift"
+               BlueprintIdentifier = "AB5983EA001CF635B04348D3D4F0F5D5"
+               BuildableName = "MXSegmentedPager.framework"
+               BlueprintName = "MXSegmentedPager"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C346EE2A9CE9F7E4E6E9C94563D40954"
-            BuildableName = "Pods_MXSegmentedPager_Swift.framework"
-            BlueprintName = "Pods-MXSegmentedPager-Swift"
+            BlueprintIdentifier = "AB5983EA001CF635B04348D3D4F0F5D5"
+            BuildableName = "MXSegmentedPager.framework"
+            BlueprintName = "MXSegmentedPager"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
