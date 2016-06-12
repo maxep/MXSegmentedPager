@@ -19,11 +19,13 @@
 		D0C37C171C0EF93A006E93DD /* MXTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424781BBD3B7B0024BCC6 /* MXTextViewController.swift */; };
 		D0C37C181C0EF965006E93DD /* MXWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424761BBD38040024BCC6 /* MXWebViewController.swift */; };
 		ED3E8B7193012556BAF65DF2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3CF37E8A1A04E7046E68B /* Pods.framework */; };
+		FB6A7731C5557A184C29039E /* Pods_MXSegmentedPager_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAA05F9B144C6238CE7993B /* Pods_MXSegmentedPager_Swift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		10D945BD54A91922BEA9206E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		12A3CF37E8A1A04E7046E68B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3948C3CFAA55A265C29FD18F /* Pods-MXSegmentedPager-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MXSegmentedPager-Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-MXSegmentedPager-Swift/Pods-MXSegmentedPager-Swift.release.xcconfig"; sourceTree = "<group>"; };
 		D04700621BBD669F00C7426B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0A4245F1BBD33390024BCC6 /* MXSegmentedPager-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MXSegmentedPager-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A424621BBD33390024BCC6 /* MXAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAppDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +43,8 @@
 		D0C37C121C0EF8DE006E93DD /* MXSegmentedPager.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MXSegmentedPager.podspec; path = ../MXSegmentedPager.podspec; sourceTree = "<group>"; };
 		D0C37C131C0EF8DE006E93DD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		E1BB643A32A7B175F8C7A3CD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		ED45FE17550DCF3E080ABE86 /* Pods-MXSegmentedPager-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MXSegmentedPager-Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MXSegmentedPager-Swift/Pods-MXSegmentedPager-Swift.debug.xcconfig"; sourceTree = "<group>"; };
+		FAAA05F9B144C6238CE7993B /* Pods_MXSegmentedPager_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MXSegmentedPager_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED3E8B7193012556BAF65DF2 /* Pods.framework in Frameworks */,
+				FB6A7731C5557A184C29039E /* Pods_MXSegmentedPager_Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +65,8 @@
 			children = (
 				10D945BD54A91922BEA9206E /* Pods.debug.xcconfig */,
 				E1BB643A32A7B175F8C7A3CD /* Pods.release.xcconfig */,
+				ED45FE17550DCF3E080ABE86 /* Pods-MXSegmentedPager-Swift.debug.xcconfig */,
+				3948C3CFAA55A265C29FD18F /* Pods-MXSegmentedPager-Swift.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -68,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				12A3CF37E8A1A04E7046E68B /* Pods.framework */,
+				FAAA05F9B144C6238CE7993B /* Pods_MXSegmentedPager_Swift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -127,12 +135,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0A424711BBD33390024BCC6 /* Build configuration list for PBXNativeTarget "MXSegmentedPager-Swift" */;
 			buildPhases = (
-				0AFF65537D3677AB0BC5B3D8 /* Check Pods Manifest.lock */,
+				0AFF65537D3677AB0BC5B3D8 /* 📦 Check Pods Manifest.lock */,
 				D0A4245B1BBD33390024BCC6 /* Sources */,
 				D0A4245C1BBD33390024BCC6 /* Frameworks */,
 				D0A4245D1BBD33390024BCC6 /* Resources */,
-				2F577B3F6A98DDB74208FA96 /* Embed Pods Frameworks */,
-				44888A1FFA9A4AEABB1B84A7 /* Copy Pods Resources */,
+				2F577B3F6A98DDB74208FA96 /* 📦 Embed Pods Frameworks */,
+				44888A1FFA9A4AEABB1B84A7 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -192,14 +200,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0AFF65537D3677AB0BC5B3D8 /* Check Pods Manifest.lock */ = {
+		0AFF65537D3677AB0BC5B3D8 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,34 +215,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		2F577B3F6A98DDB74208FA96 /* Embed Pods Frameworks */ = {
+		2F577B3F6A98DDB74208FA96 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSegmentedPager-Swift/Pods-MXSegmentedPager-Swift-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		44888A1FFA9A4AEABB1B84A7 /* Copy Pods Resources */ = {
+		44888A1FFA9A4AEABB1B84A7 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSegmentedPager-Swift/Pods-MXSegmentedPager-Swift-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -352,7 +360,7 @@
 		};
 		D0A424721BBD33390024BCC6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10D945BD54A91922BEA9206E /* Pods.debug.xcconfig */;
+			baseConfigurationReference = ED45FE17550DCF3E080ABE86 /* Pods-MXSegmentedPager-Swift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "MXSegmentedPager-Swift/Info.plist";
@@ -364,7 +372,7 @@
 		};
 		D0A424731BBD33390024BCC6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E1BB643A32A7B175F8C7A3CD /* Pods.release.xcconfig */;
+			baseConfigurationReference = 3948C3CFAA55A265C29FD18F /* Pods-MXSegmentedPager-Swift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "MXSegmentedPager-Swift/Info.plist";
