@@ -23,7 +23,7 @@
 #import "MXSegmentedPagerController.h"
 
 @interface MXSegmentedPagerController () <MXPageSegueDelegate>
-
+@property (nonatomic, strong) NSMutableDictionary<NSString *, UIViewController *> *pageViewControllers;
 @end
 
 @implementation MXSegmentedPagerController {
@@ -41,11 +41,18 @@
 
 - (UIView *)segmentedPager {
     if (!_segmentedPager) {
-        _segmentedPager = [[MXSegmentedPager alloc] init];
+        _segmentedPager = [MXSegmentedPager new];
         _segmentedPager.delegate    = self;
         _segmentedPager.dataSource  = self;
     }
     return _segmentedPager;
+}
+
+- (NSMutableDictionary<NSString *,UIViewController *> *)pageViewControllers {
+    if (!_pageViewControllers) {
+        _pageViewControllers = [NSMutableDictionary new];
+    }
+    return _pageViewControllers;
 }
 
 #pragma mark <MXSegmentedPagerControllerDataSource>
@@ -78,16 +85,22 @@
 }
 
 - (UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index {
-    if (self.storyboard) {
+    NSString *key = [NSString stringWithFormat:@"%li", (long)index];;
+    
+    _pageViewController = self.pageViewControllers[key];
+    
+    if (!_pageViewController) {
+        NSString *identifier = [self segmentedPager:segmentedPager segueIdentifierForPageAtIndex:index];
         @try {
-            NSString *identifier = [self segmentedPager:segmentedPager segueIdentifierForPageAtIndex:index];
             _pageIndex = index;
             [self performSegueWithIdentifier:identifier sender:nil];
-            return _pageViewController;
+            self.pageViewControllers[key] = _pageViewController;
         }
-        @catch(NSException *exception) {}
+        @catch(NSException *exception) {
+            NSLog(@"Error while performing segue with identifier %@ from %@ : %@", identifier, self, exception);
+        }
     }
-    return nil;
+    return _pageViewController;
 }
 
 - (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index {
