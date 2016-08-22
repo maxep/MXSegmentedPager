@@ -149,22 +149,6 @@
     NSLog(@"%@ page selected.", title);
 }
 
-- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didScrollWithParallaxHeader:(MXParallaxHeader *)parallaxHeader {
-    
-    // Use the refresh control only on WebView
-    if (segmentedPager.pager.selectedPage == self.webView) {
-        
-        // progress > 1 means 'pulled down'
-        if (parallaxHeader.progress > 1) {
-            self.cover.indeterminate = YES;
-            [self.webView reload];
-        }
-        else {
-            self.cover.progress = parallaxHeader.progress;
-        }
-    }
-}
-
 #pragma mark <MXSegmentedPagerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
@@ -208,8 +192,7 @@
 #pragma mark <UIWebViewDelegate>
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    // Remove Refresh Controll when the web view did load
-    self.cover.indeterminate = NO;
+
 }
 
 @end

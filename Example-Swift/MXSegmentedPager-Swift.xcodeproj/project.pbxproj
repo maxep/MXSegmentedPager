@@ -18,7 +18,6 @@
 		D0A424811BBD41C70024BCC6 /* LongText.txt in Resources */ = {isa = PBXBuildFile; fileRef = D0A424801BBD41C70024BCC6 /* LongText.txt */; };
 		D0C37C171C0EF93A006E93DD /* MXTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424781BBD3B7B0024BCC6 /* MXTextViewController.swift */; };
 		D0C37C181C0EF965006E93DD /* MXWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A424761BBD38040024BCC6 /* MXWebViewController.swift */; };
-		ED3E8B7193012556BAF65DF2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A3CF37E8A1A04E7046E68B /* Pods.framework */; };
 		FB6A7731C5557A184C29039E /* Pods_MXSegmentedPager_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAA05F9B144C6238CE7993B /* Pods_MXSegmentedPager_Swift.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +51,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED3E8B7193012556BAF65DF2 /* Pods.framework in Frameworks */,
 				FB6A7731C5557A184C29039E /* Pods_MXSegmentedPager_Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,12 +133,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0A424711BBD33390024BCC6 /* Build configuration list for PBXNativeTarget "MXSegmentedPager-Swift" */;
 			buildPhases = (
-				0AFF65537D3677AB0BC5B3D8 /* 📦 Check Pods Manifest.lock */,
+				0AFF65537D3677AB0BC5B3D8 /* [CP] Check Pods Manifest.lock */,
 				D0A4245B1BBD33390024BCC6 /* Sources */,
 				D0A4245C1BBD33390024BCC6 /* Frameworks */,
 				D0A4245D1BBD33390024BCC6 /* Resources */,
-				2F577B3F6A98DDB74208FA96 /* 📦 Embed Pods Frameworks */,
-				44888A1FFA9A4AEABB1B84A7 /* 📦 Copy Pods Resources */,
+				2F577B3F6A98DDB74208FA96 /* [CP] Embed Pods Frameworks */,
+				44888A1FFA9A4AEABB1B84A7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -200,14 +198,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0AFF65537D3677AB0BC5B3D8 /* 📦 Check Pods Manifest.lock */ = {
+		0AFF65537D3677AB0BC5B3D8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,14 +213,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		2F577B3F6A98DDB74208FA96 /* 📦 Embed Pods Frameworks */ = {
+		2F577B3F6A98DDB74208FA96 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,14 +228,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSegmentedPager-Swift/Pods-MXSegmentedPager-Swift-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		44888A1FFA9A4AEABB1B84A7 /* 📦 Copy Pods Resources */ = {
+		44888A1FFA9A4AEABB1B84A7 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

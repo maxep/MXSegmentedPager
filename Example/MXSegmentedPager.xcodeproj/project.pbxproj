@@ -230,12 +230,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "MXSegmentedPager" */;
 			buildPhases = (
-				24A83FA2B26760923616AC8E /* 📦 Check Pods Manifest.lock */,
+				24A83FA2B26760923616AC8E /* [CP] Check Pods Manifest.lock */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				8B3F9A29D7DEF78F69E06406 /* 📦 Copy Pods Resources */,
-				840D341D107228642D5D9D8E /* 📦 Embed Pods Frameworks */,
+				8B3F9A29D7DEF78F69E06406 /* [CP] Copy Pods Resources */,
+				840D341D107228642D5D9D8E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -322,14 +322,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		24A83FA2B26760923616AC8E /* 📦 Check Pods Manifest.lock */ = {
+		24A83FA2B26760923616AC8E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,14 +337,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		840D341D107228642D5D9D8E /* 📦 Embed Pods Frameworks */ = {
+		840D341D107228642D5D9D8E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,14 +352,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MXSegmentedPager/Pods-MXSegmentedPager-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8B3F9A29D7DEF78F69E06406 /* 📦 Copy Pods Resources */ = {
+		8B3F9A29D7DEF78F69E06406 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
