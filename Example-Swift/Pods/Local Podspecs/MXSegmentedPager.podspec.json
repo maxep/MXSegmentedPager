@@ -1,6 +1,6 @@
 {
   "name": "MXSegmentedPager",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "summary": "Segmented pager view with Parallax header.",
   "description": "MXSegmentedPager combines [MXPagerView](https://github.com/maxep/MXPagerView) with [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl) to control the page selection.\nThe integration of [MXParallaxHeader](https://github.com/maxep/MXParallaxHeader) allows you to add an parallax header on top while keeping a reliable scrolling effect.",
   "homepage": "https://github.com/maxep/MXSegmentedPager",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/maxep/MXSegmentedPager.git",
-    "tag": "3.0.5"
+    "tag": "3.1.0"
   },
   "social_media_url": "https://twitter.com/MaximeEpain",
   "platforms": {

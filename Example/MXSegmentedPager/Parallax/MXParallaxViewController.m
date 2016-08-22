@@ -57,17 +57,6 @@
     self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
     
     self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
-    
-/*
-    //VGParallaxHeader backward compatibility
-    UILabel *stickyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    stickyLabel.backgroundColor = [UIColor colorWithRed:1 green:0.749 blue:0.976 alpha:1];
-    stickyLabel.textAlignment = NSTextAlignmentCenter;
-    stickyLabel.text = @"Say hello to Sticky View :)";
-    
-    self.segmentedPager.parallaxHeader.stickyViewPosition = VGParallaxHeaderStickyViewPositionBottom;
-    [self.segmentedPager.parallaxHeader setStickyView:stickyLabel withHeight:40];
- */
 }
 
 - (void)viewWillLayoutSubviews {
