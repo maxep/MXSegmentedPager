@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D0A4245E1BBD33390024BCC6"
-               BuildableName = "MXSegmentedPager-Swift.app"
-               BlueprintName = "MXSegmentedPager-Swift"
-               ReferencedContainer = "container:MXSegmentedPager-Swift.xcodeproj">
+               BlueprintIdentifier = "AB5983EA001CF635B04348D3D4F0F5D5"
+               BuildableName = "MXSegmentedPager.framework"
+               BlueprintName = "MXSegmentedPager"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D0A4245E1BBD33390024BCC6"
-            BuildableName = "MXSegmentedPager-Swift.app"
-            BlueprintName = "MXSegmentedPager-Swift"
-            ReferencedContainer = "container:MXSegmentedPager-Swift.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -51,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D0A4245E1BBD33390024BCC6"
-            BuildableName = "MXSegmentedPager-Swift.app"
-            BlueprintName = "MXSegmentedPager-Swift"
-            ReferencedContainer = "container:MXSegmentedPager-Swift.xcodeproj">
+            BlueprintIdentifier = "AB5983EA001CF635B04348D3D4F0F5D5"
+            BuildableName = "MXSegmentedPager.framework"
+            BlueprintName = "MXSegmentedPager"
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -70,16 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D0A4245E1BBD33390024BCC6"
-            BuildableName = "MXSegmentedPager-Swift.app"
-            BlueprintName = "MXSegmentedPager-Swift"
-            ReferencedContainer = "container:MXSegmentedPager-Swift.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
