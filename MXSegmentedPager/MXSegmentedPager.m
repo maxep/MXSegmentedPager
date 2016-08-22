@@ -28,8 +28,6 @@
 @property (nonatomic, strong) MXScrollView          *contentView;
 @property (nonatomic, strong) HMSegmentedControl    *segmentedControl;
 @property (nonatomic, strong) MXPagerView           *pager;
-
-@property (nonatomic, strong) MXProgressBlock progressBlock;
 @end
 
 @implementation MXSegmentedPager {
@@ -121,8 +119,7 @@
     
     if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
         frame.origin.y = self.segmentedControlEdgeInsets.top;
-    }
-    else {
+    } else {
         frame.origin.y  = frame.size.height;
         frame.origin.y -= _controlHeight;
         frame.origin.y -= self.segmentedControlEdgeInsets.bottom;
@@ -206,13 +203,8 @@
 #pragma mark <MXScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didScrollWithParallaxHeader:)]) {
         [self.delegate segmentedPager:self didScrollWithParallaxHeader:scrollView.parallaxHeader];
-    }
-    
-    if (self.progressBlock) {
-        self.progressBlock(self.contentView.parallaxHeader.progress);
     }
 }
 
