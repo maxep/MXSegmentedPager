@@ -145,9 +145,12 @@
         frame.origin.y += self.segmentedControlEdgeInsets.bottom;
     }
     
-    frame.size.height -= _controlHeight;
-    frame.size.height -= self.segmentedControlEdgeInsets.top;
-    frame.size.height -= self.segmentedControlEdgeInsets.bottom;
+    if (self.segmentedControlPosition != MXSegmentedControlPositionTopOver) {
+        frame.size.height -= _controlHeight;
+        frame.size.height -= self.segmentedControlEdgeInsets.top;
+        frame.size.height -= self.segmentedControlEdgeInsets.bottom;
+    }
+    
     frame.size.height -= self.contentView.parallaxHeader.minimumHeight;
     
     self.pager.frame = frame;
