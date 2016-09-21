@@ -117,12 +117,14 @@
     
     frame.origin.x = self.segmentedControlEdgeInsets.left;
     
-    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
-        frame.origin.y = self.segmentedControlEdgeInsets.top;
-    } else {
+    if (self.segmentedControlPosition == MXSegmentedControlPositionBottom) {
         frame.origin.y  = frame.size.height;
         frame.origin.y -= _controlHeight;
         frame.origin.y -= self.segmentedControlEdgeInsets.bottom;
+    } else if(self.segmentedControlPosition == MXSegmentedControlPositionTopOver) {
+        frame.origin.y = -_controlHeight;
+    } else {
+        frame.origin.y = self.segmentedControlEdgeInsets.top;
     }
 
     frame.size.width -= self.segmentedControlEdgeInsets.left;

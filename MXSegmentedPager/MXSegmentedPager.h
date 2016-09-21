@@ -34,7 +34,10 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
     /** Top position. */
     MXSegmentedControlPositionTop,
     /** Bottom position. */
-    MXSegmentedControlPositionBottom
+    MXSegmentedControlPositionBottom,
+    /** Top Over position. */
+    MXSegmentedControlPositionTopOver
+
 };
 
 @class MXSegmentedPager;
