@@ -45,17 +45,17 @@
     // Parallax Header
     self.segmentedPager.parallaxHeader.view = self.cover;
     self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderModeFill;
-    self.segmentedPager.parallaxHeader.height = 250;
-    self.segmentedPager.parallaxHeader.minimumHeight = 64 + 44;
+    self.segmentedPager.parallaxHeader.height = 150;
+    self.segmentedPager.parallaxHeader.minimumHeight = 20;
     
     // Segmented Control customization
     self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    self.segmentedPager.segmentedControl.backgroundColor = [UIColor clearColor];
+    self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
     self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};
     self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor orangeColor]};
     self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
     self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
-    self.segmentedPager.segmentedControlPosition = MXSegmentedControlPositionTopOver;
+    
     self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
 }
 
