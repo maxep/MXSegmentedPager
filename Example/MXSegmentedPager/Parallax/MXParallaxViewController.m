@@ -152,6 +152,22 @@
     return @[self.tableView, self.webView, self.textView, self.customView][index];
 }
 
+- (void) segmentedPager:(MXSegmentedPager *)segmentedPager didAppearViewWithIndex:(NSInteger)index {
+    NSLog(@"Did Appear %d",index);
+}
+
+- (void) segmentedPager:(MXSegmentedPager *)segmentedPager didDisappearViewWithIndex:(NSInteger)index{
+    NSLog(@"Did DisAppear %d",index);
+}
+
+- (void) segmentedPager:(MXSegmentedPager *)segmentedPager willDisppearViewWithIndex:(NSInteger)index {
+    NSLog(@"Will Disappear %d",index);
+}
+
+- (void) segmentedPager:(MXSegmentedPager *)segmentedPager willAppearViewWithIndex:(NSInteger)index {
+    NSLog(@"Will Appear %d",index);
+}
+
 #pragma mark <UITableViewDelegate>
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

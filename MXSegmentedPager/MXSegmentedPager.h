@@ -72,6 +72,14 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  */
 - (void)segmentedPager:(MXSegmentedPager *)segmentedPager didSelectViewWithIndex:(NSInteger)index;
 
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didAppearViewWithIndex:(NSInteger)index;
+
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager willAppearViewWithIndex:(NSInteger)index;
+
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didDisappearViewWithIndex:(NSInteger)index;
+
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager willDisppearViewWithIndex:(NSInteger)index;
+
 /**
  Asks the delegate to return the height of the segmented control in the segmented-pager.
  If the delegate doesn’t implement this method, 44 is assumed.
