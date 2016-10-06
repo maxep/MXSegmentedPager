@@ -1,6 +1,0 @@
-source 'https://github.com/CocoaPods/Specs.git'
-
-target 'MXSegmentedPager' do
-  pod 'MXSegmentedPager', :path => '../'
-  
-end

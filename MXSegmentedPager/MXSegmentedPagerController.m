@@ -22,8 +22,8 @@
 
 #import "MXSegmentedPagerController.h"
 
-@interface MXSegmentedPagerController () <MXPageSegueDelegate>
-@property (nonatomic, strong) NSMutableDictionary<NSString *, UIViewController *> *pageViewControllers;
+@interface MXSegmentedPagerController () <MXPageSegueSource>
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIViewController *> *pageViewControllers;
 @end
 
 @implementation MXSegmentedPagerController {
@@ -48,7 +48,7 @@
     return _segmentedPager;
 }
 
-- (NSMutableDictionary<NSString *,UIViewController *> *)pageViewControllers {
+- (NSMutableDictionary<NSNumber *,UIViewController *> *)pageViewControllers {
     if (!_pageViewControllers) {
         _pageViewControllers = [NSMutableDictionary new];
     }
@@ -74,33 +74,25 @@
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
     
     UIViewController *viewController = [self segmentedPager:segmentedPager viewControllerForPageAtIndex:index];
-    
-    if (viewController) {
-        [self addChildViewController:viewController];
-        [viewController didMoveToParentViewController:self];
-
-        return viewController.view;
-    }
-    return nil;
+    return viewController.view;
 }
 
 - (UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index {
-    NSString *key = [NSString stringWithFormat:@"%li", (long)index];;
+    UIViewController *pageViewController = self.pageViewControllers[@(index)];
     
-    _pageViewController = self.pageViewControllers[key];
-    
-    if (!_pageViewController) {
+    if (!pageViewController && self.storyboard) {
         NSString *identifier = [self segmentedPager:segmentedPager segueIdentifierForPageAtIndex:index];
         @try {
             _pageIndex = index;
+            
             [self performSegueWithIdentifier:identifier sender:nil];
-            self.pageViewControllers[key] = _pageViewController;
+            return self.pageViewControllers[@(index)];
         }
         @catch(NSException *exception) {
             NSLog(@"Error while performing segue with identifier %@ from %@ : %@", identifier, self, exception);
         }
     }
-    return _pageViewController;
+    return pageViewController;
 }
 
 - (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index {
@@ -113,8 +105,8 @@
     return _pageIndex;
 }
 
-- (void)setPageViewController:(UIViewController *)pageViewController {
-    _pageViewController = pageViewController;
+- (void)setPageViewController:(__kindof UIViewController *)pageViewController atIndex:(NSInteger)index{
+    self.pageViewControllers[@(index)] = pageViewController;
 }
 
 @end
