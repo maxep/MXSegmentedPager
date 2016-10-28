@@ -22,7 +22,7 @@
 
 #import "MXSegmentedPagerController.h"
 
-@interface MXSegmentedPagerController () <MXPageSegueDelegate>
+@interface MXSegmentedPagerController () <MXPagerViewDelegate>
 @property (nonatomic, strong) NSMutableDictionary<NSString *, UIViewController *> *pageViewControllers;
 @end
 
@@ -107,13 +107,13 @@
     return [NSString stringWithFormat:MXSeguePageIdentifierFormat, (long)index];
 }
 
-#pragma mark <MXPageSegueDelegate>
+#pragma mark <MXPagerViewDelegate>
 
 - (NSInteger)pageIndex {
     return _pageIndex;
 }
 
-- (void)setPageViewController:(UIViewController *)pageViewController {
+- (void)setPageViewController:(__kindof UIViewController *)pageViewController atIndex:(NSInteger)index {
     _pageViewController = pageViewController;
 }
 
