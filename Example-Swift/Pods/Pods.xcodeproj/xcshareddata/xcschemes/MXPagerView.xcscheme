@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AB5983EA001CF635B04348D3D4F0F5D5"
-               BuildableName = "MXSegmentedPager.framework"
-               BlueprintName = "MXSegmentedPager"
+               BlueprintIdentifier = "D079D9AA985DDABC43ED482FC2FB3E00"
+               BuildableName = "MXPagerView.framework"
+               BlueprintName = "MXPagerView"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AB5983EA001CF635B04348D3D4F0F5D5"
-            BuildableName = "MXSegmentedPager.framework"
-            BlueprintName = "MXSegmentedPager"
+            BlueprintIdentifier = "D079D9AA985DDABC43ED482FC2FB3E00"
+            BuildableName = "MXPagerView.framework"
+            BlueprintName = "MXPagerView"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

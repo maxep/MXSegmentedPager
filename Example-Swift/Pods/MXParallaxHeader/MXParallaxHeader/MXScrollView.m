@@ -57,11 +57,13 @@ static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
     return self;
 }
 
-- (void) initialize {
+- (void)initialize {
     super.delegate = self.delegateForwarder;
     self.showsVerticalScrollIndicator = NO;
     self.directionalLockEnabled = YES;
     self.bounces = YES;
+    
+    self.panGestureRecognizer.cancelsTouchesInView = NO;
     
     [self addObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset))
               options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
@@ -129,7 +131,7 @@ static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
 
 #pragma mark KVO
 
-- (void) addObserverToView:(UIScrollView *)scrollView {
+- (void)addObserverToView:(UIScrollView *)scrollView {
     [scrollView addObserver:self
            forKeyPath:NSStringFromSelector(@selector(contentOffset))
               options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
@@ -138,7 +140,7 @@ static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
     _lock = (scrollView.contentOffset.y > -scrollView.contentInset.top);
 }
 
-- (void) removeObserverFromView:(UIScrollView *)scrollView {
+- (void)removeObserverFromView:(UIScrollView *)scrollView {
     @try {
         [scrollView removeObserver:self
                   forKeyPath:NSStringFromSelector(@selector(contentOffset))
@@ -163,12 +165,12 @@ static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
             //Adjust self scroll offset when scroll down
             if (diff > 0 && _lock) {
                 [self scrollView:self setContentOffset:old];
-            }
-            else if (((self.contentOffset.y < -self.contentInset.top) && !self.bounces)) {
+                
+            } else if (self.contentOffset.y < -self.contentInset.top && !self.bounces) {
                 [self scrollView:self setContentOffset:CGPointMake(self.contentOffset.x, -self.contentInset.top)];
             }
-        }
-        else {
+            
+        } else {
             //Adjust the observed scrollview's content offset
             UIScrollView *scrollView = object;
             _lock = (scrollView.contentOffset.y > -scrollView.contentInset.top);
@@ -182,29 +184,28 @@ static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
                 [self scrollView:scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -scrollView.contentInset.top)];
             }
         }
-    }
-    else {
+    } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
 #pragma mark Scrolling views handlers
 
-- (void) addObservedView:(UIScrollView *)scrollView {
+- (void)addObservedView:(UIScrollView *)scrollView {
     if (![self.observedViews containsObject:scrollView]) {
         [self.observedViews addObject:scrollView];
         [self addObserverToView:scrollView];
     }
 }
 
-- (void) removeObservedViews {
+- (void)removeObservedViews {
     for (UIScrollView *scrollView in self.observedViews) {
         [self removeObserverFromView:scrollView];
     }
     [self.observedViews removeAllObjects];
 }
 
-- (void) scrollView:(UIScrollView*)scrollView setContentOffset:(CGPoint)offset {
+- (void)scrollView:(UIScrollView *)scrollView setContentOffset:(CGPoint)offset {
     _isObserving = NO;
     scrollView.contentOffset = offset;
     _isObserving = YES;
@@ -243,14 +244,14 @@ static void * const kMXScrollViewKVOContext = (void*)&kMXScrollViewKVOContext;
 #pragma mark <UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [(MXScrollView*)scrollView scrollViewDidScroll:scrollView];
+    [(MXScrollView *)scrollView scrollViewDidScroll:scrollView];
     if ([self.delegate respondsToSelector:_cmd]) {
         [self.delegate scrollViewDidScroll:scrollView];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [(MXScrollView*)scrollView scrollViewDidEndDecelerating:scrollView];
+    [(MXScrollView *)scrollView scrollViewDidEndDecelerating:scrollView];
     if ([self.delegate respondsToSelector:_cmd]) {
         [self.delegate scrollViewDidEndDecelerating:scrollView];
     }

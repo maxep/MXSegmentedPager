@@ -58,69 +58,14 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  */
 - (void)pagerView:(MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index;
 
-/**
- Tells the delegate that the pager is about to show the specified page.
- 
- @param pagerView A pager object informing the delegate about the impending move.
- @param page      The showing page.
- */
-- (void)pagerView:(MXPagerView *)pagerView willShowPage:(UIView *)page;
 
 /**
- Tells the delegate that the pager did show to a specified page.
- 
- @param pagerView A pager object informing the delegate about the impending move.
- @param page      The shown page.
- */
-- (void)pagerView:(MXPagerView *)pagerView didShowPage:(UIView *)page;
+ Tells the delegate when the user scrolls the pager view within the receiver.
+ The delegate typically implements this method to obtain the change in progress from pagerView.
 
-/**
- Tells the delegate that the pager is about to hide the specified page.
- 
- @param pagerView A pager object informing the delegate about the impending move.
- @param page      The hidding page.
+ @param pagerView The pager-view object in which the scrolling occurred.
  */
-- (void)pagerView:(MXPagerView *)pagerView willHidePage:(UIView *)page;
-
-/**
- Tells the delegate that the pager did hide to a specified page.
- 
- @param pagerView A pager object informing the delegate about the impending move.
- @param page      The hidden page.
- */
-- (void)pagerView:(MXPagerView *)pagerView didHidePage:(UIView *)page;
-
-/**
- Tells the delegate that the pager is about to load the specified page.
- 
- @param pagerView A pager object informing the delegate about the impending move.
- @param page      The loading page.
- */
-- (void)pagerView:(MXPagerView *)pagerView willLoadPage:(UIView *)page;
-
-/**
- Tells the delegate that the pager did load page.
- 
- @param pagerView A pager object informing the delegate about the impending move.
- @param page      The loaded page.
- */
-- (void)pagerView:(MXPagerView *)pagerView didLoadPage:(UIView *)page;
-
-/**
- Tells the delegate that the pager is about to unload the specified page.
- 
- @param pagerView A pager object informing the delegate about the impending move.
- @param page      The unloading page.
- */
-- (void)pagerView:(MXPagerView *)pagerView willUnloadPage:(UIView *)page;
-
-/**
- Tells the delegate that the pager did unload page.
- 
- @param pagerView A pager object informing the delegate about the impending move.
- @param page      The unloaded page.
- */
-- (void)pagerView:(MXPagerView *)pagerView didUnloadPage:(UIView *)page;
+- (void)pagerViewDidScroll:(MXPagerView *)pagerView;
 
 @end
 
@@ -136,7 +81,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 /**
  Asks the data source to return the number of pages in the pager.
  
- @param segmentedPager A pager object requesting this information.
+ @param pagerView object requesting this information.
  
  @return The number of pages in pager.
  */
@@ -145,12 +90,12 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 /**
  Asks the data source for a view to insert in a particular page of the pager.
  
- @param segmentedPager A pager object requesting the view.
+ @param pagerView object requesting the view.
  @param index          An index number identifying a page in segmented-pager.
  
  @return An object inheriting from UIView that the pager can use for the specified page.
  */
-- (nullable __kindof UIView*) pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index;
+- (nullable __kindof UIView *) pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index;
 
 @end
 
@@ -197,7 +142,12 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 /**
  Default YES. turn off any dragging temporarily
  */
-@property(nonatomic,getter=isScrollEnabled) BOOL scrollEnabled;
+@property (nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
+
+/**
+ The pager progress, from 0 to the number of page.
+ */
+@property (nonatomic, readonly) CGFloat progress;
 
 /**
  Reloads everything from scratch. redisplays pages.
@@ -215,7 +165,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 /**
  Gets a page at specific index.
  
- @param indexPath Index representing page.
+ @param index Index representing page.
  
  @return nil if page is not loaded or index is out of range.
  */

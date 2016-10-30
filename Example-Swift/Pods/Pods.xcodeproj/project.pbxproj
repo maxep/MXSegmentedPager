@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00EF1178D13A1E95006D565B706E93A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A0F49E57A8B818288883C04ED809A9 /* Foundation.framework */; };
 		0D88DEAC8F430AD4FCC6392CBC7E07CF /* MXParallaxHeader-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 54EB17CBD0FA443027656927A28BEDF9 /* MXParallaxHeader-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F83AD14CDEBD948303F4EFB9286D130 /* MXScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D365D6D16DDE010096A112B071C6C4E /* MXScrollViewController.m */; };
 		14B33F85A8ECBBB339E2F994E42587C1 /* MXSegmentedPager.h in Headers */ = {isa = PBXBuildFile; fileRef = 71892C39D785A8E9D9E7D2B79C2AA8B8 /* MXSegmentedPager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -14,14 +15,16 @@
 		2128CA4344ED3B856DAD902E6188ACE0 /* MXPagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A41580F1178C27873DD5541FEA79F9 /* MXPagerViewController.m */; };
 		290DE764D7F93262BD2613796AA51AE1 /* MXScrollViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A2BD5EFAE97F3C435A940AC7328ED32 /* MXScrollViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A02EF89AE10AB9E35900FD56568176B /* MXSegmentedPager-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F874039C2D7FC955C54C92D9EC4D5CE /* MXSegmentedPager-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2CEF847CE49769EFF13FCA8CC7F4F0DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A0F49E57A8B818288883C04ED809A9 /* Foundation.framework */; };
+		2D2321E5DECB5549AD8777817B6F96B8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A0F49E57A8B818288883C04ED809A9 /* Foundation.framework */; };
 		2EC3C77459E852C50B7F1976F59FDC62 /* MXPagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 650A5CD70508C6EE77EF02D930F251F1 /* MXPagerView.m */; };
+		3A620DCEA3882C7A627DA8620C10781B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A0F49E57A8B818288883C04ED809A9 /* Foundation.framework */; };
 		3CD95C06939AB4B3430D1FA7FE1BAFA9 /* MXPagerView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D0BDEF6B73A362D567F19EAD5031A7E /* MXPagerView.framework */; };
-		3DE1179B4E4C2D29CD154CA7F85D0C90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0800AEA30F936ABF82283685D0703DB4 /* Foundation.framework */; };
-		3F9155749A25D330CC3FF197AE883643 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0800AEA30F936ABF82283685D0703DB4 /* Foundation.framework */; };
 		5787CDF60A2AFB802B4CF0052A76026F /* MXPagerView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F28D1D869BE9F0EBB0DE334FB9B901B3 /* MXPagerView-dummy.m */; };
 		5B53308B63294BE46B3C05D3F69CE14D /* MXPagerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 73F09A9AE823E24F78BAD3BD7E4F44A2 /* MXPagerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		71175D90795ACA4DF791D63CC74847E2 /* MXSegmentedPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B483F7CCA594883895101DBD706E5E /* MXSegmentedPagerController.m */; };
 		7A0A98778C517AECE63DBB7D599958A3 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EF13B1C151DE9C2A36DDB4053ABC5532 /* HMSegmentedControl.m */; };
+		8A81249DCD95C2FC0C6AF38837425284 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FC6264C575B08F40ECE5E97581DE627 /* QuartzCore.framework */; };
 		8BB5EEC0F7FF87215A78291CA9EA9CFC /* MXParallaxHeader-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FF6839CEE7CA20B334BE5C5B2118432 /* MXParallaxHeader-dummy.m */; };
 		91E9BE6B1193FD78024F3C21D4BB7E21 /* MXSegmentedPager-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EF195EC6F07C0EF58894EF7E58965583 /* MXSegmentedPager-dummy.m */; };
 		A5A74AB6E35786719EF5D1348B5B9D0F /* MXScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90551BAC2A15B8DBFBEFEE068488CAF7 /* MXScrollView.m */; };
@@ -31,16 +34,13 @@
 		B7E2789A88B04FF9C997B76C49872119 /* MXSegmentedPager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5554489DB7A1FA11F7F9925888909249 /* MXSegmentedPager.m */; };
 		B84836F7FC874648BD77A9F291E8E149 /* HMSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C0371A13D9F6A3A5BBADADDC95D689C /* HMSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC56D9D67D700EDB23CAF47DD6EBC0EA /* HMSegmentedControl-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 41F20657898EC5CBBBC90538C850FD89 /* HMSegmentedControl-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C4C1F5A6316EA49BE062A1FDA25FD174 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0800AEA30F936ABF82283685D0703DB4 /* Foundation.framework */; };
-		CC5AC695B179E00BDA262C6D06895475 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0800AEA30F936ABF82283685D0703DB4 /* Foundation.framework */; };
 		CEC235B198206A3A8DEB192B5E71E74A /* MXPagerView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 80415D5F52E482404E0947C4DAE02926 /* MXPagerView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CF32252E1F7B5BC9C17B768320F4B5F5 /* MXParallaxHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3BD1D757B596BE93302E9785D5446D /* MXParallaxHeader.m */; };
-		D00DABBFEE83CEF0EF64463A0456B751 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0800AEA30F936ABF82283685D0703DB4 /* Foundation.framework */; };
 		D20697BE289D3C67CBA66CDDC4691F23 /* MXPagerView.h in Headers */ = {isa = PBXBuildFile; fileRef = 640EA221F616F246CAE281DC59CD0A5C /* MXPagerView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D337F78D9288A2A1ED5C81563EFE543A /* Pods-MXSegmentedPager-Swift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2DBC72124F13C4FE20A537D2A596D8 /* Pods-MXSegmentedPager-Swift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E1547FD9EAF9136FB40D41A4D017C600 /* MXSegmentedPagerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 118E4D528212584A7CF45614ABE2619D /* MXSegmentedPagerController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E480E624052C25325AAFA81D26F84AFE /* MXParallaxHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6CFE9A5FAB54FD10A70AB9FA8B95CC /* MXParallaxHeader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E8110EA7B3F260AAA92CE170FC6A0849 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4722DA46AB672AB3DE2C2FC53AEC2F2 /* QuartzCore.framework */; };
+		F561E0B59B427D9BFECA6B362FD59872 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A0F49E57A8B818288883C04ED809A9 /* Foundation.framework */; };
 		FDACB0EA3040F03A5ECA2ADBDFE24BC7 /* HMSegmentedControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3405E265A91A2A286CFC17B31885F5F8 /* HMSegmentedControl.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,11 +98,11 @@
 
 /* Begin PBXFileReference section */
 		06E8B2E2C97DD5A752BF0D2A121D5A2B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0800AEA30F936ABF82283685D0703DB4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		0CC99776578E1B3AE6FD9A1004051656 /* HMSegmentedControl.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = HMSegmentedControl.modulemap; sourceTree = "<group>"; };
 		118E4D528212584A7CF45614ABE2619D /* MXSegmentedPagerController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MXSegmentedPagerController.h; sourceTree = "<group>"; };
 		13B4513CB64B1D74E7D276703354D107 /* HMSegmentedControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HMSegmentedControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A8586D8B0080E5FF0F1F2707D1AB3E0 /* MXParallaxHeader-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MXParallaxHeader-prefix.pch"; sourceTree = "<group>"; };
+		1FC6264C575B08F40ECE5E97581DE627 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		2072202AFC3755A32DEB6B03AC7C02C3 /* HMSegmentedControl-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HMSegmentedControl-prefix.pch"; sourceTree = "<group>"; };
 		21CF3E001AF013F155BFB44841459DE1 /* HMSegmentedControl.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HMSegmentedControl.xcconfig; sourceTree = "<group>"; };
 		24496A26BB0CEF4436F6E46C829DFF1B /* HMSegmentedControl-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HMSegmentedControl-dummy.m"; sourceTree = "<group>"; };
@@ -136,6 +136,7 @@
 		9F04958201C2E686783187D7E88AD379 /* MXParallaxHeader.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = MXParallaxHeader.modulemap; sourceTree = "<group>"; };
 		A23388D1333463B596ADB9E3C61BA494 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A529A077BE732758BC2A2B820CF65FA5 /* MXPagerView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MXPagerView-prefix.pch"; sourceTree = "<group>"; };
+		A8A0F49E57A8B818288883C04ED809A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		AC03D2A8252246389A46394434CEBB0A /* MXSegmentedPager.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = MXSegmentedPager.modulemap; sourceTree = "<group>"; };
 		AD2A33C2C9DD75D5C3503921D80477E4 /* Pods-MXSegmentedPager-Swift-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MXSegmentedPager-Swift-acknowledgements.markdown"; sourceTree = "<group>"; };
 		B0E10BFA19BB4DE818ADC6B13AB47488 /* MXPagerView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = MXPagerView.modulemap; sourceTree = "<group>"; };
@@ -152,7 +153,6 @@
 		DC3DD33EDD55E74F32EAEC8F6E4C3D85 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE654F45C4B020AD88413FFD8358F4DE /* MXSegmentedPager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MXSegmentedPager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E032CE88B626C793CF885293D9F8907C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E4722DA46AB672AB3DE2C2FC53AEC2F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF13B1C151DE9C2A36DDB4053ABC5532 /* HMSegmentedControl.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HMSegmentedControl.m; path = HMSegmentedControl/HMSegmentedControl.m; sourceTree = "<group>"; };
 		EF195EC6F07C0EF58894EF7E58965583 /* MXSegmentedPager-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MXSegmentedPager-dummy.m"; sourceTree = "<group>"; };
 		F28D1D869BE9F0EBB0DE334FB9B901B3 /* MXPagerView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MXPagerView-dummy.m"; sourceTree = "<group>"; };
@@ -165,7 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F9155749A25D330CC3FF197AE883643 /* Foundation.framework in Frameworks */,
+				3A620DCEA3882C7A627DA8620C10781B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4C1F5A6316EA49BE062A1FDA25FD174 /* Foundation.framework in Frameworks */,
+				00EF1178D13A1E95006D565B706E93A3 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,7 +181,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D00DABBFEE83CEF0EF64463A0456B751 /* Foundation.framework in Frameworks */,
+				2D2321E5DECB5549AD8777817B6F96B8 /* Foundation.framework in Frameworks */,
 				FDACB0EA3040F03A5ECA2ADBDFE24BC7 /* HMSegmentedControl.framework in Frameworks */,
 				3CD95C06939AB4B3430D1FA7FE1BAFA9 /* MXPagerView.framework in Frameworks */,
 				A7FDB82B9A173B9CE1256771013F7768 /* MXParallaxHeader.framework in Frameworks */,
@@ -192,7 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC5AC695B179E00BDA262C6D06895475 /* Foundation.framework in Frameworks */,
+				2CEF847CE49769EFF13FCA8CC7F4F0DF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,14 +200,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DE1179B4E4C2D29CD154CA7F85D0C90 /* Foundation.framework in Frameworks */,
-				E8110EA7B3F260AAA92CE170FC6A0849 /* QuartzCore.framework in Frameworks */,
+				F561E0B59B427D9BFECA6B362FD59872 /* Foundation.framework in Frameworks */,
+				8A81249DCD95C2FC0C6AF38837425284 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		086230F2108E65F3F8E28754CF5BD769 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A8A0F49E57A8B818288883C04ED809A9 /* Foundation.framework */,
+				1FC6264C575B08F40ECE5E97581DE627 /* QuartzCore.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		10E4C4D3BE28DA27B0BE54C0EF2796D2 /* MXSegmentedPager */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,15 +248,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/MXParallaxHeader";
-			sourceTree = "<group>";
-		};
-		3A5C9FD3974ECEC0BA6F83A8083C9166 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				0800AEA30F936ABF82283685D0703DB4 /* Foundation.framework */,
-				E4722DA46AB672AB3DE2C2FC53AEC2F2 /* QuartzCore.framework */,
-			);
-			name = iOS;
 			sourceTree = "<group>";
 		};
 		57D3B80284EC7E5901F183DC280642A2 /* Support Files */ = {
@@ -292,7 +292,7 @@
 				3405E265A91A2A286CFC17B31885F5F8 /* HMSegmentedControl.framework */,
 				7D0BDEF6B73A362D567F19EAD5031A7E /* MXPagerView.framework */,
 				30A1A8708E18E9A9C8D9F9B92880CD92 /* MXParallaxHeader.framework */,
-				3A5C9FD3974ECEC0BA6F83A8083C9166 /* iOS */,
+				086230F2108E65F3F8E28754CF5BD769 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -682,7 +682,100 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		034014829C1E4434983CF3A690C12017 /* Debug */ = {
+		134C8437BC6305847D8FF6EB68677504 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32880FDE2BAFFEE0342CE83FEB3C344C /* MXSegmentedPager.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MXSegmentedPager/MXSegmentedPager-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MXSegmentedPager/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MXSegmentedPager/MXSegmentedPager.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = MXSegmentedPager;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3C68ADDFABD09CCD3011191EAC5980A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32880FDE2BAFFEE0342CE83FEB3C344C /* MXSegmentedPager.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MXSegmentedPager/MXSegmentedPager-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MXSegmentedPager/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MXSegmentedPager/MXSegmentedPager.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = MXSegmentedPager;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3E0D3562ED252ABEC86E2887637529D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55288FA0861E0EFA468DD826D5B0CA5D /* MXPagerView.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MXPagerView/MXPagerView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MXPagerView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MXPagerView/MXPagerView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = MXPagerView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		59B042A655B7C20CBAB90E385BF4E4C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -700,6 +793,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -719,78 +813,19 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
-		1B1AD43A31D020421A19A0386EDD3429 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 718B1790954A8EC5AE23E30A5736B684 /* Pods-MXSegmentedPager-Swift.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-MXSegmentedPager-Swift/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-MXSegmentedPager-Swift/Pods-MXSegmentedPager-Swift.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_MXSegmentedPager_Swift;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		2C26026165EDAC053778CF75115F9324 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 32880FDE2BAFFEE0342CE83FEB3C344C /* MXSegmentedPager.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MXSegmentedPager/MXSegmentedPager-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MXSegmentedPager/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MXSegmentedPager/MXSegmentedPager.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = MXSegmentedPager;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		36B01CC513D1344E2694EF6A09F80088 /* Debug */ = {
+		7A498321A04756AC2041409B0DE03B77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 55288FA0861E0EFA468DD826D5B0CA5D /* MXPagerView.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
@@ -815,156 +850,13 @@
 			};
 			name = Debug;
 		};
-		37C626CEFBF55D59F205D9886D67B26A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21CF3E001AF013F155BFB44841459DE1 /* HMSegmentedControl.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/HMSegmentedControl/HMSegmentedControl-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/HMSegmentedControl/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/HMSegmentedControl/HMSegmentedControl.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = HMSegmentedControl;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		4AF858F73C0F3D147BBE310DDE06AE6A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55288FA0861E0EFA468DD826D5B0CA5D /* MXPagerView.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MXPagerView/MXPagerView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MXPagerView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MXPagerView/MXPagerView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = MXPagerView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		6FE19A17131BC34427F952840EE8160D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C11EE5603C7136BF3F4A3000587A3A6 /* MXParallaxHeader.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MXParallaxHeader/MXParallaxHeader-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MXParallaxHeader/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MXParallaxHeader/MXParallaxHeader.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = MXParallaxHeader;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		7861595585918D1785EBD78A29E017F3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C11EE5603C7136BF3F4A3000587A3A6 /* MXParallaxHeader.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MXParallaxHeader/MXParallaxHeader-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MXParallaxHeader/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MXParallaxHeader/MXParallaxHeader.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = MXParallaxHeader;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		7EC07960F5341B6BD4F9D9F4B094E5B3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21CF3E001AF013F155BFB44841459DE1 /* HMSegmentedControl.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/HMSegmentedControl/HMSegmentedControl-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/HMSegmentedControl/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/HMSegmentedControl/HMSegmentedControl.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = HMSegmentedControl;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		A10F852516E22302439DF371E67AC544 /* Release */ = {
+		8CAE18FB5790D4717A9CAB2F3784E506 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D85D1D357B695594C88E5657E5451832 /* Pods-MXSegmentedPager-Swift.release.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -993,7 +885,38 @@
 			};
 			name = Release;
 		};
-		C7E474A03CAE21F1CB6046E7344C59BD /* Release */ = {
+		A816DEDD97677961A0E7B85B8F5FD966 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C11EE5603C7136BF3F4A3000587A3A6 /* MXParallaxHeader.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MXParallaxHeader/MXParallaxHeader-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MXParallaxHeader/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MXParallaxHeader/MXParallaxHeader.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = MXParallaxHeader;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B7324857C38B065FEB1EEE3105C2367A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1011,6 +934,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1025,17 +949,20 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		C82F6072689AFCB679A7981A30A0F014 /* Debug */ = {
+		BC19CEF3CE17D1DEDAE1907719180933 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 32880FDE2BAFFEE0342CE83FEB3C344C /* MXSegmentedPager.xcconfig */;
+			baseConfigurationReference = 718B1790954A8EC5AE23E30A5736B684 /* Pods-MXSegmentedPager-Swift.debug.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
@@ -1044,14 +971,111 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MXSegmentedPager/MXSegmentedPager-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MXSegmentedPager/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-MXSegmentedPager-Swift/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MXSegmentedPager-Swift/Pods-MXSegmentedPager-Swift.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MXSegmentedPager_Swift;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E05B8E9964DB6A12E1EFED9251751C71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C11EE5603C7136BF3F4A3000587A3A6 /* MXParallaxHeader.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MXParallaxHeader/MXParallaxHeader-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MXParallaxHeader/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MXSegmentedPager/MXSegmentedPager.modulemap";
+				MODULEMAP_FILE = "Target Support Files/MXParallaxHeader/MXParallaxHeader.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = MXParallaxHeader;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		EF6F7E7ED0D9E61C0A3315C310D1763D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21CF3E001AF013F155BFB44841459DE1 /* HMSegmentedControl.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/HMSegmentedControl/HMSegmentedControl-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HMSegmentedControl/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/HMSegmentedControl/HMSegmentedControl.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = HMSegmentedControl;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FBAEED529A24F3F8A2E08F97ECDD2BBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21CF3E001AF013F155BFB44841459DE1 /* HMSegmentedControl.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/HMSegmentedControl/HMSegmentedControl-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HMSegmentedControl/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/HMSegmentedControl/HMSegmentedControl.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = MXSegmentedPager;
+				PRODUCT_NAME = HMSegmentedControl;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1066,8 +1090,8 @@
 		065AA8D5905013510AF2B2D77D72E8DF /* Build configuration list for PBXNativeTarget "HMSegmentedControl" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				37C626CEFBF55D59F205D9886D67B26A /* Debug */,
-				7EC07960F5341B6BD4F9D9F4B094E5B3 /* Release */,
+				FBAEED529A24F3F8A2E08F97ECDD2BBD /* Debug */,
+				EF6F7E7ED0D9E61C0A3315C310D1763D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1075,8 +1099,8 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				034014829C1E4434983CF3A690C12017 /* Debug */,
-				C7E474A03CAE21F1CB6046E7344C59BD /* Release */,
+				59B042A655B7C20CBAB90E385BF4E4C7 /* Debug */,
+				B7324857C38B065FEB1EEE3105C2367A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1084,8 +1108,8 @@
 		36B0E422DD2071B78C01D5BB982DB49B /* Build configuration list for PBXNativeTarget "MXSegmentedPager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C82F6072689AFCB679A7981A30A0F014 /* Debug */,
-				2C26026165EDAC053778CF75115F9324 /* Release */,
+				134C8437BC6305847D8FF6EB68677504 /* Debug */,
+				3C68ADDFABD09CCD3011191EAC5980A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1093,8 +1117,8 @@
 		817BB0B4D37E8A5986D7C178B8F59F4D /* Build configuration list for PBXNativeTarget "MXParallaxHeader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6FE19A17131BC34427F952840EE8160D /* Debug */,
-				7861595585918D1785EBD78A29E017F3 /* Release */,
+				A816DEDD97677961A0E7B85B8F5FD966 /* Debug */,
+				E05B8E9964DB6A12E1EFED9251751C71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1102,8 +1126,8 @@
 		A025EC5B520576E03B7B9B8E6B32F164 /* Build configuration list for PBXNativeTarget "MXPagerView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				36B01CC513D1344E2694EF6A09F80088 /* Debug */,
-				4AF858F73C0F3D147BBE310DDE06AE6A /* Release */,
+				7A498321A04756AC2041409B0DE03B77 /* Debug */,
+				3E0D3562ED252ABEC86E2887637529D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1111,8 +1135,8 @@
 		DCFD323FBCF138A3E3E733AD201F6395 /* Build configuration list for PBXNativeTarget "Pods-MXSegmentedPager-Swift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1B1AD43A31D020421A19A0386EDD3429 /* Debug */,
-				A10F852516E22302439DF371E67AC544 /* Release */,
+				BC19CEF3CE17D1DEDAE1907719180933 /* Debug */,
+				8CAE18FB5790D4717A9CAB2F3784E506 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

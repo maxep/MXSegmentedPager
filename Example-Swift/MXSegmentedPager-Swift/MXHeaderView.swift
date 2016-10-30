@@ -25,7 +25,7 @@ import UIKit
 class MXHeaderView: UIView {
 
     class func instanceFromNib() -> UIView {
-        return UINib(nibName: "MXHeaderView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! UIView
+        return UINib(nibName: "MXHeaderView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! UIView
     }
     
     required init?(coder aDecoder: NSCoder) {

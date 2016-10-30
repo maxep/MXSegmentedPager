@@ -1,11 +1,11 @@
 PODS:
-  - HMSegmentedControl (1.5.2)
-  - MXPagerView (0.1.3)
-  - MXParallaxHeader (0.5.2)
+  - HMSegmentedControl (1.5.3)
+  - MXPagerView (0.1.4)
+  - MXParallaxHeader (0.6.0)
   - MXSegmentedPager (3.1.0):
-    - HMSegmentedControl (~> 1.5.2)
-    - MXPagerView (~> 0.1.3)
-    - MXParallaxHeader (~> 0.5.2)
+    - HMSegmentedControl (= 1.5.3)
+    - MXPagerView (= 0.1.4)
+    - MXParallaxHeader (= 0.6.0)
 
 DEPENDENCIES:
   - MXSegmentedPager (from `../`)
@@ -15,11 +15,11 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
-  MXPagerView: db0c020aeada6a0c704f18f8053468560e346982
-  MXParallaxHeader: 5070ba8e8af27ec793c0d32ae82cfd2318e59635
-  MXSegmentedPager: 70bee6e9aeb41205288407d896646165951b89a5
+  HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
+  MXPagerView: 8798126c2e629695474eb16cbe1a6da6e0b02915
+  MXParallaxHeader: 2997592b8349baf8557ae0e4346f6b17e141de39
+  MXSegmentedPager: f01d4107fd70520fcbc3c47e0888dec9e8ba8193
 
 PODFILE CHECKSUM: f09c3c3a8311ac940ddcc1093a63427287647150
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

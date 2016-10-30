@@ -70,7 +70,7 @@ The MXPagerView comes with a UIView category which exposed the reuse identifier 
 
 + Using MXPagerViewController in storyboard is super easy:
 
-![Demo](Example/MXPagerView.png)
+![Demo](Example-swift/MXPagerView.png)
 
 ## Installation
 

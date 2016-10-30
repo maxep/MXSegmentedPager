@@ -21,9 +21,8 @@
 // THE SOFTWARE.
 
 #import "MXRefreshHeaderView.h"
-#import "MXParallaxHeader.h"
 
-@interface MXRefreshHeaderView () <MXParallaxHeader>
+@interface MXRefreshHeaderView ()
 
 @end
 

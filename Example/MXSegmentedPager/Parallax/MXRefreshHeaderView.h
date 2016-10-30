@@ -21,8 +21,9 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "MXParallaxHeader.h"
 
-@interface MXRefreshHeaderView : UIView
+@interface MXRefreshHeaderView : UIView <MXParallaxHeaderDelegate>
 
 + (instancetype)instantiateFromNib;
 

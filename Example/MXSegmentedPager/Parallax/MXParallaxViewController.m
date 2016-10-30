@@ -44,6 +44,7 @@
     
     // Parallax Header
     self.segmentedPager.parallaxHeader.view = self.cover;
+    self.segmentedPager.parallaxHeader.delegate = self.cover;
     self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderModeFill;
     self.segmentedPager.parallaxHeader.height = 150;
     self.segmentedPager.parallaxHeader.minimumHeight = 20;

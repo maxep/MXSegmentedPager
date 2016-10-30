@@ -22,11 +22,11 @@
 
 #import "MXPagerViewController.h"
 
-@interface MXPagerViewController () <MXPageSegueDelegate>
+@interface MXPagerViewController () <MXPageSegueSource>
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIViewController *> *pageViewControllers;
 @end
 
 @implementation MXPagerViewController {
-    UIViewController *_pageViewController;
     NSInteger _pageIndex;
 }
 
@@ -47,15 +47,11 @@
     return _pagerView;
 }
 
-#pragma mark Private
-
-- (UIViewController *)controllerForPage:(UIView *)page {
-    for (UIViewController *child in self.childViewControllers) {
-        if (child.view == page) {
-            return child;
-        }
+- (NSMutableDictionary<NSNumber *,UIViewController *> *)pageViewControllers {
+    if (!_pageViewControllers) {
+        _pageViewControllers = [NSMutableDictionary dictionary];
     }
-    return nil;
+    return _pageViewControllers;
 }
 
 #pragma mark <MXPagerViewControllerDataSource>
@@ -66,84 +62,36 @@
 }
 
 - (UIView *)pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
-    
-    UIViewController *viewController = [self pagerView:pagerView viewControllerForPageAtIndex:index];
-    
-    if (viewController) {
-        [viewController willMoveToParentViewController:self];
-        [self addChildViewController:viewController];
-        return viewController.view;
-    }
-    return nil;
+    return [self pagerView:pagerView viewControllerForPageAtIndex:index].view;
 }
 
 - (UIViewController *)pagerView:(MXPagerView *)pagerView viewControllerForPageAtIndex:(NSInteger)index {
-    if (self.storyboard) {
+    UIViewController *pageViewController = self.pageViewControllers[@(index)];
+    
+    if (!pageViewController && self.storyboard) {
         @try {
-            NSString *identifier = [self pagerView:pagerView segueIdentifierForPageAtIndex:index];
             _pageIndex = index;
+            NSString *identifier = [self pagerView:pagerView segueIdentifierForPageAtIndex:index];
             [self performSegueWithIdentifier:identifier sender:nil];
-            return _pageViewController;
+            return self.pageViewControllers[@(index)];
         }
         @catch(NSException *exception) {}
     }
-    return nil;
+    return pageViewController;
 }
 
 - (NSString *)pagerView:(MXPagerView *)pagerView segueIdentifierForPageAtIndex:(NSInteger)index {
     return [NSString stringWithFormat:MXSeguePageIdentifierFormat, (long)index];
 }
 
-#pragma mark <MXPagerViewDelegate>
+#pragma mark <MXPageSegueSource>
 
-- (void)pagerView:(MXPagerView *)pagerView didLoadPage:(UIView *)page {
-    UIViewController *childViewController = [self controllerForPage:page];
-    [childViewController didMoveToParentViewController:self];
-}
-
-- (void)pagerView:(MXPagerView *)pagerView willUnloadPage:(UIView *)page {
-    UIViewController *childViewController = [self controllerForPage:page];
-    [childViewController willMoveToParentViewController:nil];
-}
-
-- (void)pagerView:(MXPagerView *)pagerView didUnloadPage:(UIView *)page {
-    UIViewController *childViewController = [self controllerForPage:page];
-    [childViewController removeFromParentViewController];
-    [childViewController didMoveToParentViewController:nil];
-}
-
-- (void)pagerView:(MXPagerView *)pagerView willShowPage:(UIView *)page {
-    UIViewController *childViewController = [self controllerForPage:page];
-    BOOL animated = pagerView.transitionStyle == MXPagerViewTransitionStyleScroll;
-    [childViewController viewWillAppear:animated];
-}
-
-- (void)pagerView:(MXPagerView *)pagerView didShowPage:(UIView *)page {
-    UIViewController *childViewController = [self controllerForPage:page];
-    BOOL animated = pagerView.transitionStyle == MXPagerViewTransitionStyleScroll;
-    [childViewController viewDidAppear:animated];
-}
-
-- (void)pagerView:(MXPagerView *)pagerView willHidePage:(UIView *)page {
-    UIViewController *childViewController = [self controllerForPage:page];
-    BOOL animated = pagerView.transitionStyle == MXPagerViewTransitionStyleScroll;
-    [childViewController viewWillDisappear:animated];
-}
-
-- (void)pagerView:(MXPagerView *)pagerView didHidePage:(UIView *)page {
-    UIViewController *childViewController = [self controllerForPage:page];
-    BOOL animated = pagerView.transitionStyle == MXPagerViewTransitionStyleScroll;
-    [childViewController viewDidDisappear:animated];
-}
-
-#pragma mark <MXPageSegueDelegate>
-
-- (NSInteger)pageIndex {
+-(NSInteger)pageIndex {
     return _pageIndex;
 }
 
-- (void)setPageViewController:(UIViewController*)pageViewController{
-    _pageViewController = pageViewController;
+- (void)setPageViewController:(__kindof UIViewController *)pageViewController atIndex:(NSInteger)index {
+    self.pageViewControllers[@(index)] = pageViewController;
 }
 
 @end
@@ -157,7 +105,7 @@ NSString * const MXSeguePageIdentifierFormat = @"mx_page_%ld";
 @dynamic sourceViewController;
 @synthesize pageIndex = _pageIndex;
 
-- (instancetype)initWithIdentifier:(nullable NSString *)identifier source:(UIViewController <MXPageSegueDelegate>*)source destination:(UIViewController *)destination {
+- (instancetype)initWithIdentifier:(nullable NSString *)identifier source:(UIViewController <MXPageSegueSource>*)source destination:(UIViewController *)destination {
     if (self = [super initWithIdentifier:identifier source:source destination:destination]) {
         
         if ([source respondsToSelector:@selector(pageIndex)]) {
@@ -168,9 +116,9 @@ NSString * const MXSeguePageIdentifierFormat = @"mx_page_%ld";
 }
 
 - (void)perform {
-    if ([self.sourceViewController respondsToSelector:@selector(setPageViewController:)]) {
-        self.sourceViewController.pageViewController = self.destinationViewController;
-    }
+    [self.sourceViewController willMoveToParentViewController:self.destinationViewController];
+    [self.sourceViewController setPageViewController:self.destinationViewController atIndex:self.pageIndex];
+    [self.sourceViewController didMoveToParentViewController:self.destinationViewController];
 }
 
 @end

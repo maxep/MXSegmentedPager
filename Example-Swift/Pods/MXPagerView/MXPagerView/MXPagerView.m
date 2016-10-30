@@ -77,28 +77,24 @@
     
     //Updates index and loads the current selected page
     if ( (_count = [self.dataSource numberOfPagesInPagerView:self]) > 0) {
-        if (_index >= _count)
-            _index = _count-1;
-        
+        _index = MIN(_index, _count - 1);
         [self loadPageAtIndex:_index];
         [self setNeedsLayout];
     }
 }
 
 - (void)showPageAtIndex:(NSInteger)index animated:(BOOL)animated {
-    if (index >= 0 && index < _count) {
+    if (index >= 0 && index < _count && index != _index) {
         //The tab behavior disable animation
         animated = (self.transitionStyle == MXPagerViewTransitionStyleTab)? NO : animated;
         
         [self willMovePageToIndex:index];
+        _index = index;
         [self setContentIndex:index animated:animated];
-        if(!animated) {
-            [self didMovePageToIndex:index];
-        }
     }
 }
 
-- (UIView *) pageAtIndex:(NSInteger)index {
+- (UIView *)pageAtIndex:(NSInteger)index {
     NSNumber *key = [NSNumber numberWithInteger:index];
     return self.pages[key];
 }
@@ -127,9 +123,8 @@
     UIView *page = nil;
     
     if ([builder isKindOfClass:[UINib class]]) {
-        page = [[(UINib*)builder instantiateWithOwner:nil options:nil] firstObject];
-    }
-    else if ([builder isKindOfClass:[NSString class]]) {
+        page = [[(UINib *)builder instantiateWithOwner:nil options:nil] firstObject];
+    } else if ([builder isKindOfClass:[NSString class]]) {
         page = [[NSClassFromString(builder) alloc] init];
     }
     
@@ -211,6 +206,13 @@
     return [self.pages allValues];
 }
 
+- (CGFloat)progress {
+    CGFloat position  = self.contentView.contentOffset.x;
+    CGFloat width     = self.contentView.bounds.size.width;
+    
+    return position / width;
+}
+
 #pragma mark Private Methods
 
 - (void)willMovePageToIndex:(NSInteger)index {
@@ -219,48 +221,22 @@
     if ([self.delegate respondsToSelector:@selector(pagerView:willMoveToPageAtIndex:)]) {
         [self.delegate pagerView:self willMoveToPageAtIndex:index];
     }
-    
-    if ([self.delegate respondsToSelector:@selector(pagerView:willHidePage:)]) {
-        UIView *page = [self pageAtIndex:_index];
-        [self.delegate pagerView:self willHidePage:page];
-    }
-    
-    if ([self.delegate respondsToSelector:@selector(pagerView:willShowPage:)]) {
-        UIView *page = [self pageAtIndex:index];
-        [self.delegate pagerView:self willShowPage:page];
-    }
 }
 
 - (void)didMovePageToIndex:(NSInteger)index {
-    if (index != _index) {
-        
-        if ([self.delegate respondsToSelector:@selector(pagerView:didHidePage:)]) {
-            UIView *page = [self pageAtIndex:_index];
-            [self.delegate pagerView:self didHidePage:page];
-        }
-        
-        _index = index;
-
-        if ([self.delegate respondsToSelector:@selector(pagerView:didMoveToPageAtIndex:)]) {
-            [self.delegate pagerView:self didMoveToPageAtIndex:index];
-        }
-        
-        if ([self.delegate respondsToSelector:@selector(pagerView:didShowPage:)]) {
-            UIView *page = [self pageAtIndex:index];
-            [self.delegate pagerView:self didShowPage:page];
-        }
-                
-        //The page did change, now unload hidden pages
-        [self unLoadHiddenPages];
+    if ([self.delegate respondsToSelector:@selector(pagerView:didMoveToPageAtIndex:)]) {
+        [self.delegate pagerView:self didMoveToPageAtIndex:index];
     }
+    
+    //The page did change, now unload hidden pages
+    [self unLoadHiddenPages];
 }
 
 - (void)loadPageAtIndex:(NSInteger)index {
     
     void(^loadPage)(NSInteger index) = ^(NSInteger index) {
-        NSNumber *key = [NSNumber numberWithInteger:index];
         
-        if (!self.pages[key] && (index >= 0) && (index < _count)) {
+        if (!self.pages[@(index)] && (index >= 0) && (index < _count)) {
             
             //Load page
             UIView *page = [self.dataSource pagerView:self viewForPageAtIndex:index];
@@ -270,20 +246,13 @@
             frame.origin = CGPointMake(self.contentView.bounds.size.width * index, 0);
             page.frame = frame;
             
-            if ([self.delegate respondsToSelector:@selector(pagerView:willLoadPage:)]) {
-                [self.delegate pagerView:self willLoadPage:page];
-            }
-            
             [self.contentView addSubview:page];
+            [self.contentView setNeedsLayout];
             
             //Save page
-            [self.pages setObject:page forKey:key];
+            self.pages[@(index)] = page;
             if (page.reuseIdentifier) {
                 [self.reuseQueue addObject:page];
-            }
-            
-            if ([self.delegate respondsToSelector:@selector(pagerView:didLoadPage:)]) {
-                [self.delegate pagerView:self didLoadPage:page];
             }
         }
     };
@@ -312,16 +281,8 @@
                 
                 UIView *page = self.pages[key];
                 
-                if ([self.delegate respondsToSelector:@selector(pagerView:willUnloadPage:)]) {
-                    [self.delegate pagerView:self willUnloadPage:page];
-                }
-                
                 [page removeFromSuperview];
                 [toUnLoad addObject:key];
-                
-                if ([self.delegate respondsToSelector:@selector(pagerView:didUnloadPage:)]) {
-                    [self.delegate pagerView:self didUnloadPage:page];
-                }
             }
         }
     }
@@ -331,18 +292,26 @@
 - (void)setContentIndex:(NSInteger)index animated:(BOOL)animated {
     CGFloat x = self.contentView.bounds.size.width * index;
     [self.contentView setContentOffset:CGPointMake(x, 0) animated:animated];
+    
+    if(!animated) {
+        [self didMovePageToIndex:index];
+    }
 }
 
 #pragma mark <UIScrollViewDelegate>
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([self.delegate respondsToSelector:@selector(pagerViewDidScroll:)]) {
+        [self.delegate pagerViewDidScroll:self];
+    }
+}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger position  = scrollView.contentOffset.x;
     NSInteger width     = scrollView.bounds.size.width;
     
-    NSInteger index = position / width;
-    if (index >= 0) {
-        [self didMovePageToIndex:index];
-    }
+    _index = position / width;
+    [self didMovePageToIndex:_index];
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
@@ -351,18 +320,11 @@
     NSInteger width     = scrollView.bounds.size.width;
     
     NSInteger index = position / width;
-    if (index >= 0) {
-        [self willMovePageToIndex:index];
-    }
+    [self willMovePageToIndex:index];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    NSInteger position  = scrollView.contentOffset.x;
-    NSInteger width     = scrollView.bounds.size.width;
-    
-    if (!(position % width)) {
-        [self didMovePageToIndex:(position / width)];
-    }
+    [self didMovePageToIndex:_index];
 }
 
 @end

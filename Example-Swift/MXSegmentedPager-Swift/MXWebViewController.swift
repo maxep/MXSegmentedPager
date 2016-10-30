@@ -29,8 +29,8 @@ class MXWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let url = NSURL(string: "http://nshipster.com/");
-        let request = NSURLRequest(URL: url!);
+        let url = URL(string: "http://nshipster.com/");
+        let request = URLRequest(url: url!);
         self.webView.loadRequest(request);
     }
 

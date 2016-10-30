@@ -29,9 +29,9 @@ class MXTextViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let filePath = NSBundle.mainBundle().pathForResource("LongText", ofType: "txt");
+        let filePath = Bundle.main.path(forResource: "LongText", ofType: "txt");
 
-        self.textView.text = try! String(contentsOfFile: filePath!, encoding: NSUTF8StringEncoding);
+        self.textView.text = try! String(contentsOfFile: filePath!, encoding: String.Encoding.utf8);
     }
 
     override func didReceiveMemoryWarning() {

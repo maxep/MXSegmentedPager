@@ -22,18 +22,16 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  The parallac header mode.
  */
 typedef NS_ENUM(NSInteger, MXParallaxHeaderMode) {
     /**
-     The option to center the content in the header’s bounds, keeping the proportions the same.
-     */
-    MXParallaxHeaderModeCenter = 0,
-    /**
      The option to scale the content to fill the size of the header. Some portion of the content may be clipped to fill the header’s bounds.
      */
-    MXParallaxHeaderModeFill,
+    MXParallaxHeaderModeFill = 0,
     /**
      The option to scale the content to fill the size of the header and aligned at the top in the header's bounds.
      */
@@ -43,10 +41,16 @@ typedef NS_ENUM(NSInteger, MXParallaxHeaderMode) {
      */
     MXParallaxHeaderModeTop,
     /**
+     The option to center the content in the header’s bounds, keeping the proportions the same.
+     */
+    MXParallaxHeaderModeCenter,
+    /**
      The option to center the content aligned at the bottom in the header’s bounds.
      */
     MXParallaxHeaderModeBottom
 };
+
+@protocol MXParallaxHeaderDelegate;
 
 /**
  The MXParallaxHeader class represents a parallax header for UIScrollView.
@@ -56,22 +60,27 @@ typedef NS_ENUM(NSInteger, MXParallaxHeaderMode) {
 /**
  The content view on top of the UIScrollView's content.
  */
-@property (nonatomic,strong,readonly,nonnull) UIView *contentView;
+@property (nonatomic,readonly) UIView *contentView;
+
+/**
+ Delegate instance that adopt the MXScrollViewDelegate.
+ */
+@property (nonatomic,weak,nullable) IBOutlet id<MXParallaxHeaderDelegate> delegate;
 
 /**
  The header's view.
  */
-@property (nonatomic,strong,nullable) UIView *view;
+@property (nonatomic,strong,nullable) IBOutlet UIView *view;
 
 /**
  The header's default height. 0 0 by default.
  */
-@property (nonatomic) CGFloat height;
+@property (nonatomic) IBInspectable CGFloat height;
 
 /**
  The header's minimum height while scrolling up. 0 by default.
  */
-@property (nonatomic) CGFloat minimumHeight;
+@property (nonatomic) IBInspectable CGFloat minimumHeight;
 
 /**
  The parallax header behavior mode.
@@ -85,11 +94,25 @@ typedef NS_ENUM(NSInteger, MXParallaxHeaderMode) {
 
 @end
 
-@protocol MXParallaxHeader <NSObject>
+/**
+ The method declared by the MXParallaxHeaderDelegate protocol allow the adopting delegate to respond to scoll from the MXParallaxHeader class.
+ */
+@protocol MXParallaxHeaderDelegate <NSObject>
 
 @optional
-- (void) parallaxHeaderDidScroll:(nonnull MXParallaxHeader *)parallaxHeader;
 
+/**
+ Tells the header view that the parallax header did scroll.
+ The view typically implements this method to obtain the change in progress from parallaxHeaderView.
+
+ @param parallaxHeader The parallax header that scrolls.
+ */
+- (void)parallaxHeaderDidScroll:(MXParallaxHeader *)parallaxHeader;
+
+@end
+
+DEPRECATED_MSG_ATTRIBUTE("Use the MXParallaxHeader's delegate property instead.")
+@protocol MXParallaxHeader <MXParallaxHeaderDelegate>
 @end
 
 /**
@@ -100,6 +123,8 @@ typedef NS_ENUM(NSInteger, MXParallaxHeaderMode) {
 /**
  The parallax header.
  */
-@property (nonatomic,strong,readonly,nonnull) MXParallaxHeader *parallaxHeader;
+@property (nonatomic, strong) IBOutlet MXParallaxHeader *parallaxHeader;
 
 @end
+
+NS_ASSUME_NONNULL_END
