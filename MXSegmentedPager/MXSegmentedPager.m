@@ -83,6 +83,11 @@
     [self.pager reloadData];
 }
 
+- (void)setSelectedSegmentAndPageIndex:(NSInteger)index animated:(BOOL)animated {
+    [self.segmentedControl setSelectedSegmentIndex:index animated:animated];
+    [self.pager showPageAtIndex:index animated:animated];
+}
+
 - (void)scrollToTopAnimated:(BOOL)animated {
     [_contentView setContentOffset:CGPointMake(0, -self.contentView.parallaxHeader.height)
                           animated:animated];

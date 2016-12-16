@@ -220,6 +220,14 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 - (void)reloadData;
 
 /**
+ Select a segment with the given index in the `segmentedControl` changing appropriately being shown page in `pager`.
+ 
+ @param index       An index that identifies segment on the HMSegmentedControl and page on the MXPagerView.
+ @param animated    YES if you want to animate the change in position; NO if it should be immediate. Animated parameter has no effect on pager with MXPagerViewBehaviorTab.
+ */
+- (void)setSelectedSegmentAndPageIndex:(NSInteger)index animated:(BOOL)animated;
+
+/**
  Scrolls the main contentView back to the top position
  */
 - (void)scrollToTopAnimated:(BOOL)animated;
