@@ -83,7 +83,7 @@
     [self.pager reloadData];
 }
 
-- (void)setSelectedSegmentAndPageIndex:(NSInteger)index animated:(BOOL)animated {
+- (void)setSelectedViewIndex:(NSInteger)index animated:(BOOL)animated {
     [self.segmentedControl setSelectedSegmentIndex:index animated:animated];
     [self.pager showPageAtIndex:index animated:animated];
 }
