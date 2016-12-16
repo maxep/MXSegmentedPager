@@ -84,7 +84,6 @@
 }
 
 - (void)setSelectedViewIndex:(NSInteger)index animated:(BOOL)animated {
-    [self.segmentedControl setSelectedSegmentIndex:index animated:animated];
     [self.pager showPageAtIndex:index animated:animated];
 }
 
