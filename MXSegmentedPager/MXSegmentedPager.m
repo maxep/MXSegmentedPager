@@ -33,6 +33,7 @@
 @implementation MXSegmentedPager {
     CGFloat     _controlHeight;
     NSInteger   _count;
+    NSInteger   _currentIndex;
 }
 
 - (void)reloadData {
@@ -79,6 +80,8 @@
     self.segmentedControl.sectionSelectedImages = selectedImages;
     self.segmentedControl.sectionTitles = titles;
     [self.segmentedControl setNeedsDisplay];
+ 
+    _currentIndex = 0;
     
     [self.pager reloadData];
 }
@@ -117,12 +120,14 @@
     
     frame.origin.x = self.segmentedControlEdgeInsets.left;
     
-    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
-        frame.origin.y = self.segmentedControlEdgeInsets.top;
-    } else {
+    if (self.segmentedControlPosition == MXSegmentedControlPositionBottom) {
         frame.origin.y  = frame.size.height;
         frame.origin.y -= _controlHeight;
         frame.origin.y -= self.segmentedControlEdgeInsets.bottom;
+    } else if(self.segmentedControlPosition == MXSegmentedControlPositionTopOver) {
+        frame.origin.y = -_controlHeight;
+    } else {
+        frame.origin.y = self.segmentedControlEdgeInsets.top;
     }
 
     frame.size.width -= self.segmentedControlEdgeInsets.left;
@@ -143,9 +148,12 @@
         frame.origin.y += self.segmentedControlEdgeInsets.bottom;
     }
     
-    frame.size.height -= _controlHeight;
-    frame.size.height -= self.segmentedControlEdgeInsets.top;
-    frame.size.height -= self.segmentedControlEdgeInsets.bottom;
+    if (self.segmentedControlPosition != MXSegmentedControlPositionTopOver) {
+        frame.size.height -= _controlHeight;
+        frame.size.height -= self.segmentedControlEdgeInsets.top;
+        frame.size.height -= self.segmentedControlEdgeInsets.bottom;
+    }
+    
     frame.size.height -= self.contentView.parallaxHeader.minimumHeight;
     
     self.pager.frame = frame;
@@ -239,12 +247,31 @@
 #pragma mark <MXPagerViewDelegate>
 
 - (void)pagerView:(MXPagerView *)pagerView willMoveToPageAtIndex:(NSInteger)index {
+    if (index == self.segmentedControl.selectedSegmentIndex){
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:willDisappearViewWithIndex:)]){
+        [self.delegate segmentedPager:self willDisppearViewWithIndex:self.segmentedControl.selectedSegmentIndex];
+    }
     [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:willAppearViewWithIndex:)]){
+        [self.delegate segmentedPager:self willAppearViewWithIndex:self.segmentedControl.selectedSegmentIndex];
+    }
 }
 
 - (void)pagerView:(MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index {
+    if (index == _currentIndex){
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didDisappearViewWithIndex:)]){
+        [self.delegate segmentedPager:self didDisappearViewWithIndex:_currentIndex];
+    }
     [self.segmentedControl setSelectedSegmentIndex:index animated:NO];
     [self changedToIndex:index];
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didAppearViewWithIndex:)]){
+        [self.delegate segmentedPager:self didAppearViewWithIndex:index];
+    }
+    
 }
 
 #pragma mark <MXPagerViewDataSource>
@@ -260,6 +287,7 @@
 #pragma mark Private methods
 
 - (void)changedToIndex:(NSInteger)index {
+    _currentIndex = index;
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithIndex:)]) {
         [self.delegate segmentedPager:self didSelectViewWithIndex:index];
     }
