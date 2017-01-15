@@ -12,7 +12,7 @@ MXSegmentedPager combines [MXPagerView](https://github.com/maxep/MXPagerView) wi
 
 |           Simple view         |           Parallax view         |
 |-------------------------------|---------------------------------|
-|![Demo](Example/SimpleView.gif)|![Demo](Example/ParallaxView.gif)|
+|![Demo](Example-objc/SimpleView.gif)|![Demo](Example-objc/ParallaxView.gif)|
 
 ## Highlight
 + [HMSegmentedControl](https://github.com/HeshamMegid/HMSegmentedControl) is a very customizable control.
