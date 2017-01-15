@@ -178,7 +178,7 @@
 
 - (MXPagerView *)pager {
     if (!_pager) {
-        _pager = [[MXPagerView alloc] init];
+        _pager = [[MXPagerView alloc] initWithFrame:self.frame];
         _pager.delegate = self;
         _pager.dataSource = self;
         [self.contentView addSubview:_pager];
