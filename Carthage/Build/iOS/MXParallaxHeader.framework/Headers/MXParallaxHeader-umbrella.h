@@ -1,4 +1,4 @@
-// MXRefreshHeaderView.m
+// MXParallaxHeader-umbrella.h
 //
 // Copyright (c) 2016 Maxime Epain
 //
@@ -20,25 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <UIKit/UIKit.h>
+
+//! Project version number for MXParallaxHeader.
+FOUNDATION_EXPORT double MXParallaxHeaderVersionNumber;
+
+//! Project version string for MXParallaxHeader.
+FOUNDATION_EXPORT const unsigned char MXParallaxHeaderVersionString[];
+
 #import <MXParallaxHeader/MXParallaxHeader.h>
+#import <MXParallaxHeader/MXScrollView.h>
+#import <MXParallaxHeader/MXScrollViewController.h>
 
-#import "MXRefreshHeaderView.h"
 
-@interface MXRefreshHeaderView () <MXParallaxHeader>
-
-@end
-
-@implementation MXRefreshHeaderView
-
-+ (instancetype)instantiateFromNib {
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self.class) owner:nil options:nil];
-    return [views firstObject];
-}
-
-#pragma mark <MXParallaxHeader>
-
-- (void)parallaxHeaderDidScroll:(MXParallaxHeader *)parallaxHeader {
-    // You can track the header progress here
-}
-
-@end

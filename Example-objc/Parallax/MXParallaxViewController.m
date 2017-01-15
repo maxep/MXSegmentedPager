@@ -23,11 +23,10 @@
 #import <MXSegmentedPager/MXSegmentedPager.h>
 
 #import "MXParallaxViewController.h"
-#import "MXRefreshHeaderView.h"
 #import "MXCustomView.h"
 
 @interface MXParallaxViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
-@property (nonatomic, strong) MXRefreshHeaderView * cover;
+@property (nonatomic, strong) UIView            * cover;
 @property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
 @property (nonatomic, strong) UITableView       * tableView;
 @property (nonatomic, strong) UIWebView         * webView;
@@ -70,10 +69,10 @@
 
 #pragma mark Properties
 
-- (MXRefreshHeaderView *)cover {
+- (UIView *)cover {
     if (!_cover) {
         // Set a cover on the top of the view
-        _cover = [MXRefreshHeaderView instantiateFromNib];
+        _cover = [self.nibBundle loadNibNamed:@"Cover" owner:nil options:nil].firstObject;
     }
     return _cover;
 }
@@ -137,6 +136,10 @@
 
 - (void)segmentedPager:(MXSegmentedPager *)segmentedPager didSelectViewWithTitle:(NSString *)title {
     NSLog(@"%@ page selected.", title);
+}
+
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didScrollWithParallaxHeader:(MXParallaxHeader *)parallaxHeader {
+    NSLog(@"progress %f", parallaxHeader.progress);
 }
 
 #pragma mark <MXSegmentedPagerDataSource>

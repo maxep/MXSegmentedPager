@@ -25,28 +25,25 @@ import MXSegmentedPager
 
 class MXViewController: MXSegmentedPagerController {
 
+    @IBOutlet var headerView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.segmentedPager.backgroundColor = UIColor.white
         
         // Parallax Header       
-        self.segmentedPager.parallaxHeader.view = MXHeaderView.instanceFromNib();
-        self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.fill;
-        self.segmentedPager.parallaxHeader.height = 150;
-        self.segmentedPager.parallaxHeader.minimumHeight = 20;
+        self.segmentedPager.parallaxHeader.view = headerView
+        self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.fill
+        self.segmentedPager.parallaxHeader.height = 150
+        self.segmentedPager.parallaxHeader.minimumHeight = 20
         
         // Segmented Control customization
-        self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocation.down;
+        self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocation.down
         self.segmentedPager.segmentedControl.backgroundColor = UIColor.white
-        self.segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.black];
+        self.segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.black]
         self.segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.orange]
         self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyle.fullWidthStripe
         self.segmentedPager.segmentedControl.selectionIndicatorColor = UIColor.orange
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
-            self.segmentedPager.reloadData()
-            self.segmentedPager.pager.showPage(at: 2, animated: false)
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,10 +52,10 @@ class MXViewController: MXSegmentedPagerController {
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Table", "Web", "Text"][index];
+        return ["Table", "Web", "Text"][index]
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didScrollWith parallaxHeader: MXParallaxHeader) {
-        NSLog("progress %f", parallaxHeader.progress)
+        print("progress \(parallaxHeader.progress)")
     }
 }

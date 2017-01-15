@@ -24,8 +24,7 @@
 		9C1633A61DA63F0E001FB468 /* MXExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633931DA63F0E001FB468 /* MXExampleViewController.m */; };
 		9C1633A71DA63F0E001FB468 /* MXCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633961DA63F0E001FB468 /* MXCustomView.m */; };
 		9C1633A81DA63F0E001FB468 /* MXParallaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633981DA63F0E001FB468 /* MXParallaxViewController.m */; };
-		9C1633A91DA63F0E001FB468 /* MXRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C16339A1DA63F0E001FB468 /* MXRefreshHeaderView.m */; };
-		9C1633AA1DA63F0E001FB468 /* MXRefreshHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C16339B1DA63F0E001FB468 /* MXRefreshHeaderView.xib */; };
+		9C1633AA1DA63F0E001FB468 /* Cover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C16339B1DA63F0E001FB468 /* Cover.xib */; };
 		9C1633AB1DA63F0E001FB468 /* MXSimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C16339E1DA63F0E001FB468 /* MXSimpleViewController.m */; };
 		9C1633AC1DA63F0E001FB468 /* MXNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633A11DA63F0E001FB468 /* MXNumberViewController.m */; };
 		9C1633AD1DA63F0E001FB468 /* MXStoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633A31DA63F0E001FB468 /* MXStoryboardViewController.m */; };
@@ -42,7 +41,6 @@
 		9C1633CC1DA64676001FB468 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C1633CA1DA64676001FB468 /* LaunchScreen.storyboard */; };
 		9C1633D81DA646B1001FB468 /* LongText.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C1633D11DA646B1001FB468 /* LongText.txt */; };
 		9C1633D91DA646B2001FB468 /* MXAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633D21DA646B1001FB468 /* MXAppDelegate.swift */; };
-		9C1633DA1DA646B2001FB468 /* MXHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633D31DA646B1001FB468 /* MXHeaderView.swift */; };
 		9C1633DB1DA646B2001FB468 /* MXTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633D41DA646B1001FB468 /* MXTableViewController.swift */; };
 		9C1633DC1DA646B2001FB468 /* MXTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633D51DA646B1001FB468 /* MXTextViewController.swift */; };
 		9C1633DD1DA646B2001FB468 /* MXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1633D61DA646B1001FB468 /* MXViewController.swift */; };
@@ -55,7 +53,6 @@
 		9C1633E61DA646CA001FB468 /* MXPagerView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1633591DA58D25001FB468 /* MXPagerView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C1633E71DA646CA001FB468 /* MXParallaxHeader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C16335A1DA58D25001FB468 /* MXParallaxHeader.framework */; };
 		9C1633E81DA646CA001FB468 /* MXParallaxHeader.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C16335A1DA58D25001FB468 /* MXParallaxHeader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9C1633EC1DA64758001FB468 /* MXHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C1633EA1DA64758001FB468 /* MXHeaderView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,9 +129,7 @@
 		9C1633961DA63F0E001FB468 /* MXCustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXCustomView.m; sourceTree = "<group>"; };
 		9C1633971DA63F0E001FB468 /* MXParallaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXParallaxViewController.h; sourceTree = "<group>"; };
 		9C1633981DA63F0E001FB468 /* MXParallaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXParallaxViewController.m; sourceTree = "<group>"; };
-		9C1633991DA63F0E001FB468 /* MXRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRefreshHeaderView.h; sourceTree = "<group>"; };
-		9C16339A1DA63F0E001FB468 /* MXRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRefreshHeaderView.m; sourceTree = "<group>"; };
-		9C16339B1DA63F0E001FB468 /* MXRefreshHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MXRefreshHeaderView.xib; sourceTree = "<group>"; };
+		9C16339B1DA63F0E001FB468 /* Cover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Cover.xib; sourceTree = "<group>"; };
 		9C16339D1DA63F0E001FB468 /* MXSimpleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSimpleViewController.h; sourceTree = "<group>"; };
 		9C16339E1DA63F0E001FB468 /* MXSimpleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSimpleViewController.m; sourceTree = "<group>"; };
 		9C1633A01DA63F0E001FB468 /* MXNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXNumberViewController.h; sourceTree = "<group>"; };
@@ -148,12 +143,10 @@
 		9C1633CD1DA64676001FB468 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C1633D11DA646B1001FB468 /* LongText.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongText.txt; sourceTree = "<group>"; };
 		9C1633D21DA646B1001FB468 /* MXAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXAppDelegate.swift; sourceTree = "<group>"; };
-		9C1633D31DA646B1001FB468 /* MXHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXHeaderView.swift; sourceTree = "<group>"; };
 		9C1633D41DA646B1001FB468 /* MXTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXTableViewController.swift; sourceTree = "<group>"; };
 		9C1633D51DA646B1001FB468 /* MXTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXTextViewController.swift; sourceTree = "<group>"; };
 		9C1633D61DA646B1001FB468 /* MXViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXViewController.swift; sourceTree = "<group>"; };
 		9C1633D71DA646B1001FB468 /* MXWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXWebViewController.swift; sourceTree = "<group>"; };
-		9C1633EB1DA64758001FB468 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MXHeaderView.xib; sourceTree = "<group>"; };
 		9CCDC69B1DA6546E0024337A /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		9CCDC69C1DA6546E0024337A /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9CCDC69D1DA6546E0024337A /* MXSegmentedPager.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = MXSegmentedPager.podspec; sourceTree = "<group>"; };
@@ -258,8 +251,8 @@
 				9C1633921DA63F0E001FB468 /* MXExampleViewController.h */,
 				9C1633931DA63F0E001FB468 /* MXExampleViewController.m */,
 				9C16338F1DA63F0E001FB468 /* LongText.txt */,
-				9C1633941DA63F0E001FB468 /* Parallax */,
 				9C16339C1DA63F0E001FB468 /* Simple */,
+				9C1633941DA63F0E001FB468 /* Parallax */,
 				9C16339F1DA63F0E001FB468 /* Storyboard */,
 				9C16336D1DA5AC9C001FB468 /* Main.storyboard */,
 				9C1633701DA5AC9C001FB468 /* Assets.xcassets */,
@@ -285,9 +278,7 @@
 				9C1633961DA63F0E001FB468 /* MXCustomView.m */,
 				9C1633971DA63F0E001FB468 /* MXParallaxViewController.h */,
 				9C1633981DA63F0E001FB468 /* MXParallaxViewController.m */,
-				9C1633991DA63F0E001FB468 /* MXRefreshHeaderView.h */,
-				9C16339A1DA63F0E001FB468 /* MXRefreshHeaderView.m */,
-				9C16339B1DA63F0E001FB468 /* MXRefreshHeaderView.xib */,
+				9C16339B1DA63F0E001FB468 /* Cover.xib */,
 			);
 			path = Parallax;
 			sourceTree = "<group>";
@@ -316,14 +307,12 @@
 			isa = PBXGroup;
 			children = (
 				9C1633D21DA646B1001FB468 /* MXAppDelegate.swift */,
-				9C1633D31DA646B1001FB468 /* MXHeaderView.swift */,
-				9C1633D41DA646B1001FB468 /* MXTableViewController.swift */,
-				9C1633D51DA646B1001FB468 /* MXTextViewController.swift */,
 				9C1633D61DA646B1001FB468 /* MXViewController.swift */,
+				9C1633D41DA646B1001FB468 /* MXTableViewController.swift */,
 				9C1633D71DA646B1001FB468 /* MXWebViewController.swift */,
+				9C1633D51DA646B1001FB468 /* MXTextViewController.swift */,
 				9C1633D11DA646B1001FB468 /* LongText.txt */,
 				9C1633C51DA64676001FB468 /* Main.storyboard */,
-				9C1633EA1DA64758001FB468 /* MXHeaderView.xib */,
 				9C1633C81DA64676001FB468 /* Assets.xcassets */,
 				9C1633CA1DA64676001FB468 /* LaunchScreen.storyboard */,
 				9C1633CD1DA64676001FB468 /* Info.plist */,
@@ -422,17 +411,19 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = maxep;
 				TargetAttributes = {
 					9C1632C21DA56C54001FB468 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = C75GEDTP26;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					9C1633611DA5AC9C001FB468 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = C75GEDTP26;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					9C1633BE1DA64676001FB468 = {
@@ -476,7 +467,7 @@
 			files = (
 				9C1633741DA5AC9C001FB468 /* LaunchScreen.storyboard in Resources */,
 				9C1633711DA5AC9C001FB468 /* Assets.xcassets in Resources */,
-				9C1633AA1DA63F0E001FB468 /* MXRefreshHeaderView.xib in Resources */,
+				9C1633AA1DA63F0E001FB468 /* Cover.xib in Resources */,
 				9C16336F1DA5AC9C001FB468 /* Main.storyboard in Resources */,
 				9C1633A41DA63F0E001FB468 /* LongText.txt in Resources */,
 			);
@@ -490,7 +481,6 @@
 				9C1633C91DA64676001FB468 /* Assets.xcassets in Resources */,
 				9C1633C71DA64676001FB468 /* Main.storyboard in Resources */,
 				9C1633D81DA646B1001FB468 /* LongText.txt in Resources */,
-				9C1633EC1DA64758001FB468 /* MXHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,7 +504,6 @@
 				9C1633A81DA63F0E001FB468 /* MXParallaxViewController.m in Sources */,
 				9C1633A71DA63F0E001FB468 /* MXCustomView.m in Sources */,
 				9C1633AD1DA63F0E001FB468 /* MXStoryboardViewController.m in Sources */,
-				9C1633A91DA63F0E001FB468 /* MXRefreshHeaderView.m in Sources */,
 				9C1633661DA5AC9C001FB468 /* main.m in Sources */,
 				9C1633A61DA63F0E001FB468 /* MXExampleViewController.m in Sources */,
 				9C1633AB1DA63F0E001FB468 /* MXSimpleViewController.m in Sources */,
@@ -529,7 +518,6 @@
 				9C1633D91DA646B2001FB468 /* MXAppDelegate.swift in Sources */,
 				9C1633DD1DA646B2001FB468 /* MXViewController.swift in Sources */,
 				9C1633DC1DA646B2001FB468 /* MXTextViewController.swift in Sources */,
-				9C1633DA1DA646B2001FB468 /* MXHeaderView.swift in Sources */,
 				9C1633DB1DA646B2001FB468 /* MXTableViewController.swift in Sources */,
 				9C1633DE1DA646B2001FB468 /* MXWebViewController.swift in Sources */,
 			);
@@ -583,14 +571,6 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		9C1633EA1DA64758001FB468 /* MXHeaderView.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9C1633EB1DA64758001FB468 /* Base */,
-			);
-			name = MXHeaderView.xib;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -612,6 +592,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -663,6 +644,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -683,6 +665,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -693,6 +676,7 @@
 		9C1632CC1DA56C54001FB468 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = C75GEDTP26;
@@ -710,12 +694,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fr.maxep.MXSegmentedPager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		9C1632CD1DA56C54001FB468 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = C75GEDTP26;
@@ -733,6 +720,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fr.maxep.MXSegmentedPager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -740,6 +728,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = C75GEDTP26;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -749,6 +738,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.maxep.MXSegmentedPager-objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -756,6 +748,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = C75GEDTP26;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -765,6 +758,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.maxep.MXSegmentedPager-objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

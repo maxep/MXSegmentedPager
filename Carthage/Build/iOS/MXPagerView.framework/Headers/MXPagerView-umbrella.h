@@ -1,4 +1,4 @@
-// MXRefreshHeaderView.h
+// MXPagerView.h
 //
 // Copyright (c) 2016 Maxime Epain
 //
@@ -22,8 +22,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MXRefreshHeaderView : UIView
+//! Project version number for MXPagerView.
+FOUNDATION_EXPORT double MXPagerViewVersionNumber;
 
-+ (instancetype)instantiateFromNib;
+//! Project version string for MXPagerView.
+FOUNDATION_EXPORT const unsigned char MXPagerViewVersionString[];
 
-@end
+#import <MXPagerView/MXPagerView.h>
+#import <MXPagerView/MXPagerViewController.h>
+
+

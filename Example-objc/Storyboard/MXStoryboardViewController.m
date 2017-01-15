@@ -8,7 +8,10 @@
 
 #import "MXStoryboardViewController.h"
 #import "MXNumberViewController.h"
-#import "MXRefreshHeaderView.h"
+
+@interface MXStoryboardViewController ()
+@property (strong, nonatomic) IBOutlet UIView *headerView;
+@end
 
 @implementation MXStoryboardViewController
 
@@ -17,7 +20,7 @@
     self.view.backgroundColor = UIColor.whiteColor;
     
     // Parallax Header
-    self.segmentedPager.parallaxHeader.view = [MXRefreshHeaderView instantiateFromNib];
+    self.segmentedPager.parallaxHeader.view = self.headerView;
     self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderModeFill;
     self.segmentedPager.parallaxHeader.height = 150;
     self.segmentedPager.parallaxHeader.minimumHeight = 20;

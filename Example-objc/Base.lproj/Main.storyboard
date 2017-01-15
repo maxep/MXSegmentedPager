@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zG1-ke-aR2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zG1-ke-aR2">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -33,22 +36,30 @@
         <scene sceneID="YKD-H8-z4l">
             <objects>
                 <viewController id="Tsi-jy-cep" customClass="MXStoryboardViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="m12-l2-q1v"/>
-                        <viewControllerLayoutGuide type="bottom" id="5dr-IG-PjX"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="XHb-5i-z3K">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
                     <connections>
+                        <outlet property="headerView" destination="kHC-Ai-wEv" id="8zp-z3-J6b"/>
                         <segue destination="WSd-B9-XCE" kind="custom" identifier="number" customClass="MXPageSegue" id="yfJ-sr-oYx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vfO-lF-C8R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="kHC-Ai-wEv">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="192"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="success-baby" translatesAutoresizingMaskIntoConstraints="NO" id="1Px-wf-ykx" userLabel="Image">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="192"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="1Px-wf-ykx" firstAttribute="top" secondItem="kHC-Ai-wEv" secondAttribute="top" id="1nV-sy-riN"/>
+                        <constraint firstItem="1Px-wf-ykx" firstAttribute="leading" secondItem="kHC-Ai-wEv" secondAttribute="leading" id="6Ni-P7-i2z"/>
+                        <constraint firstAttribute="bottom" secondItem="1Px-wf-ykx" secondAttribute="bottom" id="ldr-DJ-I5J"/>
+                        <constraint firstAttribute="trailing" secondItem="1Px-wf-ykx" secondAttribute="trailing" id="nwd-pF-VJd"/>
+                    </constraints>
+                </view>
             </objects>
-            <point key="canvasLocation" x="1148" y="1024"/>
+            <point key="canvasLocation" x="1148" y="1236"/>
         </scene>
         <!--Number View Controller-->
         <scene sceneID="OJz-Zf-mOq">
@@ -63,6 +74,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8eW-gp-g0p">
+                                <rect key="frame" x="156.5" y="323.5" width="62" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -80,7 +92,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QYd-g4-DQF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1893" y="1024"/>
+            <point key="canvasLocation" x="1921" y="1236"/>
         </scene>
         <!--Parallax View Controller-->
         <scene sceneID="c4r-nS-dpp">
@@ -119,4 +131,7 @@
             <point key="canvasLocation" x="1148" y="-357"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="success-baby" width="640" height="425"/>
+    </resources>
 </document>
