@@ -1,0 +1,179 @@
+BCSymbolMap Version: 2.0
+-[HMScrollView touchesBegan:withEvent:]
+-[HMScrollView touchesMoved:withEvent:]
+-[HMScrollView touchesEnded:withEvent:]
+-[HMSegmentedControl initWithCoder:]
+-[HMSegmentedControl initWithFrame:]
+-[HMSegmentedControl initWithSectionTitles:]
+-[HMSegmentedControl initWithSectionImages:sectionSelectedImages:]
+-[HMSegmentedControl initWithSectionImages:sectionSelectedImages:titlesForSections:]
+-[HMSegmentedControl awakeFromNib]
+-[HMSegmentedControl commonInit]
+-[HMSegmentedControl layoutSubviews]
+-[HMSegmentedControl setFrame:]
+-[HMSegmentedControl setSectionTitles:]
+-[HMSegmentedControl setSectionImages:]
+-[HMSegmentedControl setSelectionIndicatorLocation:]
+-[HMSegmentedControl setSelectionIndicatorBoxOpacity:]
+-[HMSegmentedControl setSegmentWidthStyle:]
+-[HMSegmentedControl setBorderType:]
+-[HMSegmentedControl measureTitleAtIndex:]
+-[HMSegmentedControl attributedTitleAtIndex:]
+-[HMSegmentedControl drawRect:]
+___31-[HMSegmentedControl drawRect:]_block_invoke
+___copy_helper_block_
+___destroy_helper_block_
+___31-[HMSegmentedControl drawRect:]_block_invoke.227
+___copy_helper_block_.234
+___destroy_helper_block_.235
+___31-[HMSegmentedControl drawRect:]_block_invoke.237
+___copy_helper_block_.240
+___destroy_helper_block_.241
+-[HMSegmentedControl addBackgroundAndBorderLayerWithRect:]
+-[HMSegmentedControl setArrowFrame]
+-[HMSegmentedControl frameForSelectionIndicator]
+-[HMSegmentedControl frameForFillerSelectionIndicator]
+-[HMSegmentedControl updateSegmentsRects]
+___41-[HMSegmentedControl updateSegmentsRects]_block_invoke
+___copy_helper_block_.281
+___destroy_helper_block_.282
+___41-[HMSegmentedControl updateSegmentsRects]_block_invoke.287
+___copy_helper_block_.293
+___destroy_helper_block_.294
+___41-[HMSegmentedControl updateSegmentsRects]_block_invoke.300
+___copy_helper_block_.301
+___destroy_helper_block_.302
+___41-[HMSegmentedControl updateSegmentsRects]_block_invoke.304
+___copy_helper_block_.305
+___destroy_helper_block_.306
+-[HMSegmentedControl sectionCount]
+-[HMSegmentedControl willMoveToSuperview:]
+-[HMSegmentedControl touchesEnded:withEvent:]
+-[HMSegmentedControl totalSegmentedControlWidth]
+-[HMSegmentedControl scrollToSelectedSegmentIndex:]
+-[HMSegmentedControl setSelectedSegmentIndex:]
+-[HMSegmentedControl setSelectedSegmentIndex:animated:]
+-[HMSegmentedControl setSelectedSegmentIndex:animated:notify:]
+-[HMSegmentedControl notifyForSegmentChangeToIndex:]
+-[HMSegmentedControl resultingTitleTextAttributes]
+-[HMSegmentedControl resultingSelectedTitleTextAttributes]
+-[HMSegmentedControl sectionTitles]
+-[HMSegmentedControl sectionImages]
+-[HMSegmentedControl sectionSelectedImages]
+-[HMSegmentedControl setSectionSelectedImages:]
+-[HMSegmentedControl indexChangeBlock]
+-[HMSegmentedControl setIndexChangeBlock:]
+-[HMSegmentedControl titleFormatter]
+-[HMSegmentedControl setTitleFormatter:]
+-[HMSegmentedControl titleTextAttributes]
+-[HMSegmentedControl setTitleTextAttributes:]
+-[HMSegmentedControl selectedTitleTextAttributes]
+-[HMSegmentedControl setSelectedTitleTextAttributes:]
+-[HMSegmentedControl backgroundColor]
+-[HMSegmentedControl setBackgroundColor:]
+-[HMSegmentedControl selectionIndicatorColor]
+-[HMSegmentedControl setSelectionIndicatorColor:]
+-[HMSegmentedControl selectionIndicatorBoxColor]
+-[HMSegmentedControl setSelectionIndicatorBoxColor:]
+-[HMSegmentedControl verticalDividerColor]
+-[HMSegmentedControl setVerticalDividerColor:]
+-[HMSegmentedControl selectionIndicatorBoxOpacity]
+-[HMSegmentedControl verticalDividerWidth]
+-[HMSegmentedControl setVerticalDividerWidth:]
+-[HMSegmentedControl type]
+-[HMSegmentedControl setType:]
+-[HMSegmentedControl selectionStyle]
+-[HMSegmentedControl setSelectionStyle:]
+-[HMSegmentedControl segmentWidthStyle]
+-[HMSegmentedControl selectionIndicatorLocation]
+-[HMSegmentedControl borderType]
+-[HMSegmentedControl borderColor]
+-[HMSegmentedControl setBorderColor:]
+-[HMSegmentedControl borderWidth]
+-[HMSegmentedControl setBorderWidth:]
+-[HMSegmentedControl isUserDraggable]
+-[HMSegmentedControl setUserDraggable:]
+-[HMSegmentedControl isTouchEnabled]
+-[HMSegmentedControl setTouchEnabled:]
+-[HMSegmentedControl isVerticalDividerEnabled]
+-[HMSegmentedControl setVerticalDividerEnabled:]
+-[HMSegmentedControl selectedSegmentIndex]
+-[HMSegmentedControl selectionIndicatorHeight]
+-[HMSegmentedControl setSelectionIndicatorHeight:]
+-[HMSegmentedControl selectionIndicatorEdgeInsets]
+-[HMSegmentedControl setSelectionIndicatorEdgeInsets:]
+-[HMSegmentedControl segmentEdgeInset]
+-[HMSegmentedControl setSegmentEdgeInset:]
+-[HMSegmentedControl enlargeEdgeInset]
+-[HMSegmentedControl setEnlargeEdgeInset:]
+-[HMSegmentedControl shouldAnimateUserSelection]
+-[HMSegmentedControl setShouldAnimateUserSelection:]
+-[HMSegmentedControl selectionIndicatorStripLayer]
+-[HMSegmentedControl setSelectionIndicatorStripLayer:]
+-[HMSegmentedControl selectionIndicatorBoxLayer]
+-[HMSegmentedControl setSelectionIndicatorBoxLayer:]
+-[HMSegmentedControl selectionIndicatorArrowLayer]
+-[HMSegmentedControl setSelectionIndicatorArrowLayer:]
+-[HMSegmentedControl segmentWidth]
+-[HMSegmentedControl setSegmentWidth:]
+-[HMSegmentedControl segmentWidthsArray]
+-[HMSegmentedControl setSegmentWidthsArray:]
+-[HMSegmentedControl scrollView]
+-[HMSegmentedControl setScrollView:]
+-[HMSegmentedControl .cxx_destruct]
+_OBJC_IVAR_$_HMSegmentedControl._backgroundColor
+_OBJC_IVAR_$_HMSegmentedControl._selectionIndicatorColor
+_OBJC_IVAR_$_HMSegmentedControl._selectionIndicatorBoxColor
+_OBJC_IVAR_$_HMSegmentedControl._verticalDividerColor
+_OBJC_IVAR_$_HMSegmentedControl._sectionTitles
+_OBJC_IVAR_$_HMSegmentedControl._sectionImages
+_OBJC_IVAR_$_HMSegmentedControl._selectionIndicatorLocation
+_OBJC_IVAR_$_HMSegmentedControl._selectionIndicatorBoxOpacity
+_OBJC_IVAR_$_HMSegmentedControl._segmentWidthStyle
+_OBJC_IVAR_$_HMSegmentedControl._borderType
+___block_descriptor_tmp
+___block_descriptor_tmp.236
+___block_descriptor_tmp.242
+___block_descriptor_tmp.283
+___block_descriptor_tmp.295
+___block_descriptor_tmp.303
+___block_descriptor_tmp.307
+_OBJC_IVAR_$_HMSegmentedControl._selectedSegmentIndex
+_OBJC_IVAR_$_HMSegmentedControl._sectionSelectedImages
+_OBJC_IVAR_$_HMSegmentedControl._indexChangeBlock
+_OBJC_IVAR_$_HMSegmentedControl._titleFormatter
+_OBJC_IVAR_$_HMSegmentedControl._titleTextAttributes
+_OBJC_IVAR_$_HMSegmentedControl._selectedTitleTextAttributes
+_OBJC_IVAR_$_HMSegmentedControl._verticalDividerWidth
+_OBJC_IVAR_$_HMSegmentedControl._type
+_OBJC_IVAR_$_HMSegmentedControl._selectionStyle
+_OBJC_IVAR_$_HMSegmentedControl._borderColor
+_OBJC_IVAR_$_HMSegmentedControl._borderWidth
+_OBJC_IVAR_$_HMSegmentedControl._userDraggable
+_OBJC_IVAR_$_HMSegmentedControl._touchEnabled
+_OBJC_IVAR_$_HMSegmentedControl._verticalDividerEnabled
+_OBJC_IVAR_$_HMSegmentedControl._selectionIndicatorHeight
+_OBJC_IVAR_$_HMSegmentedControl._selectionIndicatorEdgeInsets
+_OBJC_IVAR_$_HMSegmentedControl._segmentEdgeInset
+_OBJC_IVAR_$_HMSegmentedControl._enlargeEdgeInset
+_OBJC_IVAR_$_HMSegmentedControl._shouldAnimateUserSelection
+_OBJC_IVAR_$_HMSegmentedControl._selectionIndicatorStripLayer
+_OBJC_IVAR_$_HMSegmentedControl._selectionIndicatorBoxLayer
+_OBJC_IVAR_$_HMSegmentedControl._selectionIndicatorArrowLayer
+_OBJC_IVAR_$_HMSegmentedControl._segmentWidth
+_OBJC_IVAR_$_HMSegmentedControl._segmentWidthsArray
+_OBJC_IVAR_$_HMSegmentedControl._scrollView
+Apple LLVM version 8.0.0 (clang-800.0.42.1)
+/Users/maxime/Documents/Projects/MXSegmentedPager/Carthage/Checkouts/HMSegmentedControl/HMSegmentedControl/HMSegmentedControl.m
+/Users/maxime/Documents/Projects/MXSegmentedPager/Carthage/Checkouts/HMSegmentedControl
+/Users/maxime/Documents/Projects/MXSegmentedPager/Carthage/Checkouts/HMSegmentedControl/HMSegmentedControl/HMSegmentedControl.h
+__destroy_helper_block_
+__copy_helper_block_
+__41-[HMSegmentedControl updateSegmentsRects]_block_invoke.304
+__41-[HMSegmentedControl updateSegmentsRects]_block_invoke.300
+__41-[HMSegmentedControl updateSegmentsRects]_block_invoke.287
+__41-[HMSegmentedControl updateSegmentsRects]_block_invoke
+__31-[HMSegmentedControl drawRect:]_block_invoke.237
+__31-[HMSegmentedControl drawRect:]_block_invoke.227
+__31-[HMSegmentedControl drawRect:]_block_invoke
+/Users/maxime/Library/Developer/Xcode/DerivedData/HMSegmentedControl-czpiybupmotujaenpuunctritdec/Build/Intermediates/HMSegmentedControl.build/Release-iphoneos/HMSegmentedControl.build/DerivedSources/HMSegmentedControl_vers.c

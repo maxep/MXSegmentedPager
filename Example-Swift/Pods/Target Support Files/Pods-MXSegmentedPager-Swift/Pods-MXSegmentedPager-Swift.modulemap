@@ -1,6 +1,0 @@
-framework module Pods_MXSegmentedPager_Swift {
-  umbrella header "Pods-MXSegmentedPager-Swift-umbrella.h"
-
-  export *
-  module * { export * }
-}

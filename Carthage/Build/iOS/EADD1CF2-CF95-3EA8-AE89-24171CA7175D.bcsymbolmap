@@ -1,0 +1,127 @@
+BCSymbolMap Version: 2.0
+-[MXScrollViewController loadView]
+-[MXScrollViewController viewDidLoad]
+-[MXScrollViewController viewDidLayoutSubviews]
+-[MXScrollViewController layoutChildViewController]
+-[MXScrollViewController scrollView]
+-[MXScrollViewController setHeaderViewController:]
+-[MXScrollViewController setChildViewController:]
+-[MXScrollViewController observeValueForKeyPath:ofObject:change:context:]
+-[MXScrollViewController dealloc]
+-[MXScrollViewController headerViewController]
+-[MXScrollViewController childViewController]
+-[MXScrollViewController headerView]
+-[MXScrollViewController setHeaderView:]
+-[MXScrollViewController headerHeight]
+-[MXScrollViewController setHeaderHeight:]
+-[MXScrollViewController headerMinimumHeight]
+-[MXScrollViewController setHeaderMinimumHeight:]
+-[MXScrollViewController .cxx_destruct]
+-[UIViewController(MXParallaxHeader) parallaxHeader]
+-[MXParallaxHeaderSegue perform]
+-[MXScrollViewControllerSegue perform]
+_OBJC_IVAR_$_MXScrollViewController._scrollView
+_kMXScrollViewControllerKVOContext
+_OBJC_IVAR_$_MXScrollViewController._headerViewController
+_OBJC_IVAR_$_MXScrollViewController._childViewController
+_OBJC_IVAR_$_MXScrollViewController._headerView
+_OBJC_IVAR_$_MXScrollViewController._headerHeight
+_OBJC_IVAR_$_MXScrollViewController._headerMinimumHeight
+Apple LLVM version 8.0.0 (clang-800.0.38)
+/Users/travis/build/maxep/MXParallaxHeader/MXParallaxHeader/MXScrollViewController.m
+/Users/travis/build/maxep/MXParallaxHeader
+/Users/travis/build/maxep/MXParallaxHeader/MXParallaxHeader/MXScrollViewController.h
+-[MXScrollView initWithFrame:]
+-[MXScrollView initWithCoder:]
+-[MXScrollView initialize]
+-[MXScrollView observedViews]
+-[MXScrollView delegateForwarder]
+-[MXScrollView setDelegate:]
+-[MXScrollView delegate]
+-[MXScrollView gestureRecognizerShouldBegin:]
+-[MXScrollView gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:]
+-[MXScrollView addObserverToView:]
+-[MXScrollView removeObserverFromView:]
+-[MXScrollView observeValueForKeyPath:ofObject:change:context:]
+-[MXScrollView addObservedView:]
+-[MXScrollView removeObservedViews]
+-[MXScrollView scrollView:setContentOffset:]
+-[MXScrollView dealloc]
+-[MXScrollView scrollViewDidScroll:]
+-[MXScrollView scrollViewDidEndDecelerating:]
+-[MXScrollView bounces]
+-[MXScrollView setBounces:]
+-[MXScrollView setDelegateForwarder:]
+-[MXScrollView setObservedViews:]
+-[MXScrollView .cxx_destruct]
+-[MXScrollViewDelegateForwarder respondsToSelector:]
+-[MXScrollViewDelegateForwarder forwardInvocation:]
+-[MXScrollViewDelegateForwarder scrollViewDidScroll:]
+-[MXScrollViewDelegateForwarder scrollViewDidEndDecelerating:]
+-[MXScrollViewDelegateForwarder delegate]
+-[MXScrollViewDelegateForwarder setDelegate:]
+-[MXScrollViewDelegateForwarder .cxx_destruct]
+_kMXScrollViewKVOContext
+_OBJC_IVAR_$_MXScrollView._isObserving
+_OBJC_IVAR_$_MXScrollView._observedViews
+_OBJC_IVAR_$_MXScrollView._delegateForwarder
+_OBJC_IVAR_$_MXScrollView._lock
+_OBJC_IVAR_$_MXScrollView._bounces
+_OBJC_IVAR_$_MXScrollView._delegate
+l_OBJC_PROTOCOL_$_NSObject
+l_OBJC_LABEL_PROTOCOL_$_NSObject
+l_OBJC_PROTOCOL_$_UIGestureRecognizerDelegate
+l_OBJC_LABEL_PROTOCOL_$_UIGestureRecognizerDelegate
+_OBJC_IVAR_$_MXScrollViewDelegateForwarder._delegate
+l_OBJC_PROTOCOL_$_UIScrollViewDelegate
+l_OBJC_LABEL_PROTOCOL_$_UIScrollViewDelegate
+l_OBJC_PROTOCOL_$_MXScrollViewDelegate
+l_OBJC_LABEL_PROTOCOL_$_MXScrollViewDelegate
+/Users/travis/build/maxep/MXParallaxHeader/MXParallaxHeader/MXScrollView.m
+-[UIScrollView setBounces:]
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIScrollView.h
+-[UIScrollView bounces]
+-[MXParallaxView willMoveToSuperview:]
+-[MXParallaxView didMoveToSuperview]
+-[MXParallaxView parent]
+-[MXParallaxView setParent:]
+-[MXParallaxView .cxx_destruct]
+-[MXParallaxHeader contentView]
+-[MXParallaxHeader setView:]
+-[MXParallaxHeader setMode:]
+-[MXParallaxHeader setHeight:]
+-[MXParallaxHeader setMinimumHeight:]
+-[MXParallaxHeader setScrollView:]
+-[MXParallaxHeader progress]
+-[MXParallaxHeader updateConstraints]
+-[MXParallaxHeader setCenterModeConstraints]
+-[MXParallaxHeader setFillModeConstraints]
+-[MXParallaxHeader setTopFillModeConstraints]
+-[MXParallaxHeader setTopModeConstraints]
+-[MXParallaxHeader setBottomModeConstraints]
+-[MXParallaxHeader layoutContentView]
+-[MXParallaxHeader adjustScrollViewTopInset:]
+-[MXParallaxHeader observeValueForKeyPath:ofObject:change:context:]
+-[MXParallaxHeader delegate]
+-[MXParallaxHeader setDelegate:]
+-[MXParallaxHeader view]
+-[MXParallaxHeader height]
+-[MXParallaxHeader minimumHeight]
+-[MXParallaxHeader mode]
+-[MXParallaxHeader scrollView]
+-[MXParallaxHeader .cxx_destruct]
+-[UIScrollView(MXParallaxHeader) parallaxHeader]
+-[UIScrollView(MXParallaxHeader) setParallaxHeader:]
+_kMXParallaxHeaderKVOContext
+_OBJC_IVAR_$_MXParallaxView._parent
+_OBJC_IVAR_$_MXParallaxHeader._contentView
+_OBJC_IVAR_$_MXParallaxHeader._view
+_OBJC_IVAR_$_MXParallaxHeader._mode
+_OBJC_IVAR_$_MXParallaxHeader._height
+_OBJC_IVAR_$_MXParallaxHeader._minimumHeight
+_OBJC_IVAR_$_MXParallaxHeader._scrollView
+_OBJC_IVAR_$_MXParallaxHeader._isObserving
+_OBJC_IVAR_$_MXParallaxHeader._delegate
+/Users/travis/build/maxep/MXParallaxHeader/MXParallaxHeader/MXParallaxHeader.m
+/Users/travis/build/maxep/MXParallaxHeader/MXParallaxHeader/MXParallaxHeader.h
+/Users/travis/Library/Developer/Xcode/DerivedData/MXParallaxHeader-ggfnrwkpjsflztdqzlustunbqigv/Build/Intermediates/MXParallaxHeader.build/Release-iphoneos/MXParallaxHeader.build/DerivedSources/MXParallaxHeader_vers.c

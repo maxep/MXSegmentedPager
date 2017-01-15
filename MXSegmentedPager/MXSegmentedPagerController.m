@@ -73,14 +73,7 @@
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
     
     UIViewController *viewController = [self segmentedPager:segmentedPager viewControllerForPageAtIndex:index];
-    
-    if (viewController) {
-        [self addChildViewController:viewController];
-        [viewController didMoveToParentViewController:self];
-
-        return viewController.view;
-    }
-    return nil;
+    return viewController.view;
 }
 
 - (UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index {
@@ -114,6 +107,5 @@
 - (void)setPageViewController:(__kindof UIViewController *)pageViewController atIndex:(NSInteger)index {
     self.pageViewControllers[@(index)] = pageViewController;
 }
-
 
 @end

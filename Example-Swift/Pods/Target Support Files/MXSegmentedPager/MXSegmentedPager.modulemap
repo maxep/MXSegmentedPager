@@ -1,6 +1,0 @@
-framework module MXSegmentedPager {
-  umbrella header "MXSegmentedPager-umbrella.h"
-
-  export *
-  module * { export * }
-}

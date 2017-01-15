@@ -253,7 +253,7 @@
     return _count;
 }
 
-- (UIView*)pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
+- (UIView *)pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
     return [self.dataSource segmentedPager:self viewForPageAtIndex:index];
 }
 

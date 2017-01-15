@@ -1,6 +1,0 @@
-framework module MXPagerView {
-  umbrella header "MXPagerView-umbrella.h"
-
-  export *
-  module * { export * }
-}
