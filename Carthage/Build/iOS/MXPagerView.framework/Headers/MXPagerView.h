@@ -1,6 +1,6 @@
 // MXPagerView.h
 //
-// Copyright (c) 2016 Maxime Epain
+// Copyright (c) 2017 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 /**
  The delegate of a MXPagerView object may adopt the MXPagerViewDelegate protocol. Optional methods of the protocol allow the delegate to manage selections.
  */
-@protocol MXPagerViewDelegate <NSObject>
+@protocol MXPagerViewDelegate <UIScrollViewDelegate>
 
 @optional
 /**
@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  @param pagerView A pager object informing the delegate about the impending move.
  @param index     The selected page index.
  */
-- (void)pagerView:(MXPagerView *)pagerView willMoveToPageAtIndex:(NSInteger)index;
+- (void)pagerView:(MXPagerView *)pagerView willMoveToPage:(UIView *)page atIndex:(NSInteger)index;
 
 /**
  Tells the delegate that the pager did move to a specified page.
@@ -56,16 +56,27 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  @param pagerView A pager object informing the delegate about the impending move.
  @param index     The selected page index.
  */
-- (void)pagerView:(MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index;
-
+- (void)pagerView:(MXPagerView *)pagerView didMoveToPage:(UIView *)page atIndex:(NSInteger)index;
 
 /**
- Tells the delegate when the user scrolls the pager view within the receiver.
- The delegate typically implements this method to obtain the change in progress from pagerView.
+ Tells the delegate the pager view is about to draw a page for a particular index.
+ A pager view sends this message to its delegate just before it uses page to draw a index, thereby permitting the delegate to customize the page object before it is displayed.
 
- @param pagerView The pager-view object in which the scrolling occurred.
+ @param pagerView The pager-view object informing the delegate of this impending event.
+ @param page A pager-view page object that pagerView is going to use when drawing the index.
+ @param index An index locating the page in pagerView.
  */
-- (void)pagerViewDidScroll:(MXPagerView *)pagerView;
+- (void)pagerView:(MXPagerView *)pagerView willDisplayPage:(UIView *)page atIndex:(NSInteger)index;
+
+/**
+ Tells the delegate that the specified page was removed from the pager.
+ Use this method to detect when a page is removed from a pager view, as opposed to monitoring the view itself to see when it appears or disappears.
+
+ @param pagerView The pager-view object that removed the view.
+ @param page The page that was removed.
+ @param index The index of the page.
+ */
+- (void)pagerView:(MXPagerView *)pagerView didEndDisplayingPage:(UIView *)page atIndex:(NSInteger)index;
 
 @end
 
@@ -95,14 +106,14 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  
  @return An object inheriting from UIView that the pager can use for the specified page.
  */
-- (nullable __kindof UIView *) pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index;
+- (nullable __kindof UIView *)pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index;
 
 @end
 
 /**
- A MXPagerView  lets the user navigate between pages of content. Navigation can be controlled programmatically by your app or directly by the user using gestures.
+ A MXPagerView lets the user navigate between pages of content. Navigation can be controlled programmatically by your app or directly by the user using gestures.
  */
-@interface MXPagerView : UIView
+@interface MXPagerView : UIScrollView
 
 /**
  Delegate instance that adopt the MXPagerViewDelegate.
@@ -140,11 +151,6 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 @property (nonatomic, assign) MXPagerViewTransitionStyle transitionStyle;
 
 /**
- Default YES. turn off any dragging temporarily
- */
-@property (nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
-
-/**
  The pager progress, from 0 to the number of page.
  */
 @property (nonatomic, readonly) CGFloat progress;
@@ -179,14 +185,14 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
  If you previously registered a class or nib file with the same reuse identifier, the nib you specify in the nib parameter replaces the old entry. You may specify nil for nib if you want to unregister the nib from the specified reuse identifier.
  
  @param nib        A nib object that specifies the nib file to use to create the page.
- @param identifier The reuse identifier for the cell. This parameter must not be nil and must not be an empty string.
+ @param identifier The reuse identifier for the page. This parameter must not be nil and must not be an empty string.
  */
 - (void)registerNib:(nullable UINib *)nib forPageReuseIdentifier:(NSString *)identifier;
 
 /**
  Registers a class for use in creating new page.
  
- Prior to dequeueing any pages, call this method or the ```registerNib:forPageReuseIdentifier:``` method to tell the pager view how to create new pages. If a page of the specified type is not currently in a reuse queue, the table view uses the provided information to create a new page object automatically.
+ Prior to dequeueing any pages, call this method or the ```registerNib:forPageReuseIdentifier:``` method to tell the pager view how to create new pages. If a page of the specified type is not currently in a reuse queue, the pager view uses the provided information to create a new page object automatically.
  
  If you previously registered a class or nib file with the same reuse identifier, the class you specify in the pageClass parameter replaces the old entry. You may specify nil for pageClass if you want to unregister the class from the specified reuse identifier.
  
@@ -198,7 +204,7 @@ typedef NS_ENUM(NSInteger, MXPagerViewTransitionStyle) {
 /**
  Returns a reusable page object located by its identifier.
  
- A pager view maintains a queue or list of page objects that the data source has marked for reuse. Call this method from your data source object when asked to provide a new page for the table view. This method dequeues an existing page if one is available or creates a new one using the class or nib file you previously registered. If no page is available for reuse and you did not register a class or nib file, this method returns nil.
+ A pager view maintains a queue or list of page objects that the data source has marked for reuse. Call this method from your data source object when asked to provide a new page for the pager view. This method dequeues an existing page if one is available or creates a new one using the class or nib file you previously registered. If no page is available for reuse and you did not register a class or nib file, this method returns nil.
  
  @param identifier A string identifying the page object to be reused. This parameter must not be nil.
  

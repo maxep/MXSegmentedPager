@@ -238,11 +238,11 @@
 
 #pragma mark <MXPagerViewDelegate>
 
-- (void)pagerView:(MXPagerView *)pagerView willMoveToPageAtIndex:(NSInteger)index {
+- (void)pagerView:(MXPagerView *)pagerView willMoveToPage:(UIView *)page atIndex:(NSInteger)index {
     [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
 }
 
-- (void)pagerView:(MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index {
+- (void)pagerView:(MXPagerView *)pagerView didMoveToPage:(UIView *)page atIndex:(NSInteger)index {
     [self.segmentedControl setSelectedSegmentIndex:index animated:NO];
     [self changedToIndex:index];
 }
