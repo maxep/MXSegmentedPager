@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   s.source_files = 'MXSegmentedPager/*.{m,h}'
   s.public_header_files = ["MXSegmentedPager/*.h"]
   s.dependency 'HMSegmentedControl'
-  s.dependency 'MXPagerView'
+  s.dependency 'MXPagerView' , '~> 0.2.1'
   s.dependency 'MXParallaxHeader'
   
 end
