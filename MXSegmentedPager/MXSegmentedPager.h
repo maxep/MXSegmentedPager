@@ -133,7 +133,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  
  @return An object inheriting from UIView that the segmented-pager can use for the specified page.
  */
-- (__kindof UIView*)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index;
+- (__kindof UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index;
 
 @optional
 
@@ -145,7 +145,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  
  @return The NSString title of the page in segmented-pager.
  */
-- (NSString*)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index;
+- (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index;
 
 /**
  Asks the data source for a title to assign to a particular page of the segmented-pager. The title will be used depending on the HMSegmentedControlType you have choosen.
@@ -155,7 +155,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  
  @return The NSAttributedString title of the page in segmented-pager.
  */
-- (NSAttributedString*)segmentedPager:(MXSegmentedPager *)segmentedPager attributedTitleForSectionAtIndex:(NSInteger)index;
+- (NSAttributedString *)segmentedPager:(MXSegmentedPager *)segmentedPager attributedTitleForSectionAtIndex:(NSInteger)index;
 
 /**
  Asks the data source for a image to assign to a particular page of the segmented-pager. The image will be used depending on the HMSegmentedControlType you have choosen.
@@ -165,7 +165,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  
  @return The image of the page in segmented-pager.
  */
-- (UIImage*)segmentedPager:(MXSegmentedPager *)segmentedPager imageForSectionAtIndex:(NSInteger)index;
+- (UIImage *)segmentedPager:(MXSegmentedPager *)segmentedPager imageForSectionAtIndex:(NSInteger)index;
 
 /**
  Asks the data source for a selected image to assign to a particular page of the segmented-pager. The image will be used depending on the HMSegmentedControlType you have choosen.
@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  
  @return The selected image of the page in segmented-pager.
  */
-- (UIImage*)segmentedPager:(MXSegmentedPager *)segmentedPager selectedImageForSectionAtIndex:(NSInteger)index;
+- (UIImage *)segmentedPager:(MXSegmentedPager *)segmentedPager selectedImageForSectionAtIndex:(NSInteger)index;
 
 @end
 

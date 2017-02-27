@@ -203,18 +203,22 @@
 #pragma mark <MXScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ([self.delegate respondsToSelector:@selector(segmentedPager:didScrollWithParallaxHeader:)]) {
+    if (scrollView == self.contentView && [self.delegate respondsToSelector:@selector(segmentedPager:didScrollWithParallaxHeader:)]) {
         [self.delegate segmentedPager:self didScrollWithParallaxHeader:scrollView.parallaxHeader];
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if ([self.delegate respondsToSelector:@selector(segmentedPager:didEndDraggingWithParallaxHeader:)]) {
+    if (scrollView == self.contentView && [self.delegate respondsToSelector:@selector(segmentedPager:didEndDraggingWithParallaxHeader:)]) {
         [self.delegate segmentedPager:self didEndDraggingWithParallaxHeader:scrollView.parallaxHeader];
     }
 }
 
 - (BOOL)scrollView:(MXScrollView *)scrollView shouldScrollWithSubView:(UIView *)subView {
+    if (subView == self.pager) {
+        return NO;
+    }
+    
     UIView<MXPageProtocol> *page = (id) self.pager.selectedPage;
     
     if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
