@@ -256,6 +256,18 @@
     [self changedToIndex:index];
 }
 
+- (void)pagerView:(MXPagerView *)pagerView willDisplayPage:(UIView *)page atIndex:(NSInteger)index {
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:willDisplayPage:atIndex:)]) {
+        [self.delegate segmentedPager:self willDisplayPage:page atIndex:index];
+    }
+}
+
+- (void)pagerView:(MXPagerView *)pagerView didEndDisplayingPage:(UIView *)page atIndex:(NSInteger)index {
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didEndDisplayingPage:atIndex:)]) {
+        [self.delegate segmentedPager:self didEndDisplayingPage:page atIndex:index];
+    }
+}
+
 #pragma mark <MXPagerViewDataSource>
 
 - (NSInteger)numberOfPagesInPagerView:(MXPagerView *)pagerView {
