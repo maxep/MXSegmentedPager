@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode8
+osx_image: xcode8.3
 
 env: 
   global:
@@ -17,7 +17,7 @@ before_script:
 - carthage bootstrap
 
 script:
-- set -o pipefail && xcodebuild -project MXSegmentedPager.xcodeproj -scheme $FRAMEWORK_NAME -sdk iphonesimulator10.0 -configuration Release | xcpretty -c
+- set -o pipefail && xcodebuild -project MXSegmentedPager.xcodeproj -scheme $FRAMEWORK_NAME -sdk iphonesimulator10.3 -configuration Release | xcpretty -c
 - pod lib lint --quick
 
 before_deploy:
