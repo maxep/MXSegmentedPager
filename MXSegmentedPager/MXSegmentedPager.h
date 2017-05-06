@@ -190,12 +190,12 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 /**
  Delegate instance that adopt the MXSegmentedPagerDelegate.
  */
-@property (nonatomic, weak) id<MXSegmentedPagerDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id<MXSegmentedPagerDelegate> delegate;
 
 /**
  Data source instance that adopt the MXSegmentedPagerDataSource.
  */
-@property (nonatomic, weak) id<MXSegmentedPagerDataSource> dataSource;
+@property (nonatomic, weak) IBOutlet id<MXSegmentedPagerDataSource> dataSource;
 
 /**
  The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
