@@ -29,21 +29,21 @@ class MXViewController: MXSegmentedPagerController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.segmentedPager.backgroundColor = UIColor.white
+        segmentedPager.backgroundColor = .white
         
         // Parallax Header       
-        self.segmentedPager.parallaxHeader.view = headerView
-        self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.fill
-        self.segmentedPager.parallaxHeader.height = 150
-        self.segmentedPager.parallaxHeader.minimumHeight = 20
+        segmentedPager.parallaxHeader.view = headerView
+        segmentedPager.parallaxHeader.mode = .fill
+        segmentedPager.parallaxHeader.height = 150
+        segmentedPager.parallaxHeader.minimumHeight = 20
         
         // Segmented Control customization
-        self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocation.down
-        self.segmentedPager.segmentedControl.backgroundColor = UIColor.white
-        self.segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.black]
-        self.segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.orange]
-        self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyle.fullWidthStripe
-        self.segmentedPager.segmentedControl.selectionIndicatorColor = UIColor.orange
+        segmentedPager.segmentedControl.selectionIndicatorLocation = .down
+        segmentedPager.segmentedControl.backgroundColor = .white
+        segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.black]
+        segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.orange]
+        segmentedPager.segmentedControl.selectionStyle = .fullWidthStripe
+        segmentedPager.segmentedControl.selectionIndicatorColor = .orange
     }
 
     override func didReceiveMemoryWarning() {

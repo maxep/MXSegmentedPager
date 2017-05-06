@@ -29,13 +29,8 @@ class MXTextViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let filePath = Bundle.main.path(forResource: "LongText", ofType: "txt");
-
-        self.textView.text = try! String(contentsOfFile: filePath!, encoding: String.Encoding.utf8);
+        let filePath = Bundle.main.path(forResource: "LongText", ofType: "txt")
+        textView.text = try! String(contentsOfFile: filePath!, encoding: .utf8)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
 }

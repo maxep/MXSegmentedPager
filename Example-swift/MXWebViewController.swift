@@ -29,14 +29,8 @@ class MXWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let url = URL(string: "http://nshipster.com/");
-        let request = URLRequest(url: url!);
-        self.webView.loadRequest(request);
+        let url = URL(string: "http://nshipster.com/")!
+        let request = URLRequest(url: url)
+        webView.loadRequest(request)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-
 }
