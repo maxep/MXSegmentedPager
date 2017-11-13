@@ -32,15 +32,12 @@
 
 @synthesize segmentedPager = _segmentedPager;
 
-- (void)loadView {
-    self.view = self.segmentedPager;
-}
-
 #pragma mark Properties
 
 - (UIView *)segmentedPager {
     if (!_segmentedPager) {
         _segmentedPager = [MXSegmentedPager new];
+        _segmentedPager.translatesAutoresizingMaskIntoConstraints = NO;
         _segmentedPager.delegate    = self;
         _segmentedPager.dataSource  = self;
     }
@@ -52,6 +49,31 @@
         _pageViewControllers = [NSMutableDictionary new];
     }
     return _pageViewControllers;
+}
+
+#pragma mark UIViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    [self.view addSubview:self.segmentedPager];
+
+    if (@available(iOS 11.0, *)) {
+        [NSLayoutConstraint activateConstraints:@[
+            [self.segmentedPager.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
+            [self.segmentedPager.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor],
+            [self.segmentedPager.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor],
+            [self.segmentedPager.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor],
+        ]];
+    } else {
+        // Because the pod supports iOS 7, we use old APIs
+        [self.view addConstraints:@[
+            [NSLayoutConstraint constraintWithItem:self.segmentedPager attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1 constant:0],
+            [NSLayoutConstraint constraintWithItem:self.segmentedPager attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0],
+            [NSLayoutConstraint constraintWithItem:self.segmentedPager attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0],
+            [NSLayoutConstraint constraintWithItem:self.segmentedPager attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop multiplier:1 constant:0],
+        ]];
+    }
 }
 
 #pragma mark <MXSegmentedPagerControllerDataSource>
