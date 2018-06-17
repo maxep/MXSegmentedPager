@@ -21,12 +21,14 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import <HMSegmentedControl/HMSegmentedControl.h>
+
 #import <MXPagerView/MXPagerView.h>
 #import <MXParallaxHeader/MXParallaxHeader.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class ViewSegmentControll;
+@class SegmentedView;
 /**
  The segmented control position options relative to the segmented-pager.
  */
@@ -158,47 +160,33 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  */
 - (__kindof UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index;
 
-@optional
+/**
+ Asks the data source for views of the segmented-pager.
+ 
+ @param segmentedPager A segmented-pager object requesting the views.
+
+ @return The Array of views of the page in segmented-pager.
+ */
+- (NSArray<SegmentedView*>*)viewsForSegmentedPager:(MXSegmentedPager *)segmentedPager;
 
 /**
- Asks the data source for a title to assign to a particular page of the segmented-pager. The title will be used depending on the HMSegmentedControlType you have choosen.
+ Asks the data source for colors of the indicator of the segmented-pager.
  
- @param segmentedPager A segmented-pager object requesting the title.
- @param index          An index number identifying a page in segmented-pager.
+ @param segmentedPager A segmented-pager object requesting the views.
  
- @return The NSString title of the page in segmented-pager.
+ @return The Array of colors of the indicator in segmented-pager.
  */
-- (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index;
+- (NSArray<UIColor*>*)indicatorColorForSegmentedPager:(MXSegmentedPager *)segmentedPager;
 
 /**
- Asks the data source for a title to assign to a particular page of the segmented-pager. The title will be used depending on the HMSegmentedControlType you have choosen.
+ Asks the data source for heigth of the indicator of the segmented-pager.
  
- @param segmentedPager A segmented-pager object requesting the title.
- @param index          An index number identifying a page in segmented-pager.
+ @param segmentedPager A segmented-pager object requesting the views.
  
- @return The NSAttributedString title of the page in segmented-pager.
+ @return The heigth of the indicator in segmented-pager.
  */
-- (NSAttributedString *)segmentedPager:(MXSegmentedPager *)segmentedPager attributedTitleForSectionAtIndex:(NSInteger)index;
+- (CGFloat)indicatorHeigthForSegmentedPager:(MXSegmentedPager *)segmentedPager;
 
-/**
- Asks the data source for a image to assign to a particular page of the segmented-pager. The image will be used depending on the HMSegmentedControlType you have choosen.
- 
- @param segmentedPager A segmented-pager object requesting the title.
- @param index          An index number identifying a page in segmented-pager.
- 
- @return The image of the page in segmented-pager.
- */
-- (UIImage *)segmentedPager:(MXSegmentedPager *)segmentedPager imageForSectionAtIndex:(NSInteger)index;
-
-/**
- Asks the data source for a selected image to assign to a particular page of the segmented-pager. The image will be used depending on the HMSegmentedControlType you have choosen.
- 
- @param segmentedPager A segmented-pager object requesting the title.
- @param index          An index number identifying a page in segmented-pager.
- 
- @return The selected image of the page in segmented-pager.
- */
-- (UIImage *)segmentedPager:(MXSegmentedPager *)segmentedPager selectedImageForSectionAtIndex:(NSInteger)index;
 
 @end
 
@@ -220,7 +208,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 /**
  The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
  */
-@property (nonatomic, readonly) HMSegmentedControl *segmentedControl;
+@property (nonatomic, readonly)  ViewSegmentControll *segmentedControl;
 
 /**
  The segmented control position option.

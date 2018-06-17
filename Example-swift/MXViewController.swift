@@ -38,12 +38,12 @@ class MXViewController: MXSegmentedPagerController {
         segmentedPager.parallaxHeader.minimumHeight = 20
         
         // Segmented Control customization
-        segmentedPager.segmentedControl.selectionIndicatorLocation = .down
-        segmentedPager.segmentedControl.backgroundColor = .white
-        segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.black]
-        segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.orange]
-        segmentedPager.segmentedControl.selectionStyle = .fullWidthStripe
-        segmentedPager.segmentedControl.selectionIndicatorColor = .orange
+//        segmentedPager.segmentedControl.selectionIndicatorLocation = .down
+//        segmentedPager.segmentedControl.backgroundColor = .white
+//        segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.black]
+//        segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.orange]
+//        segmentedPager.segmentedControl.selectionStyle = .fullWidthStripe
+//        segmentedPager.segmentedControl.selectionIndicatorColor = .orange
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,8 +51,25 @@ class MXViewController: MXSegmentedPagerController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["Table", "Web", "Text"][index]
+    override  func views(for segmentedPager: MXSegmentedPager) -> [SegmentedView] {
+        let view1 = SegmentedView()
+        view1.backgroundColor = UIColor.blue
+        
+        let view2 = SegmentedView()
+        view2.backgroundColor = UIColor.red
+        
+        let view3 = SegmentedView()
+        view3.backgroundColor = UIColor.cyan
+        
+        return [view1,view2,view3];
+    }
+    
+    override func indicatorColor(for segmentedPager: MXSegmentedPager) -> [UIColor] {
+        return [UIColor.blue.withAlphaComponent(0.5),UIColor.red.withAlphaComponent(0.5),UIColor.cyan.withAlphaComponent(0.5)]
+    }
+    
+    override func indicatorHeigth(for segmentedPager: MXSegmentedPager) -> CGFloat {
+        return 5
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didScrollWith parallaxHeader: MXParallaxHeader) {
