@@ -1,0 +1,16 @@
+PODS:
+  - SNPSegmentedPager (0.1.0)
+
+DEPENDENCIES:
+  - SNPSegmentedPager (from `../`)
+
+EXTERNAL SOURCES:
+  SNPSegmentedPager:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SNPSegmentedPager: dcea897a418702e3301887e79ced7a28ad2be94e
+
+PODFILE CHECKSUM: bdee9d23fc2cbe89c0b32e6726ad073dcee8b1ee
+
+COCOAPODS: 1.5.3
