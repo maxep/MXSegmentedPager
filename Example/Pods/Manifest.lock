@@ -1,0 +1,27 @@
+PODS:
+  - MXPagerView (0.2.1)
+  - MXParallaxHeader (0.6.1)
+  - SNPSegmentedPager (0.1.0):
+    - MXPagerView (= 0.2.1)
+    - MXParallaxHeader (= 0.6.1)
+
+DEPENDENCIES:
+  - SNPSegmentedPager (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - MXPagerView
+    - MXParallaxHeader
+
+EXTERNAL SOURCES:
+  SNPSegmentedPager:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  MXPagerView: ede184b5191b2ed689ccf05a750a9978cce42414
+  MXParallaxHeader: 858c403532ed933b381556a81ce333d7065ad182
+  SNPSegmentedPager: 5401138198dedc1e0dcce7e17ee75be021998616
+
+PODFILE CHECKSUM: bdee9d23fc2cbe89c0b32e6726ad073dcee8b1ee
+
+COCOAPODS: 1.5.3

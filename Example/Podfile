@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SNPSegmentedPager_Example' do
+  pod 'SNPSegmentedPager', :path => '../'
+
+  target 'SNPSegmentedPager_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

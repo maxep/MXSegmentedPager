@@ -1,0 +1,6 @@
+framework module SNPSegmentedPager {
+  umbrella header "SNPSegmentedPager-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module Pods_SNPSegmentedPager_Example {
+  umbrella header "Pods-SNPSegmentedPager_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

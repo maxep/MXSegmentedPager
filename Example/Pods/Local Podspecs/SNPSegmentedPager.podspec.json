@@ -1,0 +1,34 @@
+{
+  "name": "SNPSegmentedPager",
+  "version": "0.1.0",
+  "summary": "A short description of SNPSegmentedPager.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/jebelli.farhad@gmail.com/SNPSegmentedPager",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "jebelli.farhad@gmail.com": "jebelli.farhad@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/jebelli.farhad@gmail.com/SNPSegmentedPager.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": [
+    "SNPSegmentedPager/Classes/**/*.{swift}",
+    "SNPSegmentedPager/Classes/**/*.{m}",
+    "SNPSegmentedPager/Classes/**/*.{h}"
+  ],
+  "dependencies": {
+    "MXPagerView": [
+      "0.2.1"
+    ],
+    "MXParallaxHeader": [
+      "0.6.1"
+    ]
+  }
+}
