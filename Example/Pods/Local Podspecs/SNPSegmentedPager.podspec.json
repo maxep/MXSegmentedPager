@@ -16,7 +16,19 @@
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
-  "source_files": "SNPSegmentedPager/Classes/**/*"
+  "source_files": [
+    "SNPSegmentedPager/Classes/**/*.{swift}",
+    "SNPSegmentedPager/Classes/**/*.{m}",
+    "SNPSegmentedPager/Classes/**/*.{h}"
+  ],
+  "dependencies": {
+    "MXPagerView": [
+      "0.2.1"
+    ],
+    "MXParallaxHeader": [
+      "0.6.1"
+    ]
+  }
 }

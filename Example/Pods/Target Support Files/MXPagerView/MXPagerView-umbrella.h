@@ -10,9 +10,9 @@
 #endif
 #endif
 
-#import "MXSegmentedPager.h"
-#import "MXSegmentedPagerController.h"
+#import "MXPagerView.h"
+#import "MXPagerViewController.h"
 
-FOUNDATION_EXPORT double SNPSegmentedPagerVersionNumber;
-FOUNDATION_EXPORT const unsigned char SNPSegmentedPagerVersionString[];
+FOUNDATION_EXPORT double MXPagerViewVersionNumber;
+FOUNDATION_EXPORT const unsigned char MXPagerViewVersionString[];
 
