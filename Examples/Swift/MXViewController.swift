@@ -35,15 +35,17 @@ class MXViewController: MXSegmentedPagerController {
         segmentedPager.parallaxHeader.view = headerView
         segmentedPager.parallaxHeader.mode = .fill
         segmentedPager.parallaxHeader.height = 150
-        segmentedPager.parallaxHeader.minimumHeight = 20
+        segmentedPager.parallaxHeader.minimumHeight = view.safeAreaInsets.top
         
         // Segmented Control customization
-        segmentedPager.segmentedControl.selectionIndicatorLocation = .down
-        segmentedPager.segmentedControl.backgroundColor = .white
-        segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.black]
-        segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.orange]
-        segmentedPager.segmentedControl.selectionStyle = .fullWidthStripe
-        segmentedPager.segmentedControl.selectionIndicatorColor = .orange
+        segmentedPager.segmentedControl.indicator.linePosition = .bottom
+        segmentedPager.segmentedControl.textColor = .black
+        segmentedPager.segmentedControl.selectedTextColor = .orange
+        segmentedPager.segmentedControl.indicator.lineView.backgroundColor = .orange
+    }
+
+    override func viewSafeAreaInsetsDidChange() {
+        segmentedPager.parallaxHeader.minimumHeight = view.safeAreaInsets.top
     }
 
     override func didReceiveMemoryWarning() {

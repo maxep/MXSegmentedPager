@@ -48,6 +48,8 @@
 		9C1633E61DA646CA001FB468 /* MXPagerView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1633591DA58D25001FB468 /* MXPagerView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C1633E71DA646CA001FB468 /* MXParallaxHeader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C16335A1DA58D25001FB468 /* MXParallaxHeader.framework */; };
 		9C1633E81DA646CA001FB468 /* MXParallaxHeader.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C16335A1DA58D25001FB468 /* MXParallaxHeader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C73FA3E22FAFD170021C818 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C73FA3D22FAFD170021C818 /* WebKit.framework */; };
+		9C73FA3F22FAFD200021C818 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C73FA3D22FAFD170021C818 /* WebKit.framework */; };
 		9C7C424F22F9C3A8005E4109 /* MXSegmentedControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C7C424E22F9C3A8005E4109 /* MXSegmentedControl.framework */; };
 		9C7C425022F9C3B1005E4109 /* MXSegmentedControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C7C424E22F9C3A8005E4109 /* MXSegmentedControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C7C425122F9C3B7005E4109 /* MXSegmentedControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C7C424E22F9C3A8005E4109 /* MXSegmentedControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -144,6 +146,7 @@
 		9C1633D51DA646B1001FB468 /* MXTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXTextViewController.swift; sourceTree = "<group>"; };
 		9C1633D61DA646B1001FB468 /* MXViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXViewController.swift; sourceTree = "<group>"; };
 		9C1633D71DA646B1001FB468 /* MXWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXWebViewController.swift; sourceTree = "<group>"; };
+		9C73FA3D22FAFD170021C818 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		9C7C424E22F9C3A8005E4109 /* MXSegmentedControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MXSegmentedControl.framework; path = Carthage/Build/iOS/MXSegmentedControl.framework; sourceTree = "<group>"; };
 		9CCDC69B1DA6546E0024337A /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		9CCDC69C1DA6546E0024337A /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -167,6 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C73FA3F22FAFD200021C818 /* WebKit.framework in Frameworks */,
 				9C1633B61DA63F40001FB468 /* MXParallaxHeader.framework in Frameworks */,
 				9C1633B41DA63F40001FB468 /* MXPagerView.framework in Frameworks */,
 				9C1633AE1DA63F40001FB468 /* MXSegmentedPager.framework in Frameworks */,
@@ -177,6 +181,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C73FA3E22FAFD170021C818 /* WebKit.framework in Frameworks */,
 				9C1633E71DA646CA001FB468 /* MXParallaxHeader.framework in Frameworks */,
 				9C1633E51DA646CA001FB468 /* MXPagerView.framework in Frameworks */,
 				9C1633DF1DA646CA001FB468 /* MXSegmentedPager.framework in Frameworks */,
@@ -192,8 +197,7 @@
 				9CCDC69A1DA654530024337A /* Metadata */,
 				9C16334E1DA589C1001FB468 /* MXSegmentedPager */,
 				9C1633481DA5898C001FB468 /* Framework */,
-				9C1633631DA5AC9C001FB468 /* Example-objc */,
-				9C1633C01DA64676001FB468 /* Example-swift */,
+				9C73FA3C22FAFB4A0021C818 /* Examples */,
 				9C1632C41DA56C54001FB468 /* Products */,
 				9C1633571DA58D25001FB468 /* Frameworks */,
 			);
@@ -232,6 +236,7 @@
 		9C1633571DA58D25001FB468 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9C73FA3D22FAFD170021C818 /* WebKit.framework */,
 				9C7C424E22F9C3A8005E4109 /* MXSegmentedControl.framework */,
 				9C1633591DA58D25001FB468 /* MXPagerView.framework */,
 				9C16335A1DA58D25001FB468 /* MXParallaxHeader.framework */,
@@ -239,7 +244,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9C1633631DA5AC9C001FB468 /* Example-objc */ = {
+		9C1633631DA5AC9C001FB468 /* objc */ = {
 			isa = PBXGroup;
 			children = (
 				9C1633901DA63F0E001FB468 /* MXAppDelegate.h */,
@@ -256,7 +261,8 @@
 				9C1633751DA5AC9C001FB468 /* Info.plist */,
 				9C1633641DA5AC9C001FB468 /* Supporting Files */,
 			);
-			path = "Example-objc";
+			name = objc;
+			path = "Objective-C";
 			sourceTree = "<group>";
 		};
 		9C1633641DA5AC9C001FB468 /* Supporting Files */ = {
@@ -299,7 +305,7 @@
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
-		9C1633C01DA64676001FB468 /* Example-swift */ = {
+		9C1633C01DA64676001FB468 /* swift */ = {
 			isa = PBXGroup;
 			children = (
 				9C1633D21DA646B1001FB468 /* MXAppDelegate.swift */,
@@ -313,7 +319,17 @@
 				9C1633CA1DA64676001FB468 /* LaunchScreen.storyboard */,
 				9C1633CD1DA64676001FB468 /* Info.plist */,
 			);
-			path = "Example-swift";
+			name = swift;
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		9C73FA3C22FAFB4A0021C818 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				9C1633631DA5AC9C001FB468 /* objc */,
+				9C1633C01DA64676001FB468 /* swift */,
+			);
+			path = Examples;
 			sourceTree = "<group>";
 		};
 		9CCDC69A1DA654530024337A /* Metadata */ = {
@@ -748,7 +764,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Example-objc/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Examples/Objective-C/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.maxep.MXSegmentedPager-objc";
@@ -768,7 +784,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Example-objc/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Examples/Objective-C/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.maxep.MXSegmentedPager-objc";
@@ -786,7 +802,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Example-swift/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Examples/Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.maxep.MXSegmentedPager-swift";
@@ -805,7 +821,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Example-swift/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Examples/Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.maxep.MXSegmentedPager-swift";

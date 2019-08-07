@@ -1,4 +1,4 @@
-// MXParallaxViewController.m
+// MXSimpleViewController.m
 //
 // Copyright (c) 2017 Maxime Epain
 //
@@ -20,67 +20,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <MXSegmentedPager/MXSegmentedPager.h>
+#import <WebKit/WebKit.h>
 
-#import "MXParallaxViewController.h"
-#import "MXCustomView.h"
+#import "MXSimpleViewController.h"
+#import "MXSegmentedPager.h"
 
-@interface MXParallaxViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
-@property (nonatomic, strong) UIView            * cover;
+@interface MXSimpleViewController () <MXSegmentedPagerDelegate, MXSegmentedPagerDataSource, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) MXSegmentedPager  * segmentedPager;
 @property (nonatomic, strong) UITableView       * tableView;
-@property (nonatomic, strong) UIWebView         * webView;
+@property (nonatomic, strong) WKWebView         * webView;
 @property (nonatomic, strong) UITextView        * textView;
-@property (nonatomic, strong) MXCustomView      * customView;
 @end
 
-@implementation MXParallaxViewController
+@implementation MXSimpleViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
     
     [self.view addSubview:self.segmentedPager];
+    self.segmentedPager.segmentedControl.textColor = [UIColor blackColor];
+    self.segmentedPager.segmentedControl.selectedTextColor = [UIColor orangeColor];
+    self.segmentedPager.segmentedControl.indicator.lineView.backgroundColor = [UIColor orangeColor];
     
-    // Parallax Header
-    self.segmentedPager.parallaxHeader.view = self.cover;
-    self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderModeFill;
-    self.segmentedPager.parallaxHeader.height = 150;
-    self.segmentedPager.parallaxHeader.minimumHeight = 20;
+    self.segmentedPager.pager.gutterWidth = 20;
     
-    // Segmented Control customization
-    self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
-    self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};
-    self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor orangeColor]};
-    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
-    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
-    
-    self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
+    //Register UItableView as page
+    [self.segmentedPager.pager registerClass:[UITextView class] forPageReuseIdentifier:@"TextPage"];
 }
 
 - (void)viewWillLayoutSubviews {
-    self.segmentedPager.frame = (CGRect){
-        .origin = CGPointZero,
-        .size   = self.view.frame.size
-    };
     [super viewWillLayoutSubviews];
+    self.segmentedPager.frame = UIEdgeInsetsInsetRect(self.view.bounds, self.view.safeAreaInsets);
 }
 
-#pragma mark Properties
-
-- (UIView *)cover {
-    if (!_cover) {
-        // Set a cover on the top of the view
-        _cover = [self.nibBundle loadNibNamed:@"Cover" owner:nil options:nil].firstObject;
-    }
-    return _cover;
-}
+#pragma -mark Properties
 
 - (MXSegmentedPager *)segmentedPager {
     if (!_segmentedPager) {
         
-        // Set a segmented pager below the cover
+        // Set a segmented pager
         _segmentedPager = [[MXSegmentedPager alloc] init];
         _segmentedPager.delegate    = self;
         _segmentedPager.dataSource  = self;
@@ -98,13 +77,11 @@
     return _tableView;
 }
 
-- (UIWebView *)webView {
+- (WKWebView *)webView {
     if (!_webView) {
         // Add a web page
-        _webView = [[UIWebView alloc] init];
-        _webView.delegate = self;
-        NSString *strURL = @"http://nshipster.com/";
-        NSURL *url = [NSURL URLWithString:strURL];
+        _webView = [[WKWebView alloc] init];
+        NSURL *url = [NSURL URLWithString:@"http://nshipster.com/"];
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
         [_webView loadRequest:urlRequest];
     }
@@ -121,71 +98,62 @@
     return _textView;
 }
 
-- (MXCustomView *)customView {
-    if (!_customView) {
-        _customView = [[MXCustomView alloc] init];
-    }
-    return _customView;
-}
-
-#pragma mark <MXSegmentedPagerDelegate>
-
-- (CGFloat)heightForSegmentedControlInSegmentedPager:(MXSegmentedPager *)segmentedPager {
-    return 30.f;
-}
+#pragma -mark <MXSegmentedPagerDelegate>
 
 - (void)segmentedPager:(MXSegmentedPager *)segmentedPager didSelectViewWithTitle:(NSString *)title {
     NSLog(@"%@ page selected.", title);
 }
 
-- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didScrollWithParallaxHeader:(MXParallaxHeader *)parallaxHeader {
-    NSLog(@"progress %f", parallaxHeader.progress);
-}
-
-#pragma mark <MXSegmentedPagerDataSource>
+#pragma -mark <MXSegmentedPagerDataSource>
 
 - (NSInteger)numberOfPagesInSegmentedPager:(MXSegmentedPager *)segmentedPager {
-    return 4;
+    return 10;
 }
 
 - (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager titleForSectionAtIndex:(NSInteger)index {
-    return @[@"Table", @"Web", @"Text", @"Custom"][index];
+    if (index < 3) {
+        return [@[@"Table", @"Web", @"Text"] objectAtIndex:index];
+    }
+    return [NSString stringWithFormat:@"Page %li", (long) index];
 }
 
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
-    return @[self.tableView, self.webView, self.textView, self.customView][index];
+    if (index < 3) {
+        return @[self.tableView, self.webView, self.textView][index];
+    }
+    
+    //Dequeue reusable page
+    UITextView *page = [segmentedPager.pager dequeueReusablePageWithIdentifier:@"TextPage"];
+    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"LongText" ofType:@"txt"];
+    page.text = [[NSString alloc]initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+    
+    return page;
 }
 
-#pragma mark <UITableViewDelegate>
+#pragma -mark <UITableViewDelegate>
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSInteger index = (indexPath.row % 2) + 1;
-    [self.segmentedPager.pager showPageAtIndex:index animated:YES];
+    [self.segmentedPager showPageAtIndex:index animated:YES];
 }
 
-#pragma mark <UITableViewDataSource>
+#pragma -mark <UITableViewDataSource>
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 50;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = (indexPath.row % 2)? @"Text" : @"Web";
+    cell.textLabel.text = (indexPath.row % 2)? @"Text": @"Web";
     
     return cell;
-}
-
-#pragma mark <UIWebViewDelegate>
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-
 }
 
 @end

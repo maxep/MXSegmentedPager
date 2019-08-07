@@ -21,16 +21,17 @@
 // THE SOFTWARE.
 
 import UIKit
+import WebKit
 
 class MXWebViewController: UIViewController {
 
-    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let url = URL(string: "http://nshipster.com/")!
         let request = URLRequest(url: url)
-        webView.loadRequest(request)
+        webView.load(request)
     }
 }

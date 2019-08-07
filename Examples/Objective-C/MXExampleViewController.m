@@ -30,19 +30,15 @@
     [super viewDidLoad];
     
     self.segmentedPager.backgroundColor = [UIColor whiteColor];
-    
-    self.segmentedPager.pager.transitionStyle = MXPagerViewTransitionStyleTab;
-    
-    self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
-    self.segmentedPager.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};
-    self.segmentedPager.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1]};
-    self.segmentedPager.segmentedControl.selectionIndicatorColor = [UIColor blackColor];
-    self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
-    self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    
     self.segmentedPager.segmentedControlPosition = MXSegmentedControlPositionBottom;
-    
     self.segmentedPager.segmentedControlEdgeInsets = UIEdgeInsetsMake(12, 12, 0, 12);
+
+    self.segmentedPager.pager.transitionStyle = MXPagerViewTransitionStyleTab;
+
+    self.segmentedPager.segmentedControl.backgroundColor = [UIColor whiteColor];
+    self.segmentedPager.segmentedControl.textColor = [UIColor blackColor];
+    self.segmentedPager.segmentedControl.selectedTextColor = [UIColor orangeColor];
+    self.segmentedPager.segmentedControl.indicator.lineView.backgroundColor = [UIColor orangeColor];
 }
 
 #pragma mark <MXSegmentedPagerDelegate>
