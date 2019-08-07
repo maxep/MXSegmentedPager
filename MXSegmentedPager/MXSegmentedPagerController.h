@@ -20,8 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import <MXPagerView/MXPagerViewController.h>
+@import UIKit;
+@import MXPagerView;
+
 #import "MXSegmentedPager.h"
 
 NS_ASSUME_NONNULL_BEGIN

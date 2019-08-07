@@ -20,10 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import <HMSegmentedControl/HMSegmentedControl.h>
-#import <MXPagerView/MXPagerView.h>
-#import <MXParallaxHeader/MXParallaxHeader.h>
+@import UIKit;
+@import MXSegmentedControl;
+@import MXParallaxHeader;
+@import MXPagerView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -218,9 +218,9 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 @property (nonatomic, weak) IBOutlet id<MXSegmentedPagerDataSource> dataSource;
 
 /**
- The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
+ The segmented control. cf. [MXSegmentedControl](https://github.com/maxep/MXSegmentedControl) for customazation.
  */
-@property (nonatomic, readonly) HMSegmentedControl *segmentedControl;
+@property (nonatomic, readonly) MXSegmentedControl *segmentedControl;
 
 /**
  The segmented control position option.
@@ -246,6 +246,14 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  Scrolls the main contentView back to the top position
  */
 - (void)scrollToTopAnimated:(BOOL)animated;
+
+/**
+ Shows through the pager until a page identified by index is at a particular location on the screen.
+
+ @param index       An index that identifies a page.
+ @param animated    YES if you want to animate the change in position; NO if it should be immediate. Animated parameter has no effect on pager with MXPagerViewBehaviorTab.
+ */
+- (void)showPageAtIndex:(NSInteger)index animated:(BOOL)animated;
 
 @end
 
