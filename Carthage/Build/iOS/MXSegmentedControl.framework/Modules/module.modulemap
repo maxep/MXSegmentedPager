@@ -1,0 +1,11 @@
+framework module MXSegmentedControl {
+  umbrella header "MXSegmentedControl.h"
+
+  export *
+  module * { export * }
+}
+
+module MXSegmentedControl.Swift {
+    header "MXSegmentedControl-Swift.h"
+    requires objc
+}

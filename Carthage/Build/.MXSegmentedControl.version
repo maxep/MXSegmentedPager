@@ -1,0 +1,19 @@
+{
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
+  "commitish" : "1.1.0",
+  "iOS" : [
+    {
+      "name" : "MXSegmentedControl",
+      "hash" : "7e5cef77fece6b4b4e752714a4719690d5bc11666ed132193f2c46a3a28b9cd0",
+      "swiftToolchainVersion" : "5.0.1 (swiftlang-1001.0.82.4 clang-1001.0.46.5)"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 // MXSegmentedPager.h
 //
-// Copyright (c) 2017 Maxime Epain
+// Copyright (c) 2019 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import <HMSegmentedControl/HMSegmentedControl.h>
-#import <MXPagerView/MXPagerView.h>
-#import <MXParallaxHeader/MXParallaxHeader.h>
+@import UIKit;
+@import MXSegmentedControl;
+@import MXParallaxHeader;
+@import MXPagerView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
     /** Top Over position. */
     MXSegmentedControlPositionTopOver
 
-};
+} NS_SWIFT_NAME(ControlPosition);
 
 @class MXSegmentedPager;
 
@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
  @param index          The selected page index.
  */
-- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didSelectViewWithIndex:(NSInteger)index;
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didSelectViewAtIndex:(NSInteger)index;
 
 /**
  Tells the delegate the segmented pager is about to draw a page for a particular index.
@@ -126,7 +126,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  
  @return YES to permit scrolling to the top of the content, NO to disallow it.
  */
-- (BOOL)segmentedPagerShouldScrollToTop:(MXSegmentedPager *)segmentedPager;
+- (BOOL)segmentedPagerShouldScrollToTop:(MXSegmentedPager *)segmentedPager NS_SWIFT_NAME(segmentedPagerShouldScrollToTop(_:));
 
 @end
 
@@ -218,9 +218,9 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
 @property (nonatomic, weak) IBOutlet id<MXSegmentedPagerDataSource> dataSource;
 
 /**
- The segmented control. cf. [HMSegmentedControl](http://cocoadocs.org/docsets/HMSegmentedControl/1.5/) for customazation.
+ The segmented control. cf. [MXSegmentedControl](https://github.com/maxep/MXSegmentedControl) for customazation.
  */
-@property (nonatomic, readonly) HMSegmentedControl *segmentedControl;
+@property (nonatomic, readonly) MXSegmentedControl *segmentedControl;
 
 /**
  The segmented control position option.
@@ -246,6 +246,14 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  Scrolls the main contentView back to the top position
  */
 - (void)scrollToTopAnimated:(BOOL)animated;
+
+/**
+ Shows through the pager until a page identified by index is at a particular location on the screen.
+
+ @param index       An index that identifies a page.
+ @param animated    YES if you want to animate the change in position; NO if it should be immediate. Animated parameter has no effect on pager with MXPagerViewBehaviorTab.
+ */
+- (void)showPageAtIndex:(NSInteger)index animated:(BOOL)animated;
 
 @end
 

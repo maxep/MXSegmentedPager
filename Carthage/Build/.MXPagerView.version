@@ -1,0 +1,18 @@
+{
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
+  "commitish" : "0.2.1",
+  "iOS" : [
+    {
+      "name" : "MXPagerView",
+      "hash" : "81d71f10569f0f3078e7f35247b6dda74e17004081be2026cd2acad8f575abb4"
+    }
+  ]
+}

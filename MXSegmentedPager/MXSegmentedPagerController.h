@@ -1,6 +1,6 @@
 // MXSegmentedPagerController.h
 //
-// Copyright (c) 2017 Maxime Epain
+// Copyright (c) 2019 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import <MXPagerView/MXPagerViewController.h>
+@import UIKit;
+@import MXPagerView;
+
 #import "MXSegmentedPager.h"
 
 NS_ASSUME_NONNULL_BEGIN

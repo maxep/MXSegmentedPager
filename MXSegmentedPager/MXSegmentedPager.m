@@ -1,6 +1,6 @@
 // MXSegmentedPager.m
 //
-// Copyright (c) 2017 Maxime Epain
+// Copyright (c) 2019 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 
 @interface MXSegmentedPager () <MXScrollViewDelegate, MXPagerViewDelegate, MXPagerViewDataSource>
 @property (nonatomic, strong) MXScrollView          *contentView;
-@property (nonatomic, strong) HMSegmentedControl    *segmentedControl;
+@property (nonatomic, strong) MXSegmentedControl    *segmentedControl;
 @property (nonatomic, strong) MXPagerView           *pager;
 @end
 
@@ -47,37 +47,32 @@
         _controlHeight = [self.delegate heightForSegmentedControlInSegmentedPager:self];
     }
     
-    //Gets new data
-    NSMutableArray *images          = [NSMutableArray arrayWithCapacity:_count];
-    NSMutableArray *selectedImages  = [NSMutableArray arrayWithCapacity:_count];
-    NSMutableArray *titles          = [NSMutableArray arrayWithCapacity:_count];
-    
     for (NSInteger index = 0; index < _count; index++) {
-        
-        titles[index] = [NSString stringWithFormat:@"Page %ld", (long)index];
-        if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
-            titles[index] = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
+
+        MXSegment *segment = [self.segmentedControl newSegment];
+
+        if ([self.dataSource respondsToSelector:@selector(segmentedPager:attributedTitleForSectionAtIndex:)]) {
+            NSAttributedString *title = [self.dataSource segmentedPager:self attributedTitleForSectionAtIndex:index];
+            [segment setAttributedTitle:title forState:UIControlStateNormal];
+        } else if ([self.dataSource respondsToSelector:@selector(segmentedPager:titleForSectionAtIndex:)]) {
+            NSString *title = [self.dataSource segmentedPager:self titleForSectionAtIndex:index];
+            [segment setTitle:title forState:UIControlStateNormal];
+        } else {
+            NSString *title = [NSString stringWithFormat:@"Page %ld", (long)index];
+            [segment setTitle:title forState:UIControlStateNormal];
         }
         
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:imageForSectionAtIndex:)]) {
-            images[index] = [self.dataSource segmentedPager:self imageForSectionAtIndex:index];
+            UIImage *image = [self.dataSource segmentedPager:self imageForSectionAtIndex:index];
+            [segment setImage:image forState:UIControlStateNormal];
         }
         
         if ([self.dataSource respondsToSelector:@selector(segmentedPager:selectedImageForSectionAtIndex:)]) {
-            selectedImages[index] = [self.dataSource segmentedPager:self selectedImageForSectionAtIndex:index];
+            UIImage *image = [self.dataSource segmentedPager:self selectedImageForSectionAtIndex:index];
+            [segment setImage:image forState:UIControlStateSelected];
         }
     }
-    
-    if ([self.dataSource respondsToSelector:@selector(segmentedPager:attributedTitleForSectionAtIndex:)]) {
-        __weak typeof(self) segmentedPager = self;
-        self.segmentedControl.titleFormatter = ^NSAttributedString *(HMSegmentedControl *segmentedControl, NSString *title, NSUInteger index, BOOL selected) {
-            return [segmentedPager.dataSource segmentedPager:segmentedPager attributedTitleForSectionAtIndex:index];
-        };
-    }
-    
-    self.segmentedControl.sectionImages = images;
-    self.segmentedControl.sectionSelectedImages = selectedImages;
-    self.segmentedControl.sectionTitles = titles;
+
     [self.segmentedControl setNeedsDisplay];
     
     [self.pager reloadData];
@@ -86,6 +81,11 @@
 - (void)scrollToTopAnimated:(BOOL)animated {
     [_contentView setContentOffset:CGPointMake(0, -self.contentView.parallaxHeader.height)
                           animated:animated];
+}
+
+- (void)showPageAtIndex:(NSInteger)index animated:(BOOL)animated {
+    [self.pager showPageAtIndex:index animated:animated];
+    [self.segmentedControl selectWithIndex:index animated:animated];
 }
 
 #pragma mark Layout
@@ -121,6 +121,7 @@
         frame.origin.y  = frame.size.height;
         frame.origin.y -= _controlHeight;
         frame.origin.y -= self.segmentedControlEdgeInsets.bottom;
+        if (@available(iOS 11.0, *)) frame.origin.y -= self.safeAreaInsets.bottom;
     } else if(self.segmentedControlPosition == MXSegmentedControlPositionTopOver) {
         frame.origin.y = -_controlHeight;
     } else {
@@ -149,6 +150,7 @@
         frame.size.height -= _controlHeight;
         frame.size.height -= self.segmentedControlEdgeInsets.top;
         frame.size.height -= self.segmentedControlEdgeInsets.bottom;
+        if (@available(iOS 11.0, *)) frame.size.height -= self.safeAreaInsets.bottom;
     }
     
     frame.size.height -= self.contentView.parallaxHeader.minimumHeight;
@@ -169,13 +171,10 @@
     return _contentView;
 }
 
-- (HMSegmentedControl *)segmentedControl {
+- (MXSegmentedControl *)segmentedControl {
     if (!_segmentedControl) {
-        _segmentedControl = [[HMSegmentedControl alloc] init];
-        [_segmentedControl addTarget:self
-                              action:@selector(pageControlValueChanged:)
-                    forControlEvents:UIControlEventValueChanged];
-        
+        _segmentedControl = [[MXSegmentedControl alloc] init];
+        _segmentedControl.scrollView = self.pager;
         [self.contentView addSubview:_segmentedControl];
     }
     return _segmentedControl;
@@ -191,7 +190,7 @@
     return _pager;
 }
 
-- (UIView*)selectedPage {
+- (UIView *)selectedPage {
     return self.pager.selectedPage;
 }
 
@@ -239,22 +238,7 @@
     return YES;
 }
 
-#pragma mark HMSegmentedControl target
-
-- (void)pageControlValueChanged:(HMSegmentedControl*)segmentedControl {
-    [self.pager showPageAtIndex:segmentedControl.selectedSegmentIndex animated:YES];
-}
-
 #pragma mark <MXPagerViewDelegate>
-
-- (void)pagerView:(MXPagerView *)pagerView willMoveToPage:(UIView *)page atIndex:(NSInteger)index {
-    [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
-}
-
-- (void)pagerView:(MXPagerView *)pagerView didMoveToPage:(UIView *)page atIndex:(NSInteger)index {
-    [self.segmentedControl setSelectedSegmentIndex:index animated:NO];
-    [self changedToIndex:index];
-}
 
 - (void)pagerView:(MXPagerView *)pagerView willDisplayPage:(UIView *)page atIndex:(NSInteger)index {
     if ([self.delegate respondsToSelector:@selector(segmentedPager:willDisplayPage:atIndex:)]) {
@@ -281,12 +265,12 @@
 #pragma mark Private methods
 
 - (void)changedToIndex:(NSInteger)index {
-    if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithIndex:)]) {
-        [self.delegate segmentedPager:self didSelectViewWithIndex:index];
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewAtIndex:)]) {
+        [self.delegate segmentedPager:self didSelectViewAtIndex:index];
     }
     
-    NSString* title = self.segmentedControl.sectionTitles[index];
-    UIView* view = self.pager.selectedPage;
+    NSString *title = [self.segmentedControl segmentAt:index].titleLabel.text;
+    UIView *view = self.pager.selectedPage;
                     
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithTitle:)]) {
         [self.delegate segmentedPager:self didSelectViewWithTitle:title];
