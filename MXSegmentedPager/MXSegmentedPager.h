@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
     /** Top Over position. */
     MXSegmentedControlPositionTopOver
 
-};
+} NS_SWIFT_NAME(ControlPosition);
 
 @class MXSegmentedPager;
 
@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  @param segmentedPager A segmented-pager object informing the delegate about the impending selection.
  @param index          The selected page index.
  */
-- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didSelectViewWithIndex:(NSInteger)index;
+- (void)segmentedPager:(MXSegmentedPager *)segmentedPager didSelectViewAtIndex:(NSInteger)index;
 
 /**
  Tells the delegate the segmented pager is about to draw a page for a particular index.
@@ -126,7 +126,7 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  
  @return YES to permit scrolling to the top of the content, NO to disallow it.
  */
-- (BOOL)segmentedPagerShouldScrollToTop:(MXSegmentedPager *)segmentedPager;
+- (BOOL)segmentedPagerShouldScrollToTop:(MXSegmentedPager *)segmentedPager NS_SWIFT_NAME(segmentedPagerShouldScrollToTop(_:));
 
 @end
 

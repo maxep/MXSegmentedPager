@@ -265,8 +265,8 @@
 #pragma mark Private methods
 
 - (void)changedToIndex:(NSInteger)index {
-    if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithIndex:)]) {
-        [self.delegate segmentedPager:self didSelectViewWithIndex:index];
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewAtIndex:)]) {
+        [self.delegate segmentedPager:self didSelectViewAtIndex:index];
     }
     
     NSString *title = [self.segmentedControl segmentAt:index].titleLabel.text;
