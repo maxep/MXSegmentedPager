@@ -13,9 +13,9 @@ onlyLabels: []
 # Issues or Pull Requests with these labels will never be considered stale. Set to `[]` to disable
 exemptLabels:
   - bug
-  - help-wanted
-  - improvement
-  - need-review
+  - help wanted
+  - enhancement
+  - need review
 
 # Label to use when marking as stale
 staleLabel: stale
