@@ -23,5 +23,5 @@ let package = Package(
             ], path: "MXSegmentedPager"
         )
     ],
-    swiftLanguageVersions: [.v5,.v4]
+    cLanguageStandard: .c11
 )
