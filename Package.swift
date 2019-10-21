@@ -20,7 +20,8 @@ let package = Package(
                 "MXPagerView",
                 "MXSegmentedControl",
                 "MXParallaxHeader"
-            ], path: "MXSegmentedPager"
+            ], path: "MXSegmentedPager",
+            publicHeadersPath: "MXSegmentedPager"
         )
     ],
     cLanguageStandard: .c11
