@@ -7,6 +7,8 @@
 [![Platform](https://img.shields.io/cocoapods/p/MXSegmentedPager.svg?style=flat)](http://cocoadocs.org/docsets/MXSegmentedPager)
 [![Dependency Status](https://www.versioneye.com/objective-c/mxsegmentedpager/1.0/badge.svg)](https://www.versioneye.com/objective-c/mxsegmentedpager)
 
+:warning: This project is no longer maintained, see [#263](https://github.com/maxep/MXSegmentedPager/issues/263) :warning:
+
 MXSegmentedPager combines [MXPagerView](https://github.com/maxep/MXPagerView) with [MXSegmentedControl](https://github.com/maxep/MXSegmentedControl) to control the page selection. The integration of [MXParallaxHeader](https://github.com/maxep/MXParallaxHeader) allows you to add a parallax header on top while keeping a reliable scrolling effect.
 
 
